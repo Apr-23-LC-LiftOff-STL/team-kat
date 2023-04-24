@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AuthenticationFilter implements HandlerInterceptor {
 
-    private static final List<String> whitelist = Arrays.asList("/", "/login", "/logout", "/css");
+    private static final List<String> whitelist = Arrays.asList("/", "/login", "/logout", "/css", "/api/user");
 
     @Override
     public boolean preHandle(HttpServletRequest request,
