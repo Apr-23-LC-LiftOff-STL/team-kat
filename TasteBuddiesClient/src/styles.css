@@ -1,1 +1,150 @@
 /* You can add global styles to this file, and also import other style files */
+/* Global styles */
+:root {
+  --primary-color: #ff6b6b;
+  --secondary-color: #484848;
+  --background-color: #f9f9f9;
+  --font-family: 'Roboto', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  color: var(--secondary-color);
+  background-color: var(--background-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header styles */
+header {
+  background-color: var(--primary-color);
+  padding: 1rem 0;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav li {
+  margin-left: 2rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+}
+
+/* Hero section styles */
+.hero {
+  background-image: url('https://images.unsplash.com/photo-1528495796357-aa0e585f6377');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  text-align: center;
+}
+
+.btn {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background-color: var(--secondary-color);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #222;
+}
+
+/* Features section styles */
+.features {
+  padding: 4rem 0;
+}
+
+.features h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.feature i {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-right: 2rem;
+}
+
+.feature h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+.feature p {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: var(--secondary-color);
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+/* Pricing section styles */
+.pricing {
+  background-color: #fff;
+  padding: 4rem 0;
+}
+
+.pricing h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align
