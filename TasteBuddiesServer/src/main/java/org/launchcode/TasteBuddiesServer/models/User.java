@@ -3,20 +3,24 @@ package org.launchcode.TasteBuddiesServer.models;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @Entity
 public class User extends AbstractEntity {
 
     // TODO add validation for displayName
     @NotNull
+    @NotBlank
     private String displayName;
 
     // TODO add validation for email
+    @Email
     @NotNull
     private String email;
 
     @NotNull
+    @Min(message = "Password must be at least 4 characters", value=4)
+    @Max(message = "Password must be 20 characters or fewer", value=20)
     private String passwordHash;
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
