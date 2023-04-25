@@ -3,7 +3,10 @@ package org.launchcode.TasteBuddiesServer.models;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User extends AbstractEntity {
@@ -13,7 +16,6 @@ public class User extends AbstractEntity {
     @NotBlank
     private String displayName;
 
-    // TODO add validation for email
     @Email
     @NotNull
     private String email;
@@ -22,6 +24,9 @@ public class User extends AbstractEntity {
     @Min(message = "Password must be at least 4 characters", value=4)
     @Max(message = "Password must be 20 characters or fewer", value=20)
     private String passwordHash;
+
+    @ManyToMany
+    private List<Event> events = new ArrayList<>();
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -39,8 +44,28 @@ public class User extends AbstractEntity {
         return displayName;
     }
 
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPasswordHash(String password) {
+        this.passwordHash = encoder.encode(password);
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void addEvent(Event event) {
+        this.events.add(event);
     }
 
     public boolean isMatchingPassword(String password) {
