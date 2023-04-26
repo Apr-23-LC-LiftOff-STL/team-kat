@@ -1,5 +1,6 @@
 package org.launchcode.TasteBuddiesServer;
 
+import org.launchcode.TasteBuddiesServer.config.AuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
