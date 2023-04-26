@@ -1,4 +1,4 @@
-package org.launchcode.TasteBuddiesServer;
+package org.launchcode.TasteBuddiesServer.config;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
