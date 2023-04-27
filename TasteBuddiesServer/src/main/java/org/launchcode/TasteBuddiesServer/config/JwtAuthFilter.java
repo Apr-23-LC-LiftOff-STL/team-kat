@@ -1,8 +1,7 @@
 package org.launchcode.TasteBuddiesServer.config;
 
 import lombok.RequiredArgsConstructor;
-import org.launchcode.TasteBuddiesServer.data.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.launchcode.TasteBuddiesServer.dao.UserDao;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +20,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private final UserRepository userDetailsService;
+    private final UserDao userDao;
     private final JwtUtil jwtUtil;
 
     protected void doFilterInternal(
@@ -45,7 +44,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             // TODO: Think about extending our User class with UserDetails as it will
             // make Spring Security play nicely with authenticating our users
             // This is a DB connection
-            UserDetails userDetails = userDetailsService.findByEmail(email);
+            UserDetails userDetails =  userDao.findUserByEmail(email);
 
             if (jwtUtil.validateToken(jwtToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken =
