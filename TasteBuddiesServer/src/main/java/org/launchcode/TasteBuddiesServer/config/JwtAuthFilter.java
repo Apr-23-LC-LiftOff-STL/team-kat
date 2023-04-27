@@ -1,5 +1,8 @@
 package org.launchcode.TasteBuddiesServer.config;
 
+import lombok.RequiredArgsConstructor;
+import org.launchcode.TasteBuddiesServer.data.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
+
+    private final UserRepository userDetailsService;
+    private final JwtUtil jwtUtil;
 
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -31,16 +38,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         jwtToken = authHeader.substring(7);
-        email = "Something"; // TODO to be implemented
+        email = jwtUtil.extractUsername(jwtToken);
 
         // Check that there is an email and that the user is not already authenticated
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             // TODO: Think about extending our User class with UserDetails as it will
             // make Spring Security play nicely with authenticating our users
             // This is a DB connection
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-            final boolean isTokenValid; // TODO to be implemented
-            if (isTokenValid) {
+            UserDetails userDetails = userDetailsService.findByEmail(email);
+
+            if (jwtUtil.validateToken(jwtToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
