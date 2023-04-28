@@ -52,6 +52,11 @@ public class AuthController {
         return ResponseEntity.status(400).body("Some error has occurred.");
     }
 
+    @GetMapping("/authenticated")
+    public ResponseEntity<String> authenticationTest() {
+        return ResponseEntity.status(200).body("You are logged in.");
+    }
+
     @PostMapping("/register")
     public ResponseEntity<?> processRegistrationForm(@RequestBody RegistrationFormDTO registrationFormDTO,
                                                      HttpServletResponse response,
