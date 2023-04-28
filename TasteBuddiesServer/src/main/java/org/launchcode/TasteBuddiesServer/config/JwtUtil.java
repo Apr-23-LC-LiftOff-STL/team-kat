@@ -16,7 +16,8 @@ import java.util.function.Function;
 @Service
 public class JwtUtil {
 
-    private final String SECRET_KEY = "secret";
+    // TODO Make a real secret key and hide it from github!!!
+    private final String SECRET_KEY = "4390q7ghr4lknvasio4rkjlhfbndvsaasdf23ern0a789wcffjqfk34hg9087qhwef";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
