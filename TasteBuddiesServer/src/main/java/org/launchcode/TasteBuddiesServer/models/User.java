@@ -40,9 +40,14 @@ public class User extends AbstractEntity implements UserDetails {
         this.password = encoder.encode(password);
     }
 
+    public boolean isMatchingPassword(String password) {
+        return encoder.matches(password, this.getPassword());
+    }
+
     public String getDisplayName() {
         return displayName;
     }
+    public void setDisplayName(String displayName) { this.displayName = displayName; }
 
     @Override
     public String getUsername() {
@@ -52,6 +57,7 @@ public class User extends AbstractEntity implements UserDetails {
     public String getEmail() {
         return email;
     }
+    public void setEmail(String email) { this.email = email; }
 
     @Override
     public Set<AuthorityEntity> getAuthorities() {
@@ -62,28 +68,34 @@ public class User extends AbstractEntity implements UserDetails {
     public String getPassword() {
         return this.password;
     }
+    public void setPassword(String password) { this.password = encoder.encode(password); }
 
-    public boolean isMatchingPassword(String password) {
-        return encoder.matches(password, this.getPassword());
-    }
 
     @Override
     public boolean isAccountNonExpired() {
         return accountNonExpired;
     }
+    public void setAccountNonExpired(boolean accountNonExpired) { this.accountNonExpired = accountNonExpired; }
 
     @Override
-    public boolean isAccountNonLocked() {
-        return accountNonLocked;
+    public boolean isAccountNonLocked() { return accountNonLocked; }
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
         return credentialsNonExpired;
     }
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
 
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
