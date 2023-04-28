@@ -76,19 +76,9 @@ public class AuthController {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
 
-//        Unneeded check of passwords. Functionality moved to frontend.
-//        String password = registrationFormDTO.getPassword();
-//        String verifyPassword = registrationFormDTO.getVerifyPassword();
-
-//        if (password.equals(verifyPassword)) {
-//            errors.rejectValue("password", "password.mismatch", "The entered passwords do not match.");
-//            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-//        }
-
         User newUser = new User(registrationFormDTO.getDisplayName(), registrationFormDTO.getEmail(), registrationFormDTO.getPassword());
         userRepository.save(newUser);
-        response.sendRedirect("/login");
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.status(200).build();
     }
 
 }
