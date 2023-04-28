@@ -48,7 +48,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> processRegistrationForm(@RequestBody @Valid RegistrationFormDTO registrationFormDTO,
+    public ResponseEntity<?> processRegistrationForm(@RequestBody RegistrationFormDTO registrationFormDTO,
                                                      HttpServletResponse response,
                                                      Errors errors
                                                      ) throws IOException {

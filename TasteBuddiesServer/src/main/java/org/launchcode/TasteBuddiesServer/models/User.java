@@ -91,6 +91,10 @@ public class User extends AbstractEntity implements UserDetails {
         this.credentialsNonExpired = credentialsNonExpired;
     }
 
+    public Set<AuthorityEntity> getAuthorites() {
+        return authorites;
+    }
+
     @Override
     public boolean isEnabled() {
         return enabled;
