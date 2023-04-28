@@ -3,8 +3,7 @@ package org.launchcode.TasteBuddiesServer.models;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +23,7 @@ public class User extends AbstractEntity implements UserDetails {
     @NotNull
     private String password;
 
-    @OneToMany()
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<AuthorityEntity> authorities;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
@@ -39,6 +38,7 @@ public class User extends AbstractEntity implements UserDetails {
         this.credentialsNonExpired = true;
         this.enabled = true;
         this.authorities = new HashSet<>();
+        this.authorities.add(new AuthorityEntity("BASIC_USER"));
     }
 
     public User(String displayName, String email, String password) {
