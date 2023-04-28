@@ -50,9 +50,9 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 //        return NoOpPasswordEncoder.getInstance();
-        return new BCryptPasswordEncoder();
+//        return new BCryptPasswordEncoder();
     }
 
     @Bean

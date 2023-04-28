@@ -25,7 +25,7 @@ public class User extends AbstractEntity implements UserDetails {
     private String password;
 
     @OneToMany()
-    private final Set<AuthorityEntity> authorities = new HashSet<>();
+    private Set<AuthorityEntity> authorities;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
@@ -33,44 +33,51 @@ public class User extends AbstractEntity implements UserDetails {
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public User() { }
+    public User() {
+        this.accountNonExpired = true;
+        this.accountNonLocked = true;
+        this.credentialsNonExpired = true;
+        this.enabled = true;
+        this.authorities = new HashSet<>();
+    }
 
     public User(String displayName, String email, String password) {
+        this();
         this.displayName = displayName;
         this.email = email;
-        this.password = encoder.encode(password);
+        this.password = "{bcrypt}" + encoder.encode(password);
     }
 
-    public boolean isMatchingPassword(String password) {
-        return encoder.matches(password, this.getPassword());
+    public String getDisplayName() { return displayName; }
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-    public void setDisplayName(String displayName) { this.displayName = displayName; }
 
     @Override
     public String getUsername() {
         return getEmail();
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmail() { return email; }
+    public void setEmail(String email) {
+        this.email = email;
     }
-    public void setEmail(String email) { this.email = email; }
 
     @Override
-    public Set<AuthorityEntity> getAuthorities() {
-        return authorities;
+    public Set<AuthorityEntity> getAuthorities() { return authorities; }
+    public void setAuthorities(Set<AuthorityEntity> authorities) {
+        this.authorities = authorities;
     }
 
+    // A note on password handling: Spring's DelegatingPasswordEncoder
+    // required a string stored as part of the password designating
+    // which encoder was used on the password in order to check incoming
+    // password with the same encoder. Hence, the {bcrypt} being appended.
     @Override
     public String getPassword() { return this.password; }
     public void setPassword(String password) {
-        this.password = encoder.encode(password);
+        this.password = "{bcrypt}" + encoder.encode(password);
     }
-
 
     @Override
     public boolean isAccountNonExpired() { return accountNonExpired; }
