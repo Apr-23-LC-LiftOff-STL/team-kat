@@ -6,13 +6,13 @@ import javax.validation.constraints.Size;
 
 public class RegistrationFormDTO extends LoginFormDTO {
 
-    private String username;
+    private String displayName;
 
-    public String getUsername() {
-        return username;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }
