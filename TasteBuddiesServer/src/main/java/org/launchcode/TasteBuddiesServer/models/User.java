@@ -20,11 +20,12 @@ public class User extends AbstractEntity implements UserDetails {
     @NotNull
     private String email;
 
+    // TODO add validation for password
     @NotNull
     private String password;
 
     @OneToMany()
-    private final Set<AuthorityEntity> authorites = new HashSet<>();
+    private final Set<AuthorityEntity> authorities = new HashSet<>();
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
@@ -61,21 +62,21 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Override
     public Set<AuthorityEntity> getAuthorities() {
-        return authorites;
+        return authorities;
     }
 
     @Override
-    public String getPassword() {
-        return this.password;
+    public String getPassword() { return this.password; }
+    public void setPassword(String password) {
+        this.password = encoder.encode(password);
     }
-    public void setPassword(String password) { this.password = encoder.encode(password); }
 
 
     @Override
-    public boolean isAccountNonExpired() {
-        return accountNonExpired;
+    public boolean isAccountNonExpired() { return accountNonExpired; }
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
     }
-    public void setAccountNonExpired(boolean accountNonExpired) { this.accountNonExpired = accountNonExpired; }
 
     @Override
     public boolean isAccountNonLocked() { return accountNonLocked; }
@@ -84,15 +85,9 @@ public class User extends AbstractEntity implements UserDetails {
     }
 
     @Override
-    public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
-    }
+    public boolean isCredentialsNonExpired() { return credentialsNonExpired; }
     public void setCredentialsNonExpired(boolean credentialsNonExpired) {
         this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    public Set<AuthorityEntity> getAuthorites() {
-        return authorites;
     }
 
     @Override
