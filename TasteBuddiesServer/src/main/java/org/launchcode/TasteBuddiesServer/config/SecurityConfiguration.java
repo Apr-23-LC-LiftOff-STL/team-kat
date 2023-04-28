@@ -1,4 +1,4 @@
-package org.launchcode.TasteBuddiesServer;
+package org.launchcode.TasteBuddiesServer.config;
 
 import lombok.RequiredArgsConstructor;
 import org.launchcode.TasteBuddiesServer.config.JwtAuthFilter;
