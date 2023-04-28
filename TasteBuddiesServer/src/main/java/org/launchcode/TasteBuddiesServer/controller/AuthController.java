@@ -75,7 +75,7 @@ public class AuthController {
 //            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 //        }
 
-        User newUser = new User(registrationFormDTO.getUsername(), registrationFormDTO.getEmail(), registrationFormDTO.getPassword());
+        User newUser = new User(registrationFormDTO.getDisplayName(), registrationFormDTO.getEmail(), registrationFormDTO.getPassword());
         userRepository.save(newUser);
         response.sendRedirect("/login");
         return new ResponseEntity<>(HttpStatus.OK);
