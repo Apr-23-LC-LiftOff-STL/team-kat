@@ -13,6 +13,9 @@ public class Restaurant {
     @Id
     @NotNull
     private String apiID;
+    private String name;
+    private int priceLevel;
+    private float rating;
 
     public Restaurant() {
     }
