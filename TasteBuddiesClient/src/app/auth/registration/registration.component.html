@@ -1,15 +1,19 @@
-<form action="localhost:8080/api/auth/registration">
+<form #regForm="ngForm" (ngSubmit)="onSubmit()" action="localhost:8080/api/auth/register">
     <div>
         <label for="email">Email</label>
-        <input type="email" id="email">
+        <input type="text" id="email" name="email" [(ngModel)]="regModel.email">
     </div>
     <div>
         <label for="displayName">Display Name</label>
-        <input type="displayName" id="displayName">
+        <input type="text" id="displayName" name="displayName" [(ngModel)]="regModel.displayName">
     </div>
     <div>
         <label for="password">Password</label>
-        <input type="password" id="password">
+        <input type="password" id="password" name="password" [(ngModel)]="regModel.password">
     </div>
-    <input type="button" value="Submit">
+    <input type="submit" value="Submit">
 </form>
+
+<p>{{submitted}}</p>
+
+{{ regModel | json }}
