@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Registration } from 'src/models/registration';
 import { Observable } from 'rxjs';
 
-const baseURL = 'localhost:8080/api/auth/register'
+const baseURL = 'http://localhost:8080/api/auth/register'
 
 @Injectable({
   providedIn: 'root'
