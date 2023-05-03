@@ -31,9 +31,13 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-
+    //cascade and orphanRemoval attributes ensure that events are removed when the parent user is removed.
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Event> events;
+
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserLikes userLikes;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<AuthorityEntity> authorities;
@@ -71,6 +75,14 @@ public class User extends AbstractEntity implements UserDetails {
 
     public void setEvents(List<Event> events) {
         this.events = events;
+    }
+
+    public UserLikes getUserLikes() {
+        return userLikes;
+    }
+
+    public void setUserLikes(UserLikes userLikes) {
+        this.userLikes = userLikes;
     }
 
     @Override
