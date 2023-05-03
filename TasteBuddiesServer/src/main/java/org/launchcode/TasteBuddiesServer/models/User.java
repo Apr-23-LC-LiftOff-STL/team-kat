@@ -1,27 +1,39 @@
 package org.launchcode.TasteBuddiesServer.models;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 public class User extends AbstractEntity implements UserDetails {
 
-    // TODO add validation for displayName
-    @NotNull
+
+    @NotBlank(message = "Display name required.")
+    @Column(nullable = false)
     private String displayName;
 
-    // TODO add validation for email
-    @NotNull
+    @Email(message = "A valid email required.")
+    @NotBlank(message = "Email required")
+    @Column(unique = true, nullable = false)
     private String email;
 
-    // TODO add validation for password
-    @NotNull
+
+    @NotBlank(message = "Password required.")
+    @Size(min = 6,max = 30, message = "Password must be between 6 and 30 characters.")
+    @Column(nullable = false)
     private String password;
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Event> events;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<AuthorityEntity> authorities;
@@ -51,6 +63,14 @@ public class User extends AbstractEntity implements UserDetails {
     public String getDisplayName() { return displayName; }
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     @Override
