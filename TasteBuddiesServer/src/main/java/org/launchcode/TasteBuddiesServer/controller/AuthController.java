@@ -1,6 +1,5 @@
 package org.launchcode.TasteBuddiesServer.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.launchcode.TasteBuddiesServer.config.JwtUtil;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
 import org.launchcode.TasteBuddiesServer.models.User;
@@ -17,14 +16,12 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:4200")
-//@RequiredArgsConstructor
 public class AuthController {
 
     @Autowired
