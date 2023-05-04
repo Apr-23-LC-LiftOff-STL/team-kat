@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,8 +33,8 @@ public class User extends AbstractEntity implements UserDetails {
     private String password;
 
     //cascade and orphanRemoval attributes ensure that events are removed when the parent user is removed.
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Event> events;
+    @ManyToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Event> events = new ArrayList<>();;
 
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -68,6 +69,14 @@ public class User extends AbstractEntity implements UserDetails {
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
+
+//    public List<Event> getEvents() {
+//        return events;
+//    }
+//
+//    public void setEvents(List<Event> events) {
+//        this.events = events;
+//    }
 
     public List<Event> getEvents() {
         return events;
