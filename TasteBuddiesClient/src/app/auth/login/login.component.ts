@@ -30,9 +30,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-
-    
-
     this.authenticationService.login(this.regModel).subscribe({
       next: res => {
         this.storageService.saveJwt(res);
