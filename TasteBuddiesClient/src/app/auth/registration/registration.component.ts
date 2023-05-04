@@ -10,7 +10,7 @@ import { AuthenticationService } from 'src/services/authentication.service';
 
 export class RegistrationComponent implements OnInit {
 
-  regModel: Registration = new Registration('', '', '');
+  regModel: Registration = new Registration('nathan@example.net', 'BATS!', 'password');
   isSignupFailed = false;
   submitted: boolean = false;
   response: any;
