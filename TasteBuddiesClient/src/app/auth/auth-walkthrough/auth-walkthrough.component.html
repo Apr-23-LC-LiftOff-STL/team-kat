@@ -2,6 +2,10 @@
 
 <p>For this it will probably help to open up dev tool.</p>
 
+<p>
+    <b>API connection status:</b> <br>{{response}}
+</p>
+
 <h3>1) Register a new user in your DB</h3>
 <p>This request should generate a 200 respond indicating your request was processed successfully.</p>
 <app-registration></app-registration>
@@ -10,3 +14,7 @@
 <p>Again, we're looking in the dev tools for a 200 response to the request.</p>
 <app-login></app-login>
 
+<h3>3) Test your connection</h3>
+<input (click)="onClick()" type="button" value="Test">
+<br>
+{{users}} 

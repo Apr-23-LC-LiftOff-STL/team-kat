@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/services/authentication.service';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-auth-walkthrough',
@@ -7,9 +9,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthWalkthroughComponent implements OnInit {
 
-  constructor() { }
+  response: string = 'Connecting...';
+  users: any;
 
-  ngOnInit(): void {
+  constructor(private authenticationService: AuthenticationService, private userService: UserService) {
+    authenticationService.corsCheck().subscribe({
+      next: res => {
+        this.response = 'SUCCESS: Connected to API without errors.';
+      },
+      error: res => {
+        console.error(res);
+        this.response = 'ERROR: Could not get data from API :(';
+      }
+    })
+  }
+
+  ngOnInit(): void { }
+
+  onClick(): void {
+    this.userService.getUsers().subscribe({
+      next: res => {
+        this.users = res;
+      },
+      error: e => {
+        this.users = 'Error: check the dev tools'
+        console.error(e);
+      },
+    });
   }
 
 }

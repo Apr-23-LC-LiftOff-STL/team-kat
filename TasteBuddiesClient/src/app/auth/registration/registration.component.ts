@@ -16,18 +16,7 @@ export class RegistrationComponent implements OnInit {
   response: any;
 
 
-  constructor(private authenticationService: AuthenticationService) {
-    authenticationService.corsCheck().subscribe({
-      next: res => {
-        console.log('Got through CORS!');
-        this.response = res;
-      },
-      error: res => {
-        console.error(res);
-        this.response = 'failed :/';
-      }
-    })
-  }
+  constructor(private authenticationService: AuthenticationService) { }
   
   ngOnInit(): void {
   }
