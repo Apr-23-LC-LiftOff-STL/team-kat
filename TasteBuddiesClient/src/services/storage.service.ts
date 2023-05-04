@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-const USER_KEY = 'auth-user';
+const JWT_TOKEN = 'id_token';
 
 @Injectable({
   providedIn: 'root'
@@ -13,26 +13,33 @@ export class StorageService {
     window.localStorage.clear();
   }
 
-  public saveUser(user: any): void {
-    window.localStorage.removeItem(USER_KEY);
-    window.localStorage.setItem(USER_KEY, JSON.stringify(user));
+  public saveJwt(jwt: any): void {
+    window.localStorage.removeItem(JWT_TOKEN);
+    window.localStorage.setItem(JWT_TOKEN, jwt.idToken);
   }
 
-  public getUser(): any {
-    const user = window.localStorage.getItem(USER_KEY);
-    if (user) {
-      return JSON.parse(user);
+  public getJwt(): any {
+    const token = window.localStorage.getItem(JWT_TOKEN);
+    if (token) {
+      return token;
     }
 
     return {};
   }
 
   public isLoggedIn(): boolean {
-    const user = window.localStorage.getItem(USER_KEY);
-    if (user) {
-      return true;
+    const token = window.localStorage.getItem(JWT_TOKEN);
+
+    if (token == null) {
+      return false;
     }
 
-    return false;
+    return !this.isTokenExpired(token);
   }
+
+  private isTokenExpired(token: any): boolean {
+    const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+    return (Math.floor((new Date).getTime() / 10000)) >= expiry;
+  }
+
 }
