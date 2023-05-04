@@ -11,26 +11,27 @@ import { AuthenticationService } from 'src/services/authentication.service';
 
 export class RegistrationComponent implements OnInit {
 
-  regModel: Registration = new Registration('email', 'display name', 'password')
+  regModel: Registration = new Registration('', '', '');
   isSignupFailed = false;
   submitted: boolean = false;
 
 
-  constructor(private registerService: RegisterService) { }
-  // private authenticationService: AuthenticationService
+  constructor(private authenticationService: AuthenticationService) { }
+  
   ngOnInit(): void {
   }
 
   onSubmit(): void {
-
-
-
-    this.registerService.postJson(this.regModel).subscribe({
-      next: (res) => {
+    this.authenticationService.register(this.regModel).subscribe({
+      next: res => {
         console.log(res);
+        this.isSignupFailed = false;
         this.submitted = true;
       },
-      error: (e) => console.error(e.message)
+      error: e => {
+        console.error(e.message);
+        this.isSignupFailed = true;
+      }
     });
   }
 
