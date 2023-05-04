@@ -13,9 +13,21 @@ export class RegistrationComponent implements OnInit {
   regModel: Registration = new Registration('', '', '');
   isSignupFailed = false;
   submitted: boolean = false;
+  response: any;
 
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService) {
+    authenticationService.corsCheck().subscribe({
+      next: res => {
+        console.log('Got through CORS!');
+        this.response = res;
+      },
+      error: res => {
+        console.error(res);
+        this.response = 'failed :/';
+      }
+    })
+  }
   
   ngOnInit(): void {
   }

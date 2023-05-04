@@ -37,6 +37,10 @@ export class AuthenticationService {
     );
   }
 
+  corsCheck(): Observable<any> {
+    return this.http.get(AUTH_API + 'authenticated', httpOptions)
+  }
+
   logout(): Observable<any> {
     return this.http.post(AUTH_API + 'logout', {}, httpOptions);
   }
