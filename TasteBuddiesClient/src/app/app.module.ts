@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RegistrationComponent } from './auth/registration/registration.component';
+import { RegistrationFormComponent } from './auth/registration-form/registration-form.component';
 import { LoginFormComponent } from './auth/login-form/login-form.component';
 
 import { httpInterceptorProviders } from 'src/helpers/http.intercepter';
@@ -17,7 +17,7 @@ import { FooterComponent } from './common/footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
-    RegistrationComponent,
+    RegistrationFormComponent,
     LoginFormComponent,
     AuthWalkthroughComponent,
     HomeComponent,

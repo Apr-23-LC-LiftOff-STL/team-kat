@@ -4,11 +4,11 @@ import { AuthenticationService } from 'src/services/authentication.service';
 
 @Component({
   selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  templateUrl: './registration-form.component.html',
+  styleUrls: ['./registration-form.component.css']
 })
 
-export class RegistrationComponent implements OnInit {
+export class RegistrationFormComponent implements OnInit {
 
   regModel: Registration = new Registration('nathan@example.net', 'BATS!', 'password');
   isSignupFailed = false;
