@@ -27,6 +27,10 @@ export class StorageService {
     return null;
   }
 
+  public clearJwt(): void {
+    window.localStorage.removeItem(JWT_TOKEN);
+  }
+
   public isLoggedIn(): boolean {
     const token = window.localStorage.getItem(JWT_TOKEN);
 

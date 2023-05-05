@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Login } from 'src/models/login';
 import { Registration } from 'src/models/registration';
+import { StorageService } from './storage.service';
 
 const AUTH_API = 'http://localhost:8080/api/auth/'
 
@@ -18,7 +19,7 @@ const httpOptions = {
 
 export class AuthenticationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storageService: StorageService) { }
 
   login(credentials: Login): Observable<any> {
     return this.http.post(
@@ -28,9 +29,9 @@ export class AuthenticationService {
     );
   }
 
-  register<T>(data: Registration): Observable<T> {
+  register(data: Registration): Observable<any> {
     console.log(JSON.stringify(data))
-    return this.http.post<T>(
+    return this.http.post(
       AUTH_API + 'register',
       JSON.stringify(data),
       httpOptions,
@@ -41,8 +42,8 @@ export class AuthenticationService {
     return this.http.get(AUTH_API + 'authenticated', httpOptions)
   }
 
-  logout(): Observable<any> {
-    return this.http.post(AUTH_API + 'logout', {}, httpOptions);
+  logout(): void {
+    this.storageService.clearJwt();
   }
 
 }

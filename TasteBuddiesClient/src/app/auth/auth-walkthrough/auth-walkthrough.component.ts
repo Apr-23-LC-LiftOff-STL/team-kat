@@ -43,8 +43,8 @@ export class AuthWalkthroughComponent implements OnInit {
   }
   
   clearLogin(): void {
-    console.log('Cleared login')
-    this.storageService.clean();
+    console.log('Logged out')
+    this.authenticationService.logout();
   }
 
 }
