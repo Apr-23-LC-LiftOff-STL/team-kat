@@ -13,6 +13,8 @@ import { AuthWalkthroughComponent } from './auth/auth-walkthrough/auth-walkthrou
 import { HomeComponent } from './home/home.component';
 import { NavBarComponent } from './common/nav-bar/nav-bar.component';
 import { FooterComponent } from './common/footer/footer.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegistrationComponent } from './auth/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { FooterComponent } from './common/footer/footer.component';
     AuthWalkthroughComponent,
     HomeComponent,
     NavBarComponent,
-    FooterComponent
+    FooterComponent,
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
