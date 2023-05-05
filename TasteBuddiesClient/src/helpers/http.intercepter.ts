@@ -3,6 +3,8 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { StorageService } from "src/services/storage.service";
 
+// This intercepter appends a couple headers to outgoing http requests
+// that are needed for authentication. 
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
@@ -13,10 +15,14 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         
         const idToken = this.storageService.getJwt();
 
+        // apparently requests can't be modified so you clone and add stuff at the same time
         const clone1 = req.clone({
+
+            // a header telling angular to send session cookie for CORS purposes
             withCredentials: true
         });
-        
+
+        // add the auth token if it exists.
         if (idToken) {
             const clone2 = clone1.clone({
                 headers: clone1.headers.set("Authorization", "Bearer " + idToken),
@@ -27,8 +33,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
         return next.handle(clone1);
     }
-
-    
 
 }
 
