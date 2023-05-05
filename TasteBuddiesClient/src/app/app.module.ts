@@ -11,6 +11,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { httpInterceptorProviders } from 'src/helpers/http.intercepter';
 import { AuthWalkthroughComponent } from './auth/auth-walkthrough/auth-walkthrough.component';
 import { HomeComponent } from './home/home.component';
+import { NavBarComponent } from './common/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HomeComponent } from './home/home.component';
     RegistrationComponent,
     LoginComponent,
     AuthWalkthroughComponent,
-    HomeComponent
+    HomeComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
