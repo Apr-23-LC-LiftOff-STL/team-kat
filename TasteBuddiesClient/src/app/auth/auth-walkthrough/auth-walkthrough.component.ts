@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/services/authentication.service';
+import { StorageService } from 'src/services/storage.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -12,7 +13,10 @@ export class AuthWalkthroughComponent implements OnInit {
   response: string = 'Connecting...';
   users: any;
 
-  constructor(private authenticationService: AuthenticationService, private userService: UserService) {
+  constructor(
+    private authenticationService: AuthenticationService, 
+    private userService: UserService,
+    private storageService: StorageService) {
     authenticationService.corsCheck().subscribe({
       next: res => {
         this.response = 'SUCCESS: Connected to API without errors.';
@@ -36,6 +40,11 @@ export class AuthWalkthroughComponent implements OnInit {
         console.error(e);
       },
     });
+  }
+  
+  clearLogin(): void {
+    console.log('Cleared login')
+    this.storageService.clean();
   }
 
 }

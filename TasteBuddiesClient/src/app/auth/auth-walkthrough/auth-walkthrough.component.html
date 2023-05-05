@@ -15,6 +15,14 @@
 <app-login></app-login>
 
 <h3>3) Test your connection</h3>
-<input (click)="onClick()" type="button" value="Test">
+<input (click)="onClick()" type="button" value="Test">   
+<input (click)="clearLogin()" type="button" value="Clear login">
 <br>
-{{users}} 
+<div *ngIf="users">
+    <h4>Users in DB:</h4>
+    <div class="users" *ngFor="let user of users">
+        <b>User:</b> {{user.email}} <br>
+        ID: {{user.id}} <br>
+        DisplayName: {{user.displayName}} <br>
+    </div>
+</div>
