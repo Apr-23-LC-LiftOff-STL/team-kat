@@ -3,7 +3,7 @@ import { Registration } from 'src/models/registration';
 import { AuthenticationService } from 'src/services/authentication.service';
 
 @Component({
-  selector: 'app-registration',
+  selector: 'app-registration-form',
   templateUrl: './registration-form.component.html',
   styleUrls: ['./registration-form.component.css']
 })
