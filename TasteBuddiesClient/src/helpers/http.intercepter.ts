@@ -13,18 +13,19 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         
         const idToken = this.storageService.getJwt();
 
-        if (idToken) {
-            req = req.clone({
-                headers: req.headers.set("Authorization", "Bearer " + idToken),
-                withCredentials: true,
-            });
-        } 
-        
-        req = req.clone({
-            withCredentials: true,
+        const clone1 = req.clone({
+            withCredentials: true
         });
+        
+        if (idToken) {
+            const clone2 = clone1.clone({
+                headers: clone1.headers.set("Authorization", "Bearer " + idToken),
+            });
 
-        return next.handle(req);
+            return next.handle(clone2)
+        } 
+
+        return next.handle(clone1);
     }
 
     

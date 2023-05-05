@@ -18,13 +18,13 @@ export class StorageService {
     window.localStorage.setItem(JWT_TOKEN, jwt.idToken);
   }
 
-  public getJwt(): any {
+  public getJwt(): any | null {
     const token = window.localStorage.getItem(JWT_TOKEN);
     if (token) {
       return token;
     }
 
-    return {};
+    return null;
   }
 
   public isLoggedIn(): boolean {
