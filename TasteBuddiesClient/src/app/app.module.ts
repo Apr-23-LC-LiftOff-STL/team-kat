@@ -12,6 +12,7 @@ import { httpInterceptorProviders } from 'src/helpers/http.intercepter';
 import { AuthWalkthroughComponent } from './auth/auth-walkthrough/auth-walkthrough.component';
 import { HomeComponent } from './home/home.component';
 import { NavBarComponent } from './common/nav-bar/nav-bar.component';
+import { FooterComponent } from './common/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NavBarComponent } from './common/nav-bar/nav-bar.component';
     LoginComponent,
     AuthWalkthroughComponent,
     HomeComponent,
-    NavBarComponent
+    NavBarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
