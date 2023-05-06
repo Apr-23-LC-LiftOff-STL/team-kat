@@ -10,9 +10,10 @@ import { StorageService } from 'src/services/storage.service';
 export class NavBarComponent implements OnInit {
 
   buttons = [
-    {buttonName : "Home", path : "/", class: 'navbar-brand'},
-    {buttonName : "Event", path : "/events"},
+    {buttonName : "Event", path : "/events",},
+    {buttonName : "Account", path : "account",},
   ];
+
   loginLogout = {
     buttonName: "Login", 
     path: "/login",

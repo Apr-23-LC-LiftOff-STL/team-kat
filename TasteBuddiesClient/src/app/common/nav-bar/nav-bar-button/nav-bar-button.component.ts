@@ -9,9 +9,13 @@ export class NavBarButtonComponent implements OnInit {
 
   @Input() buttonText:String='Button';
   @Input() path:String='/';
-  @Input() class:String='nav-link';
+  @Input() newClasses:String = '';
+  baseClass = 'nav-link'; 
 
-  constructor() { }
+  constructor() { 
+
+    this.baseClass += this.newClasses;
+  }
 
   ngOnInit(): void {
   }
