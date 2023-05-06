@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Login } from 'src/models/login';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { StorageService } from 'src/services/storage.service';
@@ -20,6 +21,7 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService, 
     private storageService: StorageService,
+    private router: Router,
     ) { }
 
   ngOnInit(): void {
@@ -37,7 +39,7 @@ export class LoginFormComponent implements OnInit {
         this.isLoggedIn = false;
         this.isLoggedIn = true;
         this.roles = this.storageService.getJwt().roles;
-        this.reloadPage();
+        this.router.navigate(['/event']);
       },
       error: (e) => { 
         console.error(e.message)
