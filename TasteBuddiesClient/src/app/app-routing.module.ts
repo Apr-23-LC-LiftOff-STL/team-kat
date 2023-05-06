@@ -8,12 +8,12 @@ import { UserEventsComponent } from './user-events/user-events.component';
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: RegistrationComponent },
-  { path: 'account', component: AccountComponent },
-  { path: 'event', component: UserEventsComponent },
-  { path: '**', component: PageNotFoundComponent },
+  { path: '', title: 'Taste Buddies', component: HomeComponent },
+  { path: 'login', title: 'Login', component: LoginComponent },
+  { path: 'signup', title: 'Register', component: RegistrationComponent },
+  { path: 'account', title: 'Account', component: AccountComponent },
+  { path: 'event', title: 'Events', component: UserEventsComponent },
+  { path: '**', title: 'Page not found', component: PageNotFoundComponent },
 ];
 
 @NgModule({
