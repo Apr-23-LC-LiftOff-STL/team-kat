@@ -20,6 +20,7 @@ import { NavBarButtonComponent } from './common/nav-bar/nav-bar-button/nav-bar-b
 import { EventComponent } from './event/event.component';
 import { AccountComponent } from './account/account.component';
 import { UserEventsComponent } from './user-events/user-events.component';
+import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { UserEventsComponent } from './user-events/user-events.component';
     NavBarButtonComponent,
     EventComponent,
     AccountComponent,
-    UserEventsComponent
+    UserEventsComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

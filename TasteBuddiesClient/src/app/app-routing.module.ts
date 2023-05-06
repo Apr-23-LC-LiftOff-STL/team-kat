@@ -5,6 +5,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component'; 
 import { AccountComponent } from './account/account.component';
 import { UserEventsComponent } from './user-events/user-events.component';
+import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'signup', component: RegistrationComponent },
   { path: 'account', component: AccountComponent },
   { path: 'event', component: UserEventsComponent },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
