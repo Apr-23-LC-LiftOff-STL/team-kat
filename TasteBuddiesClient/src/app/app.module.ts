@@ -17,6 +17,9 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { HeaderComponent } from './common/header/header.component';
 import { NavBarButtonComponent } from './common/nav-bar/nav-bar-button/nav-bar-button.component';
+import { EventComponent } from './event/event.component';
+import { AccountComponent } from './account/account.component';
+import { UserEventsComponent } from './user-events/user-events.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { NavBarButtonComponent } from './common/nav-bar/nav-bar-button/nav-bar-b
     LoginComponent,
     RegistrationComponent,
     HeaderComponent,
-    NavBarButtonComponent
+    NavBarButtonComponent,
+    EventComponent,
+    AccountComponent,
+    UserEventsComponent
   ],
   imports: [
     BrowserModule,
