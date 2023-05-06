@@ -10,7 +10,7 @@ import { StorageService } from 'src/services/storage.service';
 })
 export class LoginFormComponent implements OnInit {
 
-  regModel: Login = new Login('nathan@example.net', 'password')
+  regModel: Login = new Login('', '') // 'nathan@example.net', 'password'
   submitted: boolean = false;
   isLoggedIn = false;
   isLoginFailed = false;
