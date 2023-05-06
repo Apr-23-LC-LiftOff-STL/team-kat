@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { StorageService } from 'src/services/storage.service';
 
@@ -23,7 +24,8 @@ export class NavBarComponent implements OnInit {
 
   constructor(
     private storageService: StorageService, 
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService,
+    private router: Router) {
 
     // TODO: add the isLoggedIn method to the authentication service?
     this.loggedIn = storageService.isLoggedIn();
@@ -40,5 +42,6 @@ export class NavBarComponent implements OnInit {
   logout(): void {
     this.authenticationService.logout();
     this.loggedIn = false;
+    this.router.navigate(['/']);
   }
 }
