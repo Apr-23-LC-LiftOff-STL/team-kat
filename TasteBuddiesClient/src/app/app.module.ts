@@ -16,6 +16,7 @@ import { FooterComponent } from './common/footer/footer.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { HeaderComponent } from './common/header/header.component';
+import { NavBarButtonComponent } from './common/nav-bar/nav-bar-button/nav-bar-button.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HeaderComponent } from './common/header/header.component';
     FooterComponent,
     LoginComponent,
     RegistrationComponent,
-    HeaderComponent
+    HeaderComponent,
+    NavBarButtonComponent
   ],
   imports: [
     BrowserModule,
