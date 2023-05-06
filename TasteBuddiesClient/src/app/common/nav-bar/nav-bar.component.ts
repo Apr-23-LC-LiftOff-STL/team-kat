@@ -10,14 +10,13 @@ import { StorageService } from 'src/services/storage.service';
 export class NavBarComponent implements OnInit {
 
   buttons = [
-    {buttonName : "Event", path : "/events",},
+    {buttonName : "Event", path : "event",},
     {buttonName : "Account", path : "account",},
   ];
 
   loginLogout = {
     buttonName: "Login", 
-    path: "/login",
-    navClass: "nav-link"
+    path: "/login"
   };
 
   loggedIn: boolean = false;
@@ -30,7 +29,7 @@ export class NavBarComponent implements OnInit {
     this.loggedIn = storageService.isLoggedIn();
 
     if (this.loggedIn) {
-      this.loginLogout = {buttonName : "Sign Out", path : "/", navClass: "nav-link active"}
+      this.loginLogout = {buttonName : "Sign Out", path : "/"}
     }
 
   }
