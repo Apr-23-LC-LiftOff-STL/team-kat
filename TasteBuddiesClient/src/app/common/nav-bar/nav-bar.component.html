@@ -1,1 +1,17 @@
-<p>nav-bar works!</p>
+<ul class="nav nav-pills nav-fill">
+    <li *ngFor="let button of buttons"class="nav-item">
+        <app-nav-bar-button  
+        [buttonText]="button.buttonName" 
+        [path]="button.path">
+        </app-nav-bar-button>
+    </li>
+
+    <li class="nav-item">
+        <app-nav-bar-button 
+        [class]="loginLogout.navClass"
+        [buttonText]="loginLogout.buttonName"
+        [path]="loginLogout.path"
+        (click)="logout()"
+        ></app-nav-bar-button>
+    </li>
+</ul>
