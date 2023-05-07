@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/models/user';
 import { UserService } from 'src/services/user.service';
+import { Event } from 'src/models/event';
 
 @Component({
   selector: 'app-user-events',
@@ -10,7 +11,8 @@ import { UserService } from 'src/services/user.service';
 export class UserEventsComponent implements OnInit {
 
   user: User;
-
+  upcommingEvents: Array<Event> = [new Event(), new Event(), new Event()];
+  pastEvents: Array<Event> = [new Event(), new Event(), new Event()];
 
   constructor(private userService: UserService) {
     this.user = new User(0, '', '');
