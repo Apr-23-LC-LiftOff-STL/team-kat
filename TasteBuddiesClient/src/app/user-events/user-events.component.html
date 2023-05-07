@@ -1,18 +1,22 @@
 <p>user-events works!</p>
 
 <div class="container">
-    <h3>Upcoming events</h3>
-    <ul>
-        <li *ngFor="let event of upcommingEvents">{{event.entryCode}}</li>
-    </ul>
-</div>
-<div class="container">
-    <h3>
-        Past events
-    </h3>
-    <ul>
-        <li *ngFor="let event of pastEvents">{{event.entryCode}}</li>
-    </ul>
+    <div class="row">
+        <div class="col">
+            <h3>Upcoming events</h3>
+            <ul>
+                <li *ngFor="let event of upcommingEvents">{{event.entryCode}}</li>
+            </ul>
+        </div>
+        <div class="col">
+            <h3>
+                Past events
+            </h3>
+            <ul>
+                <li *ngFor="let event of pastEvents">{{event.entryCode}}</li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <ul>
