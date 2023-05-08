@@ -2,14 +2,14 @@
 
 <div class="container">
     <div class="row">
-        <div class="col">
-            <h3>Upcoming events</h3>
+        <div class="col card p-2 m-3" style="background-color: burlywood;">
+            <h3 class="mx-auto">Upcoming events</h3>
             <ul>
                 <li *ngFor="let event of upcommingEvents">{{event.entryCode}}</li>
             </ul>
         </div>
-        <div class="col">
-            <h3>
+        <div class="col card p-2 m-3" style="background-color: cadetblue;">
+            <h3 class="mx-auto">
                 Past events
             </h3>
             <ul>
