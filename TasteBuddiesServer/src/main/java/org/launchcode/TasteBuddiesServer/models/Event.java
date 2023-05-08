@@ -35,7 +35,13 @@ public class Event {
     )
     private List<User> users = new ArrayList<>();
 
-
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "event_restaurants",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "restaurant_id")
+    )
+    private List<Restaurant> availableRestaurants = new ArrayList<>();
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -50,6 +56,14 @@ public class Event {
         this.searchRadius = searchRadius;
         this.user = user;
         this.createdDate = new Date();
+    }
+
+    public List<Restaurant> getAvailableRestaurants() {
+        return availableRestaurants;
+    }
+
+    public void setAvailableRestaurants(List<Restaurant> availableRestaurants) {
+        this.availableRestaurants = availableRestaurants;
     }
 
     public int getId() {

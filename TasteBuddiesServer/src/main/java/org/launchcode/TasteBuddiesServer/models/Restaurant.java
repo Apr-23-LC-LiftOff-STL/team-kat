@@ -1,7 +1,9 @@
 package org.launchcode.TasteBuddiesServer.models;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Restaurant {
 
@@ -19,7 +21,8 @@ public class Restaurant {
 
     @NotNull
     private float rating;
-
+    @ManyToMany(mappedBy = "availableRestaurants", fetch = FetchType.LAZY)
+    private List<Event> events = new ArrayList<>();
     public Restaurant(){
 
     }
@@ -30,6 +33,14 @@ public class Restaurant {
         this.address = address;
         this.priceLevel = priceLevel;
         this.rating = rating;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     public String getId() {

@@ -32,9 +32,9 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    //cascade and orphanRemoval attributes ensure that events are removed when the parent user is removed.
-    @ManyToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Event> events = new ArrayList<>();;
+
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Event> events = new ArrayList<>();
 
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
