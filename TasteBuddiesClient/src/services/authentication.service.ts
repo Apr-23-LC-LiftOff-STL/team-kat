@@ -46,4 +46,8 @@ export class AuthenticationService {
     this.storageService.clearJwt();
   }
 
+  isAuthenticated(): boolean {
+    return this.storageService.isLoggedIn();
+  }
+
 }
