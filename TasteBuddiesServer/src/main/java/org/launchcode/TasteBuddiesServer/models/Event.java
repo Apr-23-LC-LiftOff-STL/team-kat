@@ -26,7 +26,7 @@ public class Event {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
+//defining a many-to-one relationship between two entities and specifying that the related entity should be fetched lazily to optimize performance.
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_events",
@@ -84,9 +84,9 @@ public class Event {
         this.searchRadius = searchRadius;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
+    public User getUser() {
+        return user;
+    }
 
     public void setUser(User user) {
         this.user = user;

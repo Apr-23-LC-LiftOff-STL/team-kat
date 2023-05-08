@@ -70,13 +70,7 @@ public class User extends AbstractEntity implements UserDetails {
         this.displayName = displayName;
     }
 
-//    public List<Event> getEvents() {
-//        return events;
-//    }
-//
-//    public void setEvents(List<Event> events) {
-//        this.events = events;
-//    }
+
 
     public List<Event> getEvents() {
         return events;

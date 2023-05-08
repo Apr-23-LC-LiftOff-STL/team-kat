@@ -25,15 +25,22 @@ public class EventService {
         String entryCode = generateUniqueEntryCode();
         event.setEntryCode(entryCode);
 
-        Optional<User> user = userRepository.findByEmail(userEmail);
-        event.getUser().add(user);
+        Optional<User> optionalUser = userRepository.findByEmail(userEmail);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            event.getUsers().add(user);
 
-        Event savedEvent = eventRepository.save(event);
-        user.getEvents().add(savedEvent);
-        userRepository.save(user);
+            Event savedEvent = eventRepository.save(event);
+            user.getEvents().add(savedEvent);
+            userRepository.save(user);
 
-        return savedEvent;
+            return savedEvent;
+        } else {
+            // handel the case when user is not found, throw exception or return default value
+        }
+
     }
+
     private String generateUniqueEntryCode() {
         //Implement unique entry
     }
