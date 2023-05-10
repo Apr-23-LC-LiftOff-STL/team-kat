@@ -21,6 +21,7 @@ import { EventComponent } from './event/event.component';
 import { AccountComponent } from './account/account.component';
 import { UserEventsComponent } from './user-events/user-events.component';
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
+import { EventFormComponent } from './event/event-form/event-form.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.co
     EventComponent,
     AccountComponent,
     UserEventsComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    EventFormComponent
   ],
   imports: [
     BrowserModule,
