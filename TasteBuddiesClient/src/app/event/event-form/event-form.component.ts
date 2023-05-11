@@ -15,7 +15,12 @@ export class EventFormComponent implements OnInit {
   constructor(
     private router: Router,
     private eventService: EventService,
-    ) { }
+    ) { 
+      // I'll leave this in for the moment, but it won't work because this is 
+      // a template driven form. We'd need a reactive form to set values
+      // here in the ts.
+      this.newEvent.date = new Date(Date.now() + 60000);
+    }
 
   ngOnInit(): void {
 

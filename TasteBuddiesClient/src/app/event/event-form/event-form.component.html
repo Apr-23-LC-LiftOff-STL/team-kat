@@ -2,22 +2,30 @@
     <div class="container">
         <div class="row">
             <div class="col card p-2 m-3">
-                <label for="">Location</label>
+                <label class="mx-auto" for="location">Location</label>
                 <input type="text" id="location" name="location" [(ngModel)]="newEvent.location">
             </div>
             <div class="col card p-2 m-3">
-                <label for="users">Users</label>
+                <label class="mx-auto" for="users">Users</label>
                 <input type="users" id="users" name="users" [(ngModel)]="newEvent.users">
             </div>
             <div class="col card p-2 m-3">
-                <label for="date">Date</label>
-                <input type="date" id="date" name="date" [(ngModel)]="newEvent.date">
-            </div>
-
-            <div class="row">
-                <div class="col"><input type="submit" value="Submit"></div>
+                <label class="mx-auto" for="date">Date</label>
+                <input type="datetime-local" id="date" name="date" [(ngModel)]="newEvent.date">
             </div>
             
+            <div class="row">
+                <div class="col">
+                    <input class="btn btn-success" type="submit" value="Create Event">
+                </div>
+                <div class="col card p-2 m-3">
+                    <p class="mx-auto">Inputs</p>
+                    <p>{{ newEvent.location }}</p>
+                    <p>{{ newEvent.users }}</p>
+                    <p>{{ newEvent.date }}</p>
+                </div>
+                
+            </div>
         </div>
     </div>
 </form>
