@@ -4,10 +4,10 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component'; 
 import { AccountComponent } from './account/account.component';
-import { UserEventsComponent } from './user-events/user-events.component';
+import { UserEventsComponent } from './events/user-events/user-events.component';
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { AuthGuardService as AuthGuard } from 'src/services/auth-guard.service';
-import { EventFormComponent } from './event/event-form/event-form.component';
+import { EventFormComponent } from './events/event-form/event-form.component';
 
 const routes: Routes = [
   { path: '', title: 'Taste Buddies', component: HomeComponent },
