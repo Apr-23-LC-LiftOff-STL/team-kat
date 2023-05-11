@@ -3,8 +3,10 @@ package org.launchcode.TasteBuddiesServer.controller.api;
 import org.launchcode.TasteBuddiesServer.config.JwtUtil;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
 import org.launchcode.TasteBuddiesServer.models.User;
+import org.launchcode.TasteBuddiesServer.models.dto.SearchDTO;
 import org.launchcode.TasteBuddiesServer.models.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +59,12 @@ public class APIUserController {
         UserDTO user = new UserDTO(possibleUser.get());
 
         return ResponseEntity.status(200).body(user);
+    }
+
+    @GetMapping("search")
+    public ResponseEntity<?> getUsersFromSearch(@RequestBody SearchDTO term) {
+        List<User> users = this.userRepository.findDisplayNameFromFilter(term.getTerm());
+        return ResponseEntity.status(200).body(users);
     }
 
 }
