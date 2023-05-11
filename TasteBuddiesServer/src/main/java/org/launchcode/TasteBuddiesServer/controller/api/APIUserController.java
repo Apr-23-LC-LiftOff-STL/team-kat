@@ -61,7 +61,7 @@ public class APIUserController {
         return ResponseEntity.status(200).body(user);
     }
 
-    @GetMapping("search")
+    @PostMapping("search")
     public ResponseEntity<?> getUsersFromSearch(@RequestBody SearchDTO term) {
         List<User> users = this.userRepository.findDisplayNameFromFilter(term.getTerm());
         return ResponseEntity.status(200).body(users);

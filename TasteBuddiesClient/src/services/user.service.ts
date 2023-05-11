@@ -25,4 +25,14 @@ export class UserService {
     return this.http.get(API_URL + 's');
   }
 
+  searchUsers(term: string): Observable<any> {
+    
+    return this.http.post(
+      API_URL + '/search',
+      JSON.stringify({
+        term: term
+      }),
+      httpOptions);
+  }
+
 }
