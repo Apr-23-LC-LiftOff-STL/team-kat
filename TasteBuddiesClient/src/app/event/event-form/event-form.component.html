@@ -1,1 +1,23 @@
-<p>event-form works!</p>
+<form #newEventForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+        <div class="row">
+            <div class="col card p-2 m-3">
+                <label for="">Location</label>
+                <input type="text" id="location" name="location" [(ngModel)]="newEvent.location">
+            </div>
+            <div class="col card p-2 m-3">
+                <label for="users">Users</label>
+                <input type="users" id="users" name="users" [(ngModel)]="newEvent.users">
+            </div>
+            <div class="col card p-2 m-3">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" [(ngModel)]="newEvent.date">
+            </div>
+
+            <div class="row">
+                <div class="col"><input type="submit" value="Submit"></div>
+            </div>
+            
+        </div>
+    </div>
+</form>
