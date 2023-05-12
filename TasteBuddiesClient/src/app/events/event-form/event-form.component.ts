@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Event } from 'src/models/event';
+import { User } from 'src/models/user';
 import { EventService } from 'src/services/event.service';
 
 @Component({
@@ -11,6 +12,7 @@ import { EventService } from 'src/services/event.service';
 export class EventFormComponent implements OnInit {
   newEvent: Event = new Event;
   submitted: boolean = false;
+  results: Array<User> = [];
 
   constructor(
     private router: Router,
@@ -35,6 +37,22 @@ export class EventFormComponent implements OnInit {
         console.error(e.message)
       }
     });
+  }
+
+  onSelectUser(user: User): void {
+    if (!this.newEvent.users.includes(user))  {
+      this.newEvent.users.push(user);
+      console.log(this.newEvent.users);
+    }
+  }
+
+  searchUsers(displayName: string) {
+    if (displayName.length === 0) {
+      return;
+    }
+
+    this.results = [new User(1, 'me@new.com', 'Amy'), new User(2, 'Hi@he.com', 'Gary')];
+    
   }
 
   reloadPage(): void {
