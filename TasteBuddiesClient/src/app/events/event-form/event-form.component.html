@@ -9,8 +9,10 @@
                 <label class="mx-auto" for="users">Users</label>
 
                 <!-- TODO: Working on this!!! -->
-                <input type="text" id="users" name="users" (change)="onSelectUser(value)">
-
+                <input type="text" id="users" name="users" [ngModel]="searchText" (ngModelChange)="onSearchBoxEntry($event.target.value)">
+                <div>
+                    <p>{{searchText}}</p>
+                </div>
                 <div class="row" *ngFor="let result of results" (click)="onSelectUser(result)">
                     {{result.displayName}}
                 </div>
