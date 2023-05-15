@@ -13,7 +13,7 @@ export class EventFormComponent implements OnInit {
   newEvent: Event = new Event;
   submitted: boolean = false;
   results: Array<User> = [];
-  searchText: string = '';
+  searchBox: any;
 
   constructor(
     private router: Router,
@@ -23,6 +23,9 @@ export class EventFormComponent implements OnInit {
       // a template driven form. We'd need a reactive form to set values
       // here in the ts.
       this.newEvent.date = new Date(Date.now() + 60000);
+      this.searchBox = {
+        searchText: '',
+      };
     }
 
   ngOnInit(): void {
@@ -47,13 +50,12 @@ export class EventFormComponent implements OnInit {
     }
   }
 
-  onSearchBoxEntry(searchText: string | null) {
-    if (this.searchText.length === null) {
-      console.log("NO DATA")
+  onSearchBoxEntry(searchText: string) {
+    if (searchText === '') {
       return;
     }
 
-    console.log(this.searchText);
+    console.log(searchText);
 
     this.results = [new User(1, 'me@new.com', 'Amy'), new User(2, 'Hi@he.com', 'Gary')];
     

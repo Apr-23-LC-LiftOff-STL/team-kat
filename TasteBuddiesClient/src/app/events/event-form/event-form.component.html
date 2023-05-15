@@ -7,11 +7,9 @@
             </div>
             <div class="col card p-2 m-3">
                 <label class="mx-auto" for="users">Users</label>
-
-                <!-- TODO: Working on this!!! -->
-                <input type="text" id="users" name="users" [ngModel]="searchText" (ngModelChange)="onSearchBoxEntry($event.target.value)">
+                <input type="text" id="users" name="users" [(ngModel)]="searchBox.searchText" (ngModelChange)="onSearchBoxEntry($event)">
                 <div>
-                    <p>{{searchText}}</p>
+                    <p>{{searchBox.searchText}}</p>
                 </div>
                 <div class="row" *ngFor="let result of results" (click)="onSelectUser(result)">
                     {{result.displayName}}
