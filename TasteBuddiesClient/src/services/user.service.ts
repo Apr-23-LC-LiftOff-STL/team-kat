@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const API_URL = 'http://localhost:8080/api/user'
+const API_URL = 'http://localhost:8080/api/user/'
 
 const httpOptions = { 
   headers: new HttpHeaders({
@@ -28,7 +28,7 @@ export class UserService {
   searchUsers(term: string): Observable<any> {
     
     return this.http.post(
-      API_URL + '/search',
+      API_URL + 'search',
       JSON.stringify({
         term: term
       }),

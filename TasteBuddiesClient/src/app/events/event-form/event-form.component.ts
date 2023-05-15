@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Event } from 'src/models/event';
 import { User } from 'src/models/user';
 import { EventService } from 'src/services/event.service';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-event-form',
@@ -18,6 +19,7 @@ export class EventFormComponent implements OnInit {
   constructor(
     private router: Router,
     private eventService: EventService,
+    private userService: UserService,
     ) { 
       // I'll leave this in for the moment, but it won't work because this is 
       // a template driven form. We'd need a reactive form to set values
@@ -57,8 +59,19 @@ export class EventFormComponent implements OnInit {
 
     console.log(searchText);
 
-    this.results = [new User(1, 'me@new.com', 'Amy'), new User(2, 'Hi@he.com', 'Gary')];
-    
+    this.userService.searchUsers(searchText).subscribe({
+      next: res => {
+        this.results = res;
+      },
+      error: res => {
+        console.error(res);
+      }
+    });
+
+    // this.results = [
+    //   new User(1, 'me@new.com', 'Amy'), 
+    //   new User(2, 'Hi@he.com', 'Gary')
+    // ];
   }
 
   reloadPage(): void {
