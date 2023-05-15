@@ -13,6 +13,7 @@ export class EventFormComponent implements OnInit {
   newEvent: Event = new Event;
   submitted: boolean = false;
   results: Array<User> = [];
+  searchText: string = '';
 
   constructor(
     private router: Router,
@@ -46,10 +47,13 @@ export class EventFormComponent implements OnInit {
     }
   }
 
-  searchUsers(displayName: string) {
-    if (displayName.length === 0) {
+  onSearchBoxEntry(searchText: string | null) {
+    if (this.searchText.length === null) {
+      console.log("NO DATA")
       return;
     }
+
+    console.log(this.searchText);
 
     this.results = [new User(1, 'me@new.com', 'Amy'), new User(2, 'Hi@he.com', 'Gary')];
     
