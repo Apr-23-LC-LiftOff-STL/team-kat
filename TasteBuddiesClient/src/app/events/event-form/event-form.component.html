@@ -1,19 +1,17 @@
 <form #newEventForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="container">
         <div class="row">
+            <div class="col">
+                <h2 class="mx-auto">
+                    Start a new event
+                </h2>
+            </div>
+        </div>
+        <div class="row">
             <div class="col card p-2 m-3">
                 <label class="mx-auto" for="location">Location</label>
                 <input type="text" id="location" name="location" [(ngModel)]="newEvent.location">
-            </div>
-            <div class="col card p-2 m-3">
-                <label class="mx-auto" for="users">Users</label>
-                <input type="text" id="users" name="users" [(ngModel)]="searchBox.searchText" (ngModelChange)="onSearchBoxEntry($event)">
-                <div>
-                    <p>{{searchBox.searchText}}</p>
-                </div>
-                <div class="row" *ngFor="let result of results" (click)="onSelectUser(result)">
-                    {{result.displayName}}
-                </div>
+                <input type="number" id="searchRadius" name="searchRadius" [(ngModel)]="newEvent.searchRadius">
             </div>
             <div class="col card p-2 m-3">
                 <label class="mx-auto" for="date">Date</label>
@@ -27,7 +25,7 @@
                 <div class="col card p-2 m-3">
                     <p class="mx-auto">Inputs</p>
                     <p>{{ newEvent.location }}</p>
-                    <p>{{ newEvent.users }}</p>
+                    <p>{{ newEvent.searchRadius }}</p>
                     <p>{{ newEvent.date }}</p>
                 </div>
                 

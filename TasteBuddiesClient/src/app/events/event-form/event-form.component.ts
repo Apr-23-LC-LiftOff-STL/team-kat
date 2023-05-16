@@ -12,22 +12,15 @@ import { UserService } from 'src/services/user.service';
 })
 export class EventFormComponent implements OnInit {
   newEvent: Event = new Event;
-  submitted: boolean = false;
-  results: Array<User> = [];
-  searchBox: any;
 
   constructor(
     private router: Router,
     private eventService: EventService,
-    private userService: UserService,
     ) { 
       // I'll leave this in for the moment, but it won't work because this is 
       // a template driven form. We'd need a reactive form to set values
       // here in the ts.
       this.newEvent.date = new Date(Date.now() + 60000);
-      this.searchBox = {
-        searchText: '',
-      };
     }
 
   ngOnInit(): void {
@@ -43,35 +36,6 @@ export class EventFormComponent implements OnInit {
         console.error(e.message)
       }
     });
-  }
-
-  onSelectUser(user: User): void {
-    if (!this.newEvent.users.includes(user))  {
-      this.newEvent.users.push(user);
-      console.log(this.newEvent.users);
-    }
-  }
-
-  onSearchBoxEntry(searchText: string) {
-    if (searchText === '') {
-      return;
-    }
-
-    console.log(searchText);
-
-    this.userService.searchUsers(searchText).subscribe({
-      next: res => {
-        this.results = res;
-      },
-      error: res => {
-        console.error(res);
-      }
-    });
-
-    // this.results = [
-    //   new User(1, 'me@new.com', 'Amy'), 
-    //   new User(2, 'Hi@he.com', 'Gary')
-    // ];
   }
 
   reloadPage(): void {
