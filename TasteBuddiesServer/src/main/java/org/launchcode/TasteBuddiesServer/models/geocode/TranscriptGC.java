@@ -8,6 +8,7 @@ public class TranscriptGC {
     public TranscriptGC(List<TranscriptGC> results) {
         this.results = results;
     }
+    public TranscriptGC(){}
 
     public List<TranscriptGC> getResults() {
         return results;

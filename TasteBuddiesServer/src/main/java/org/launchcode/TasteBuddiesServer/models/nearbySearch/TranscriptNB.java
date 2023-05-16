@@ -10,6 +10,8 @@ public class TranscriptNB {
         this.results = results;
     }
 
+    public TranscriptNB(){}
+
     public List<ResultsNB> getResults() {
         return results;
     }

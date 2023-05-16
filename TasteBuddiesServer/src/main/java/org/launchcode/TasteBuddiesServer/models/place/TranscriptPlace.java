@@ -6,6 +6,7 @@ public class TranscriptPlace {
     public TranscriptPlace(ResultsPlace results) {
         this.results = results;
     }
+    public TranscriptPlace(){}
 
     public ResultsPlace getResults() {
         return results;
