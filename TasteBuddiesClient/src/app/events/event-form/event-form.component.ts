@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NewEventDTO } from 'src/models/DTO/new-event-dto';
 import { Event } from 'src/models/event';
 import { User } from 'src/models/user';
 import { EventService } from 'src/services/event.service';
@@ -11,7 +12,7 @@ import { UserService } from 'src/services/user.service';
   styleUrls: ['./event-form.component.css']
 })
 export class EventFormComponent implements OnInit {
-  newEvent: Event = new Event;
+  newEvent: NewEventDTO = new NewEventDTO;
 
   constructor(
     private router: Router,
