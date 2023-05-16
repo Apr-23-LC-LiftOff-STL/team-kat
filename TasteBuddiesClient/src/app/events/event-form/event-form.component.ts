@@ -30,6 +30,7 @@ export class EventFormComponent implements OnInit {
   onSubmit(): void {
     this.eventService.createEvent(this.newEvent).subscribe({
       next: res => {
+
         this.router.navigate(['/event']);
       },
       error: (e) => { 
