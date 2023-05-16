@@ -7,7 +7,7 @@ public class SearchDTO {
         this.term = term;
     }
 
-    public SearchDTO() {};
+    public SearchDTO() {}
 
     public String getTerm() {
         return term;
