@@ -24,4 +24,19 @@ export class EventService {
       JSON.stringify(event),
       httpOptions)
   }
+
+  public getEvents():Observable<any> {
+    return this.http.get(
+      EVENT_API + 'all',
+    )
+  }
+
+  public getEvent(eventId: number):Observable<any> {
+    return this.http.post(
+      EVENT_API,
+      JSON.stringify(eventId),
+      httpOptions
+    )
+  }
+
 }
