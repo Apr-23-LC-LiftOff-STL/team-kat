@@ -1,8 +1,10 @@
 package org.launchcode.TasteBuddiesServer.models;
 
+import javax.persistence.Id;
 import java.util.Objects;
 
 public class Restaurant {
+    @Id
     private String id;
     private String name;
     private String address;

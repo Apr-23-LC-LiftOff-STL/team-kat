@@ -1,18 +1,18 @@
 package org.launchcode.TasteBuddiesServer.models.place;
 
 public class TranscriptPlace {
-    private ResultsPlace results;
+    private ResultsPlace result;
 
-    public TranscriptPlace(ResultsPlace results) {
-        this.results = results;
+    public TranscriptPlace(ResultsPlace result) {
+        this.result = result;
     }
     public TranscriptPlace(){}
 
-    public ResultsPlace getResults() {
-        return results;
+    public ResultsPlace getResult() {
+        return result;
     }
 
-    public void setResults(ResultsPlace results) {
-        this.results = results;
+    public void setResult(ResultsPlace results) {
+        this.result = result;
     }
 }

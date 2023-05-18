@@ -8,7 +8,10 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+
+import org.launchcode.TasteBuddiesServer.data.RestaurantRepository;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
+import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
 import org.launchcode.TasteBuddiesServer.models.geocode.TranscriptGC;
 import org.launchcode.TasteBuddiesServer.models.nearbySearch.TranscriptNB;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.http.HttpClient;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/event")
@@ -28,6 +33,8 @@ import java.net.http.HttpClient;
 public class EventController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RestaurantRepository restaurantRepository;
     @Value("${apiKey}")
     private String APIKey;
 
@@ -55,8 +62,35 @@ public class EventController {
         String lat = transcriptGC.getResults().get(0).getGeometry().getLocation().getLat();
         String lng = transcriptGC.getResults().get(0).getGeometry().getLocation().getLng();
 
-        System.out.println(lat);
+        HttpRequest getRequestNB = HttpRequest.newBuilder()
+                .uri(new URI(URLNB+lat+"%2C"+lng+"&radius="+data.getSearchRadius()+"&key="+APIKey))
+                .build();
+        HttpResponse<String> getResponseNB = httpClient.send(getRequestNB, HttpResponse.BodyHandlers.ofString());
+        transcriptNB = gson.fromJson(getResponseNB.body(), TranscriptNB.class);
 
+        List<String> place_ids = new ArrayList<>();
+
+        for(int i=0; i < transcriptNB.getResults().size(); i++){
+            String place_id = transcriptNB.getResults().get(i).getPlace_id();
+            place_ids.add(place_id);
+        }
+
+        List<Restaurant> restaurants = new ArrayList<>();
+
+        for(int place_num = 0; place_num < place_ids.size(); place_num++){
+            HttpRequest getRequestPlace = HttpRequest.newBuilder()
+                    .uri(new URI(URLPlace+place_ids.get(place_num)+"&key="+APIKey))
+                    .build();
+            HttpResponse<String> getResponsePlace = httpClient.send(getRequestPlace, HttpResponse.BodyHandlers.ofString());
+            transcriptPlace = gson.fromJson(getResponsePlace.body(), TranscriptPlace.class);
+
+            String id = place_ids.get(place_num);
+            String name = transcriptPlace.getResult().getName();
+            String address = transcriptPlace.getResult().getFormatted_address();
+
+            restaurantRepository.save(new Restaurant(id, name, address));
+        }
+        
         return ResponseEntity.status(200).build();
     }
 }
