@@ -18,12 +18,8 @@ import org.launchcode.TasteBuddiesServer.models.nearbySearch.TranscriptNB;
 import org.launchcode.TasteBuddiesServer.models.place.TranscriptPlace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.net.http.HttpClient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,9 +37,9 @@ public class EventController {
     @PostMapping("")
     public ResponseEntity<?> collectRestaurantData(@RequestBody EventDTO data)
             throws URISyntaxException, IOException, InterruptedException {
-        TranscriptGC transcriptGC = new TranscriptGC();
-        TranscriptNB transcriptNB = new TranscriptNB();
-        TranscriptPlace transcriptPlace = new TranscriptPlace();
+        TranscriptGC transcriptGC;
+        TranscriptNB transcriptNB;
+        TranscriptPlace transcriptPlace;
 
         String URLGC = "https://maps.googleapis.com/maps/api/geocode/json?address=";
         String URLNB = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?type=restaurant&location=";
@@ -90,7 +86,7 @@ public class EventController {
 
             restaurantRepository.save(new Restaurant(id, name, address));
         }
-        
+
         return ResponseEntity.status(200).build();
     }
 }
