@@ -1,15 +1,20 @@
 package org.launchcode.TasteBuddiesServer.models;
 
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
 public class UserLikes extends AbstractEntity{
     private User user;
-    private List<Restaurant> restaurants = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "userLikes_Id")
+    private List<Restaurant> likedRestaurants = new ArrayList<>();
 
     public UserLikes(User user, List<Restaurant> restaurants) {
         this.user = user;
-        this.restaurants = restaurants;
+        this.likedRestaurants = restaurants;
     }
     public UserLikes(){}
 
@@ -22,10 +27,10 @@ public class UserLikes extends AbstractEntity{
     }
 
     public List<Restaurant> getRestaurants() {
-        return restaurants;
+        return likedRestaurants;
     }
 
     public void setRestaurants(List<Restaurant> restaurants) {
-        this.restaurants = restaurants;
+        this.likedRestaurants = restaurants;
     }
 }

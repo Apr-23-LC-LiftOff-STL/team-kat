@@ -1,8 +1,9 @@
 package org.launchcode.TasteBuddiesServer.models;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Objects;
-
+@Entity
 public class Restaurant {
     @Id
     private String id;

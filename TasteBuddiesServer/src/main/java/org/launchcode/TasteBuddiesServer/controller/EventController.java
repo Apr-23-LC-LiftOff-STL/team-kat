@@ -9,8 +9,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import org.launchcode.TasteBuddiesServer.data.EventRepository;
 import org.launchcode.TasteBuddiesServer.data.RestaurantRepository;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
+import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
 import org.launchcode.TasteBuddiesServer.models.geocode.TranscriptGC;
@@ -22,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/event")
@@ -31,15 +34,19 @@ public class EventController {
     private UserRepository userRepository;
     @Autowired
     private RestaurantRepository restaurantRepository;
+    @Autowired
+    private EventRepository eventRepository;
     @Value("${apiKey}")
     private String APIKey;
 
     @PostMapping("")
-    public ResponseEntity<?> collectRestaurantData(@RequestBody EventDTO data)
+    public ResponseEntity<?> collectRestaurantData(/*@RequestBody EventDTO eventDTO*/)
             throws URISyntaxException, IOException, InterruptedException {
         TranscriptGC transcriptGC;
         TranscriptNB transcriptNB;
         TranscriptPlace transcriptPlace;
+
+        Event newEvent = new Event("63117", "1500");
 
         String URLGC = "https://maps.googleapis.com/maps/api/geocode/json?address=";
         String URLNB = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?type=restaurant&location=";
@@ -48,7 +55,7 @@ public class EventController {
         Gson gson = new Gson();
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest getRequest = HttpRequest.newBuilder()
-                .uri(new URI(URLGC+data.getLocation()+"&key="+APIKey))
+                .uri(new URI(URLGC+"63117"+"&key="+APIKey))
                 .build();
         HttpResponse<String> getResponse = httpClient
                 .send(getRequest, HttpResponse.BodyHandlers.ofString());
@@ -59,7 +66,7 @@ public class EventController {
         String lng = transcriptGC.getResults().get(0).getGeometry().getLocation().getLng();
 
         HttpRequest getRequestNB = HttpRequest.newBuilder()
-                .uri(new URI(URLNB+lat+"%2C"+lng+"&radius="+data.getSearchRadius()+"&key="+APIKey))
+                .uri(new URI(URLNB+lat+"%2C"+lng+"&radius="+"1500"+"&key="+APIKey))
                 .build();
         HttpResponse<String> getResponseNB = httpClient.send(getRequestNB, HttpResponse.BodyHandlers.ofString());
         transcriptNB = gson.fromJson(getResponseNB.body(), TranscriptNB.class);
@@ -84,8 +91,15 @@ public class EventController {
             String name = transcriptPlace.getResult().getName();
             String address = transcriptPlace.getResult().getFormatted_address();
 
-            restaurantRepository.save(new Restaurant(id, name, address));
+            if(!restaurantRepository.existsById(id)) {
+                restaurantRepository.save(new Restaurant(id, name, address));
+            }
+            Optional<Restaurant> result = restaurantRepository.findById(id);
+            restaurants.add(result.get());
         }
+
+        newEvent.setAvailableRestaurants(restaurants);
+        eventRepository.save(newEvent);
 
         return ResponseEntity.status(200).build();
     }
