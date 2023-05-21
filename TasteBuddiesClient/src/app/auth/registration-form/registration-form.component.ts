@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Registration } from 'src/models/registration';
 import { AuthenticationService } from 'src/services/authentication.service';
 
@@ -16,7 +17,10 @@ export class RegistrationFormComponent implements OnInit {
   response: any;
 
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router,
+    ) { }
   
   ngOnInit(): void {
   }
@@ -27,6 +31,7 @@ export class RegistrationFormComponent implements OnInit {
         console.log(res);
         this.isSignupFailed = false;
         this.submitted = true;
+        this.router.navigate(['/login']);
       },
       error: e => {
         console.error(e.message);
