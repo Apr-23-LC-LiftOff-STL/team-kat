@@ -1,7 +1,9 @@
 package org.launchcode.TasteBuddiesServer.controller.api;
 
 import org.launchcode.TasteBuddiesServer.config.JwtUtil;
+import org.launchcode.TasteBuddiesServer.controller.Services.UserService;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
+import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class APIUserController {
     private UserRepository userRepository;
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("all")
     public ResponseEntity<?> getAllUsers() {
@@ -58,5 +63,46 @@ public class APIUserController {
 
         return ResponseEntity.status(200).body(user);
     }
+
+
+    //add endpoints to add and remove favorite restaurants
+    @PostMapping("/{userId}/favorites/{restaurantId}")
+    public ResponseEntity<?> addFavoriteRestaurant(@PathVariable Integer userId, @PathVariable String restaurantId) {
+        try {
+            userService.addFavoriteRestaurant(userId, restaurantId);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            // Handle exception
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @DeleteMapping("/{userId}/favorites/{restaurantId}")
+    public ResponseEntity<?> removeFavoriteRestaurant(@PathVariable Integer userId, @PathVariable String restaurantId) {
+        try {
+            userService.removeFavoriteRestaurant(userId, restaurantId);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            // Handle exception
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/{userId}/favorites")
+    public ResponseEntity<?> getFavoriteRestaurants(@PathVariable Integer userId) {
+        try {
+            List<Restaurant> favoriteRestaurants = userService.getFavoriteRestaurants(userId);
+            if (favoriteRestaurants == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.OK).body(favoriteRestaurants);
+            }
+        } catch (Exception e) {
+            // Handle exception
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
 
 }

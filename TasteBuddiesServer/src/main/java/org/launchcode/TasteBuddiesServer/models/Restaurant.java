@@ -23,6 +23,12 @@ public class Restaurant {
     private float rating;
     @ManyToMany(mappedBy = "availableRestaurants", fetch = FetchType.LAZY)
     private List<Event> events = new ArrayList<>();
+
+    // Add a list of users that favorited this restaurant
+    @ManyToMany(mappedBy = "favoriteRestaurants")
+    private List<User> favoritedByUsers = new ArrayList<>();
+
+
     public Restaurant(){
 
     }
@@ -81,5 +87,15 @@ public class Restaurant {
 
     public void setRating(float rating) {
         this.rating = rating;
+    }
+    //Add G/S
+
+
+    public List<User> getFavoritedByUsers() {
+        return favoritedByUsers;
+    }
+
+    public void setFavoritedByUsers(List<User> favoritedByUsers) {
+        this.favoritedByUsers = favoritedByUsers;
     }
 }

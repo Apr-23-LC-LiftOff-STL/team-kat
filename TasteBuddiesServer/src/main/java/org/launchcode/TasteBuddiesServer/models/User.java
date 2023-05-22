@@ -40,6 +40,12 @@ public class User extends AbstractEntity implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserLikes userLikes;
 
+
+    //fav restaurants
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Restaurant> favoriteRestaurants = new ArrayList<>();
+
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<AuthorityEntity> authorities;
     private boolean accountNonExpired;
@@ -86,6 +92,15 @@ public class User extends AbstractEntity implements UserDetails {
 
     public void setUserLikes(UserLikes userLikes) {
         this.userLikes = userLikes;
+    }
+
+    //fav restaurants G/S
+    public List<Restaurant> getFavoriteRestaurants() {
+        return favoriteRestaurants;
+    }
+
+    public void setFavoriteRestaurants(List<Restaurant> favoriteRestaurants) {
+        this.favoriteRestaurants = favoriteRestaurants;
     }
 
     @Override
