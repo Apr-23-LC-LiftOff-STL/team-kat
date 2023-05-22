@@ -7,11 +7,13 @@ import { AccountComponent } from './account/account.component';
 import { UserEventsComponent } from './user-events/user-events.component';
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { AuthGuardService as AuthGuard } from 'src/services/auth-guard.service';
+import { ViewRestaurantsComponent } from './view-restaurants/view-restaurants.component';
 
 const routes: Routes = [
   { path: '', title: 'Taste Buddies', component: HomeComponent },
   { path: 'login', title: 'Login', component: LoginComponent },
   { path: 'signup', title: 'Register', component: RegistrationComponent },
+  { path: 'view-restaurants', title: 'view-restaurants', component: ViewRestaurantsComponent },
   { path: 'account', title: 'Account', component: AccountComponent, canActivate: [AuthGuard] },
   { path: 'event', title: 'Events', component: UserEventsComponent, canActivate: [AuthGuard] },
   { path: '**', title: 'Page not found', component: PageNotFoundComponent },
