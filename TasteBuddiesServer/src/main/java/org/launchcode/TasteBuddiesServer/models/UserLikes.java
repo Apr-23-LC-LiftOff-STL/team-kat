@@ -3,14 +3,14 @@ package org.launchcode.TasteBuddiesServer.models;
 
 import javax.persistence.*;
 import java.util.List;
-
+@Entity
 public class UserLikes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

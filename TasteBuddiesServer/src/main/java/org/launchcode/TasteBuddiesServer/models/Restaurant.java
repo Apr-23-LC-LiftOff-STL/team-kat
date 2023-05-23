@@ -4,7 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
+@Table(name = "restaurant")
 public class Restaurant {
 
     @Id
