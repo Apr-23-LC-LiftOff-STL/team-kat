@@ -7,6 +7,7 @@ import { AccountComponent } from './account/account.component';
 import { UserEventsComponent } from './user-events/user-events.component';
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { AuthGuardService as AuthGuard } from 'src/services/auth-guard.service';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   { path: '', title: 'Taste Buddies', component: HomeComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'account', title: 'Account', component: AccountComponent, canActivate: [AuthGuard] },
   { path: 'event', title: 'Events', component: UserEventsComponent, canActivate: [AuthGuard] },
   { path: '**', title: 'Page not found', component: PageNotFoundComponent },
+  { path: 'about', title: 'About Us', component: AboutComponent},
 ];
 
 @NgModule({
