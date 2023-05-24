@@ -1,32 +1,26 @@
 package org.launchcode.TasteBuddiesServer.models.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 public class RegistrationFormDTO extends LoginFormDTO {
 
-    private String username;
+    // TODO add validation
+    private String displayName;
 
-    @NotNull(message = "Password is required")
-    @NotBlank(message = "Password is required")
-    @Size(min = 6, max = 30, message = "Password must be 6-30 characters long.")
-    private String verifyPassword;
-
-    public String getVerifyPassword() {
-        return verifyPassword;
+    public RegistrationFormDTO(String email, String password, String displayName) {
+        super(email, password);
+        this.displayName = displayName;
     }
 
-    public void setVerifyPassword(String verifyPassword) {
-        this.verifyPassword = verifyPassword;
+    public RegistrationFormDTO(String displayName) {
+        this.displayName = displayName;
     }
 
-    public String getUsername() {
-        return username;
+    public RegistrationFormDTO() { }
+
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
-
 }

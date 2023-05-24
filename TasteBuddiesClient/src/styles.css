@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+<<<<<<< HEAD
 /* Global styles */
 :root {
   --primary-color: #ff6b6b;
@@ -147,4 +148,5 @@ nav a {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 2rem;
-  text-align
+  text-align: left;
+}

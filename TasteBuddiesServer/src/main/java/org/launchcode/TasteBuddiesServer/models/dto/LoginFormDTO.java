@@ -17,9 +17,20 @@ public class LoginFormDTO {
     @Size(min = 6, max = 30, message = "Password must be 6-30 characters long.")
     private String password;
 
-    public String getEmail() { return email; }
+    public LoginFormDTO(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
-    public void setEmail(String email) { this.email = email; }
+    public LoginFormDTO() {}
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getPassword() {
         return password;
