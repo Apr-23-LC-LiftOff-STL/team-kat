@@ -18,6 +18,7 @@ import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
 import org.launchcode.TasteBuddiesServer.models.geocode.TranscriptGC;
 import org.launchcode.TasteBuddiesServer.models.nearbySearch.TranscriptNB;
 import org.launchcode.TasteBuddiesServer.models.place.TranscriptPlace;
+import org.launchcode.TasteBuddiesServer.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -31,12 +32,19 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:4200",
         allowCredentials = "true")
 public class EventController {
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private RestaurantRepository restaurantRepository;
+
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private EventService eventService;
+
     @Value("${apiKey}")
     private String APIKey;
 
@@ -46,7 +54,7 @@ public class EventController {
         TranscriptGC transcriptGC;
         TranscriptNB transcriptNB;
         TranscriptPlace transcriptPlace;
-        Event newEvent = new Event(eventDTO.getLocation(), eventDTO.getSearchRadius());
+        Event newEvent = new Event(eventDTO.getLocation(), eventDTO.getSearchRadius(), eventService.generateUniqueEntryCode());
 
         String URLGC = "https://maps.googleapis.com/maps/api/geocode/json?address=";
         String URLNB = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?type=restaurant&location=";
