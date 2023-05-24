@@ -28,7 +28,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/event")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200",
+        allowCredentials = "true")
 public class EventController {
     @Autowired
     private UserRepository userRepository;
@@ -45,13 +46,11 @@ public class EventController {
         TranscriptGC transcriptGC;
         TranscriptNB transcriptNB;
         TranscriptPlace transcriptPlace;
-
         Event newEvent = new Event(eventDTO.getLocation(), eventDTO.getSearchRadius());
 
         String URLGC = "https://maps.googleapis.com/maps/api/geocode/json?address=";
         String URLNB = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?type=restaurant&location=";
         String URLPlace = "https://maps.googleapis.com/maps/api/place/details/json?place_id=";
-
         Gson gson = new Gson();
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest getRequest = HttpRequest.newBuilder()
