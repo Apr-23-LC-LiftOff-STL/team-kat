@@ -40,13 +40,13 @@ public class EventController {
     private String APIKey;
 
     @PostMapping("")
-    public ResponseEntity<?> collectRestaurantData(/*@RequestBody EventDTO eventDTO*/)
+    public ResponseEntity<?> collectRestaurantData(@RequestBody EventDTO eventDTO)
             throws URISyntaxException, IOException, InterruptedException {
         TranscriptGC transcriptGC;
         TranscriptNB transcriptNB;
         TranscriptPlace transcriptPlace;
 
-        Event newEvent = new Event("63117", "1500");
+        Event newEvent = new Event(eventDTO.getLocation(), eventDTO.getSearchRadius());
 
         String URLGC = "https://maps.googleapis.com/maps/api/geocode/json?address=";
         String URLNB = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?type=restaurant&location=";
@@ -55,7 +55,7 @@ public class EventController {
         Gson gson = new Gson();
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest getRequest = HttpRequest.newBuilder()
-                .uri(new URI(URLGC+"63117"+"&key="+APIKey))
+                .uri(new URI(URLGC+eventDTO.getLocation()+"&key="+APIKey))
                 .build();
         HttpResponse<String> getResponse = httpClient
                 .send(getRequest, HttpResponse.BodyHandlers.ofString());
@@ -66,7 +66,7 @@ public class EventController {
         String lng = transcriptGC.getResults().get(0).getGeometry().getLocation().getLng();
 
         HttpRequest getRequestNB = HttpRequest.newBuilder()
-                .uri(new URI(URLNB+lat+"%2C"+lng+"&radius="+"1500"+"&key="+APIKey))
+                .uri(new URI(URLNB+lat+"%2C"+lng+"&radius="+eventDTO.getSearchRadius()+"&key="+APIKey))
                 .build();
         HttpResponse<String> getResponseNB = httpClient.send(getRequestNB, HttpResponse.BodyHandlers.ofString());
         transcriptNB = gson.fromJson(getResponseNB.body(), TranscriptNB.class);
