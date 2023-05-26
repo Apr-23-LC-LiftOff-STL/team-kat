@@ -6,13 +6,13 @@ import axios from 'axios';
 })
 export class GooglePlacesService {
 
-  private apiKey = '';
+  private apiKey = ''; //Enter your API key here
   
   async getNearbyPlaces(latLng: string, radius: string, keyword: string): Promise<any> {
 
     const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latLng}&radius=${radius}&type=restaurant&keyword=${keyword}&key=${this.apiKey}`;
-    let proxy = "https://cors-anywhere.herokuapp.com/";
-    let proxyUrl =proxy+ url;
+    let proxy = "https://cors-anywhere.herokuapp.com/";  //Activate by visiting cors-anywhere.herokuapp.com/corsdemo
+    let proxyUrl =proxy+ url; //uses the proxy combined with the regular url to bypass the CORS Restrictions.
 
     try {
       const response = await axios.get(proxyUrl);
