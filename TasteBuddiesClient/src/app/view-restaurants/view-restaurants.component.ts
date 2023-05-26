@@ -15,7 +15,7 @@ export class ViewRestaurantsComponent implements OnInit {
   ngOnInit() {
     
     const loader = new Loader({
-      apiKey: '',
+      apiKey: 'src/app/view-restaurants/view-restaurants.component.ts',
       version: 'weekly',
       libraries: ['places']
     });
