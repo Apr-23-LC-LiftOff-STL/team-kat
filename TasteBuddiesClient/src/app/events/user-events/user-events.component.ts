@@ -13,8 +13,8 @@ import { EventService } from 'src/services/event.service';
 })
 export class UserEventsComponent implements OnInit {
 
-  upcommingEvents: Array<Event> = [new Event(), new Event(), new Event()];
-  pastEvents: Array<Event> = [new Event(), new Event(), new Event()];
+  upcommingEvents: Array<Event> = [];
+  pastEvents: Array<Event> = [];
   // note: trailer $ is a convention for Observables in ng
   events$: Observable<Event[]>;
   selectedID: number;
@@ -23,7 +23,20 @@ export class UserEventsComponent implements OnInit {
     private route: ActivatedRoute,
     private eventService: EventService,
     ) {
-
+      this.eventService.getEvents().subscribe({
+        next: res => {
+          for (let event of res) {
+            if (res.date > new Date().getTime()) {
+              this.upcommingEvents.push(event)
+            } else {
+              this.pastEvents.push(event)
+            }
+          }
+        },
+        error: e => {
+          console.error(e);
+        }
+      })
 
   }
 
