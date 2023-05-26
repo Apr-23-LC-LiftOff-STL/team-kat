@@ -1,1 +1,6 @@
-<p>view-restaurants works!</p>
+<div *ngIf="restaurants.length > 0">
+    <h2>Restaurants</h2>
+    <ul>
+      <li *ngFor="let restaurant of restaurants">{{ restaurant.name }}</li>
+    </ul>
+  </div>
