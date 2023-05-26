@@ -1,2 +1,9 @@
-<p>Event works!</p>
-<app-event-form></app-event-form>
+<h1>Event Component</h1>
+<h2>DUMMY OUTPUT PLEASE CHANGE ME</h2>
+<div *ngIf="event$ | async as event"> 
+    <p>{{ event.id }}</p>
+    <p>{{ event.location }}</p>
+    <p>{{ event.date }}</p>
+    <p>{{ event.searchRadius }}</p>
+    <p>{{ event.users }}</p>
+</div>

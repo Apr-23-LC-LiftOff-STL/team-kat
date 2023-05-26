@@ -8,14 +8,16 @@ import { UserEventsComponent } from './events/user-events/user-events.component'
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { AuthGuardService as AuthGuard } from 'src/services/auth-guard.service';
 import { EventFormComponent } from './events/event-form/event-form.component';
+import { EventComponent } from './events/event.component';
 
 const routes: Routes = [
   { path: '', title: 'Taste Buddies', component: HomeComponent },
   { path: 'login', title: 'Login', component: LoginComponent },
   { path: 'signup', title: 'Register', component: RegistrationComponent },
   { path: 'account', title: 'Account', component: AccountComponent, canActivate: [AuthGuard] },
-  { path: 'event', title: 'Events', component: UserEventsComponent, canActivate: [AuthGuard] },
   { path: 'event/create', title: 'New event', component: EventFormComponent, canActivate: [AuthGuard] },
+  { path: 'event/:id', title: 'Event', component: EventComponent, canActivate: [AuthGuard] },
+  { path: 'event', title: 'Events', component: UserEventsComponent, canActivate: [AuthGuard] },
   { path: '**', title: 'Page not found', component: PageNotFoundComponent },
 ];
 
