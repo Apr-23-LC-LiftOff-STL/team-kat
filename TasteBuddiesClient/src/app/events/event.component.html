@@ -1,9 +1,19 @@
 <h1>Event Component</h1>
 <h2>DUMMY OUTPUT PLEASE CHANGE ME</h2>
 <div *ngIf="event$ | async as event"> 
-    <p>{{ event.id }}</p>
-    <p>{{ event.location }}</p>
-    <p>{{ event.date }}</p>
-    <p>{{ event.searchRadius }}</p>
-    <p>{{ event.users }}</p>
+    <p>id: {{ event.id }}</p>
+    <p>location:  {{ event.location }}</p>
+    <p>date: {{ event.date }}</p>
+    <p>search radius: {{ event.searchRadius }}</p>
+    <p>users: {{ event.users }}</p>
+    <h3>Restaurants</h3>
+    <ol>
+        <li *ngFor="let restaurant of event.availableRestaurants">
+            <ul>
+                <li>Restaurant ID: {{restaurant.id}}</li>
+                <li>Restaurant name: {{restaurant.name}}</li>
+                <li>Restaurant address: {{restaurant.address}}</li>
+            </ul>
+        </li>
+    </ol>
 </div>
