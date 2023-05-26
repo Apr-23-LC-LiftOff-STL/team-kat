@@ -19,10 +19,8 @@ export class EventService {
   constructor(private http: HttpClient) { }
 
   public createEvent(event: NewEventDTO): Observable<any> {
-
-    console.log(event)
     return this.http.post(
-      EVENT_API + '',
+      EVENT_API + 'create',
       JSON.stringify(event),
       httpOptions)
   }
@@ -35,7 +33,7 @@ export class EventService {
 
   public getEvent(eventId: number):Observable<any> {
     return this.http.post(
-      EVENT_API,
+      EVENT_API + '',
       JSON.stringify(eventId),
       httpOptions
     )
