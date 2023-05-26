@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,18 @@ public class EventController {
 
     @Value("${apiKey}")
     private String APIKey;
+
+    @GetMapping("all")
+    public ResponseEntity<?> getAllEvents(HttpServletRequest request) {
+
+        List<Event> possibleEvents = (List<Event>) eventRepository.findAll();
+
+        if (possibleEvents.size() == 0) {
+            return ResponseEntity.status(204).body(null);
+        }
+
+        return ResponseEntity.status(200).body(eventRepository.findAll());
+    }
 
     @PostMapping("")
     public ResponseEntity<?> collectRestaurantData(@RequestBody EventDTO eventDTO)
