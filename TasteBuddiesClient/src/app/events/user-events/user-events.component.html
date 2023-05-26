@@ -3,7 +3,9 @@
         <div class="col card p-2 m-3">
             <h3 class="mx-auto">Upcoming events</h3>
             <ul>
-                <li *ngFor="let event of upcommingEvents">{{event.entryCode}}</li>
+                <li *ngFor="let event of upcommingEvents">
+                    <a routerLink="./{{event.id}}">{{event.entryCode}}</a>
+                </li>
             </ul>
         </div>
         <div class="col card p-2 m-3">
@@ -11,12 +13,18 @@
                 Past events
             </h3>
             <ul>
-                <li *ngFor="let event of pastEvents">{{event.entryCode}}</li>
+                <li *ngFor="let event of pastEvents">
+                    <a routerLink="./{{event.id}}">{{event.entryCode}}</a>
+                </li>
             </ul>
         </div>
     </div>
 
     <div class="row">
-        <a href="/event/create">New Event</a>
+        <div>
+            <a class="btn btn-primary" routerLink="./create" role="button">
+                New Event
+            </a>
+        </div>
     </div>
 </div>

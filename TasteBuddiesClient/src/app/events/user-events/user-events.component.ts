@@ -13,7 +13,6 @@ import { EventService } from 'src/services/event.service';
 })
 export class UserEventsComponent implements OnInit {
 
-  user: User;
   upcommingEvents: Array<Event> = [new Event(), new Event(), new Event()];
   pastEvents: Array<Event> = [new Event(), new Event(), new Event()];
   // note: trailer $ is a convention for Observables in ng
@@ -21,20 +20,11 @@ export class UserEventsComponent implements OnInit {
   selectedID: number;
 
   constructor(
-    private userService: UserService,
     private route: ActivatedRoute,
     private eventService: EventService,
     ) {
-    this.user = new User(0, '', '');
 
-    this.userService.getUser().subscribe({
-      next: res => {
-        this.user = new User(res.id, res.email, res.displayName);
-      },
-      error: (e) => {
-        console.error(e);
-      },
-    });
+
   }
 
   ngOnInit(): void {
