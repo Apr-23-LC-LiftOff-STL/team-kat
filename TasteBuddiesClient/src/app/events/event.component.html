@@ -1,6 +1,32 @@
 <h1>Event Component</h1>
 <h2>DUMMY OUTPUT PLEASE CHANGE ME</h2>
-<div *ngIf="event$ | async as event"> 
+<div *ngIf="event$ | async as event2"> 
+
+    <div class="row">
+        <div class="col-auto card m-auto p-3">
+            <div *ngIf="currentRestaurant != null; else noNextEvent">
+                <div class="row p-2">
+                    <h4 class="col-auto m-auto">{{ currentRestaurant.name }}</h4>
+                </div>
+                <div class="row p-2">
+                    <div class="col-auto m-auto text-center">
+                        <!-- TODO: call google api to get place images -->
+                        PLACEHOLDER <br> FOR <br> IMAGES
+                    </div>
+                </div>
+                <div class="row p-2">
+                    <div class="col-auto m-auto">
+                        <!-- TODO: Center these buttons -->
+                        <button class="btn btn-success mx-3" (click)="yesToRestaurant(true)">Yes</button>
+                        <button class="btn btn-danger mx-3" (click)="yesToRestaurant(false)">No</button>
+                    </div>
+                </div>
+            </div>
+            <ng-template #noNextEvent>
+                <p class="m-auto text-secondary">Woops! Nothing was here :/</p>
+            </ng-template>
+        </div>
+
     <p>id: {{ event.id }}</p>
     <p>location:  {{ event.location }}</p>
     <p>date: {{ event.date }}</p>
