@@ -1,4 +1,5 @@
 import { User } from "./user";
+import { Restaurant } from "./restaurant";
 
 export class Event {
 
@@ -8,6 +9,7 @@ export class Event {
     searchRadius: string;  // meters?
     entryCode: string; // six characters. Numbers too?
     users: Array<User>;
+    availableRestaurants: Array<Restaurant>;
 
     // TODO: implement these
     // availableRestaurants: Array<Restauraunt> = new Array();
@@ -22,6 +24,7 @@ export class Event {
         searchRadius: string = '1000', 
         entryCode: string = 'ABCDEF',
         users: Array<User> = [new User(0, 'demo', 'also demo')],
+        availableRestaurants: Array<Restaurant> = [new Restaurant()],
         ) {
             this.id = id;
             this.location = location;
@@ -29,6 +32,7 @@ export class Event {
             this.searchRadius = searchRadius;
             this.entryCode = entryCode;
             this.users = users;
+            this.availableRestaurants = availableRestaurants;
         }
 
 }
