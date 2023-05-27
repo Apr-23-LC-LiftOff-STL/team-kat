@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { Event } from 'src/models/event';
+import { Restaurant } from 'src/models/restaurant';
 import { EventService } from 'src/services/event.service';
 
 @Component({
@@ -12,7 +13,9 @@ import { EventService } from 'src/services/event.service';
 export class EventComponent implements OnInit {
 
   event$: Observable<any>;
-  // event: Event = new Event;
+  event: Event;
+  currentRestaurant: Restaurant;
+  restaurants: Array<Restaurant>;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,20 +24,32 @@ export class EventComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-
     this.event$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         return this.eventService.getEvent(Number.parseInt(params.get('id')!))
       })
     );
 
-    // const eventId = this.route.snapshot.paramMap.get('id');
-
-    // if (eventId != null) {
-    //   this.event$ = this.eventService.getEvent(Number.parseInt(eventId));
-    // }
-
+    this.event$.subscribe({
+      next: res => {
+        this.event = res;
+        this.restaurants = this.event.availableRestaurants;
+        this.nextRestaurant();
+      },
+      error: e => {
+        console.error(e);
+      }
+    })
   }
 
+  yesToRestaurant(choice: boolean): void {
 
+    // TODO: Call event service to save result of choice, update position of user on backend. 
+
+    this.nextRestaurant();
+  }
+
+  private nextRestaurant(): void {
+    this.currentRestaurant = this.restaurants.shift()!;
+  }
 }
