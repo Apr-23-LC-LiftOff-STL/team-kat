@@ -93,12 +93,12 @@ public class EventController {
             List<String> types = transcriptPlace.getResult().getTypes();
 
             if(!restaurantRepository.existsById(id)) {
-                if(!(types.contains("gas_station") || types.contains("convenience_store") || types.contains("supermarket"))) {
+                if(!(types.contains("gas_station") || types.contains("convenience_store"))){
                     restaurantRepository.save(new Restaurant(id, name, address));
+                    Optional<Restaurant> result = restaurantRepository.findById(id);
+                    restaurants.add(result.get());
                 }
             }
-            Optional<Restaurant> result = restaurantRepository.findById(id);
-            restaurants.add(result.get());
         }
 
         newEvent.setAvailableRestaurants(restaurants);
