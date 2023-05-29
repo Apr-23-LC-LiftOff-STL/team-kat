@@ -26,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,10 +112,32 @@ public class EventController {
         transcriptNB = gson.fromJson(getResponseNB.body(), TranscriptNB.class);
 
         List<String> place_ids = new ArrayList<>();
+        String pageToken = transcriptNB.getNext_page_token();
 
         for(int i=0; i < transcriptNB.getResults().size(); i++){
             String place_id = transcriptNB.getResults().get(i).getPlace_id();
             place_ids.add(place_id);
+        }
+
+        while(pageToken != null){
+            Date currentDate = new Date();
+            Date futureDate = new Date();
+            futureDate.setTime(currentDate.getTime()+2000);
+            while(futureDate.getTime() > currentDate.getTime()){
+                currentDate = new Date();
+            }
+            HttpRequest getRequestNB2 = HttpRequest.newBuilder()
+                    .uri(new URI(URLNB+lat+"%2C"+lng+"&radius="+eventDTO.getSearchRadius()+"&key="+APIKey+"&pagetoken="+pageToken))
+                    .build();
+            HttpResponse<String> getResponseNB2 = httpClient.send(getRequestNB2, HttpResponse.BodyHandlers.ofString());
+            transcriptNB = gson.fromJson(getResponseNB2.body(), TranscriptNB.class);
+
+            pageToken = transcriptNB.getNext_page_token();
+
+            for(int j=0; j < transcriptNB.getResults().size(); j++){
+                String place_id = transcriptNB.getResults().get(j).getPlace_id();
+                place_ids.add(place_id);
+            }
         }
 
         List<Restaurant> restaurants = new ArrayList<>();
@@ -129,12 +152,15 @@ public class EventController {
             String id = place_ids.get(place_num);
             String name = transcriptPlace.getResult().getName();
             String address = transcriptPlace.getResult().getFormatted_address();
+            List<String> types = transcriptPlace.getResult().getTypes();
 
             if(!restaurantRepository.existsById(id)) {
-                restaurantRepository.save(new Restaurant(id, name, address));
+                if(!(types.contains("gas_station") || types.contains("convenience_store"))){
+                    restaurantRepository.save(new Restaurant(id, name, address));
+                    Optional<Restaurant> result = restaurantRepository.findById(id);
+                    restaurants.add(result.get());
+                }
             }
-            Optional<Restaurant> result = restaurantRepository.findById(id);
-            restaurants.add(result.get());
         }
 
         newEvent.setAvailableRestaurants(restaurants);
