@@ -10,8 +10,7 @@ public class UserLikes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToOne(mappedBy = "userLikes", cascade = CascadeType.ALL)
     private User user;
 
 

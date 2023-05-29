@@ -37,7 +37,8 @@ public class User extends AbstractEntity implements UserDetails {
     private List<Event> events = new ArrayList<>();
 
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable = false)
     private UserLikes userLikes;
 
 
