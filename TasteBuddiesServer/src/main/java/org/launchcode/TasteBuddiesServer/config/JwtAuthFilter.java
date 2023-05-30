@@ -1,6 +1,5 @@
 package org.launchcode.TasteBuddiesServer.config;
 
-import lombok.RequiredArgsConstructor;
 import org.launchcode.TasteBuddiesServer.dao.UserDao;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,11 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-@RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final UserDao userDao;
     private final JwtUtil jwtUtil;
+
+    public JwtAuthFilter(UserDao userDao, JwtUtil jwtUtil) {
+        this.userDao = userDao;
+        this.jwtUtil = jwtUtil;
+    }
 
     protected void doFilterInternal(
             HttpServletRequest request,

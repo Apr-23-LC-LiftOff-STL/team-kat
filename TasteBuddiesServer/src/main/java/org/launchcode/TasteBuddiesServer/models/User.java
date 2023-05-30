@@ -6,7 +6,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,7 +36,7 @@ public class User extends AbstractEntity implements UserDetails {
     private List<Event> events = new ArrayList<>();
 
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private UserLikes userLikes;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -69,8 +68,6 @@ public class User extends AbstractEntity implements UserDetails {
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
-
-
 
     public List<Event> getEvents() {
         return events;

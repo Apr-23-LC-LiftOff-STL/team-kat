@@ -11,6 +11,12 @@ public class UserDTO {
     // TODO Add events, and other user data
 
 
+    public UserDTO(int id, String displayName, String email) {
+        this.id = id;
+        this.displayName = displayName;
+        this.email = email;
+    }
+
     public UserDTO(User user) {
         this.id = user.getId();
         this.displayName = user.getDisplayName();

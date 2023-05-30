@@ -1,17 +1,16 @@
 package org.launchcode.TasteBuddiesServer.models;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+
 
 @Entity
-public class Event {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Event extends AbstractEntity {
 
     @NotNull
     private String entryCode;
@@ -26,7 +25,8 @@ public class Event {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-//defining a many-to-one relationship between two entities and specifying that the related entity should be fetched lazily to optimize performance.
+
+    //defining a many-to-one relationship between two entities and specifying that the related entity should be fetched lazily to optimize performance.
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_events",
@@ -42,6 +42,7 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "restaurant_id")
     )
     private List<Restaurant> availableRestaurants = new ArrayList<>();
+
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -66,14 +67,6 @@ public class Event {
         this.availableRestaurants = availableRestaurants;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getEntryCode() {
         return entryCode;
     }
@@ -81,6 +74,10 @@ public class Event {
     public void setEntryCode(String entryCode) {
         this.entryCode = entryCode;
     }
+
+//    @OneToMany
+//    @JoinColumn(name = "event_id")
+//    private List<UserLikes> userLikedRestaurants = new ArrayList<>();
 
     public String getLocation() {
         return location;
@@ -121,4 +118,13 @@ public class Event {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
+//    public List<UserLikes> getUserLikedRestaurants() {
+//        return userLikedRestaurants;
+//    }
+
+//    public void setUserLikedRestaurants(List<UserLikes> userLikedRestaurants) {
+//        this.userLikedRestaurants = userLikedRestaurants;
+//    }
+
 }

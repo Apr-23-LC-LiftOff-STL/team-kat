@@ -4,7 +4,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Objects;
 
+@Entity
 public class Restaurant {
 
     @Id
@@ -21,8 +25,10 @@ public class Restaurant {
 
     @NotNull
     private float rating;
+
     @ManyToMany(mappedBy = "availableRestaurants", fetch = FetchType.LAZY)
     private List<Event> events = new ArrayList<>();
+
     public Restaurant(){
 
     }
@@ -81,5 +87,18 @@ public class Restaurant {
 
     public void setRating(float rating) {
         this.rating = rating;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Restaurant)) return false;
+        Restaurant that = (Restaurant) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

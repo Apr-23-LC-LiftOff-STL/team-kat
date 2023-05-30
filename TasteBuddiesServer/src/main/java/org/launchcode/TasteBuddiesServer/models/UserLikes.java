@@ -1,19 +1,17 @@
 package org.launchcode.TasteBuddiesServer.models;
 
-
 import javax.persistence.*;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 
-public class UserLikes {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Entity
+public class UserLikes extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -32,11 +30,11 @@ public class UserLikes {
         this.likedRestaurants = likedRestaurants;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -54,5 +52,13 @@ public class UserLikes {
 
     public void setLikedRestaurants(List<Restaurant> likedRestaurants) {
         this.likedRestaurants = likedRestaurants;
+    }
+
+    public List<Restaurant> getRestaurants() {
+        return likedRestaurants;
+    }
+
+    public void setRestaurants(List<Restaurant> restaurants) {
+        this.likedRestaurants = restaurants;
     }
 }

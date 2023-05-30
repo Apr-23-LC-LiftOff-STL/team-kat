@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <ul class="navbar-nav mb-2">
+      <a class="navbar-brand" href="/">Taste Buddies</a>
+    </ul>
+
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <li *ngFor="let button of buttons"class="nav-item">
+          <app-nav-bar-button
+          [buttonText]="button.buttonName"
+          [path]="button.path"></app-nav-bar-button>
+      </li>
+    </ul>
+
+        <ul class="nav nav-pills px-3">
+          <li class="nav-item">
+            <a (click)="logout()" href="{{loginLogout.path}}" class="nav-link active">
+              {{loginLogout.buttonName}}
+            </a>
+          </li>
+        </ul>
+    </div>
+</nav>

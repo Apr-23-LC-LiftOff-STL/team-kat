@@ -1,11 +1,12 @@
 package org.launchcode.TasteBuddiesServer.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.launchcode.TasteBuddiesServer.config.JwtUtil;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
 import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.LoginFormDTO;
 import org.launchcode.TasteBuddiesServer.models.dto.RegistrationFormDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.TokenDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,14 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
-//@RequiredArgsConstructor
+@CrossOrigin(
+        origins = "http://localhost:4200",
+        allowCredentials = "true")
 public class AuthController {
 
     @Autowired
@@ -39,7 +41,7 @@ public class AuthController {
     private UserRepository userRepository;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<String> authenticate(
+    public ResponseEntity<?> authenticate(
             @RequestBody LoginFormDTO loginDetails
     ) {
         authenticationManager.authenticate(
@@ -47,14 +49,14 @@ public class AuthController {
         );
         final UserDetails user = userDetailsService.loadUserByUsername(loginDetails.getEmail());
         if (user != null) {
-            return ResponseEntity.ok(jwtUtil.generateToken(user));
+            return ResponseEntity.status(200).body(new TokenDTO(jwtUtil.generateToken(user)));
         }
         return ResponseEntity.status(400).body("Some error has occurred.");
     }
 
     @GetMapping("/authenticated")
-    public ResponseEntity<String> authenticationTest() {
-        return ResponseEntity.status(200).body("You are logged in.");
+    public ResponseEntity<?> authenticationTest() {
+        return ResponseEntity.status(200).body(new UserDTO(-1, "This is an email", "email@gmail.com"));
     }
 
     @PostMapping("/register")
