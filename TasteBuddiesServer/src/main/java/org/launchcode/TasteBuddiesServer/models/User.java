@@ -8,7 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -30,9 +29,6 @@ public class User extends AbstractEntity implements UserDetails {
 
     @JsonIgnore
     @NotBlank(message = "Password required.")
-//    moving this requirement to the registration DTO because the stored password is excrypted with
-//    bcrypt which makes it more than 30 characters.
-//    @Size(min = 6,max = 30, message = "Password must be between 6 and 30 characters.")
     @Column(nullable = false)
     private String password;
 
