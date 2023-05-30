@@ -75,9 +75,9 @@ public class Event extends AbstractEntity {
         this.entryCode = entryCode;
     }
 
-//    @OneToMany
-//    @JoinColumn(name = "event_id")
-//    private List<UserLikes> userLikedRestaurants = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "event_id")
+    private List<UserLikes> userLikedRestaurants = new ArrayList<>();
 
     public String getLocation() {
         return location;
