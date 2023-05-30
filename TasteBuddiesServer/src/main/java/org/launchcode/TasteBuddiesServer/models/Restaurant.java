@@ -1,5 +1,8 @@
 package org.launchcode.TasteBuddiesServer.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -8,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Objects;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 public class Restaurant {
 
@@ -26,6 +30,7 @@ public class Restaurant {
     @NotNull
     private float rating;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "availableRestaurants", fetch = FetchType.LAZY)
     private List<Event> events = new ArrayList<>();
 
