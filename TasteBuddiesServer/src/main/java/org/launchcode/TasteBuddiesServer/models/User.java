@@ -1,33 +1,59 @@
 package org.launchcode.TasteBuddiesServer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Email;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 public class User extends AbstractEntity implements UserDetails {
 
-    // TODO add validation for displayName
-    @NotNull
+
+    @NotBlank(message = "Display name required.")
+    @Column(nullable = false)
     private String displayName;
 
-    // TODO add validation for email
-    @NotNull
+    @Email(message = "A valid email required.")
+    @NotBlank(message = "Email required")
+    @Column(unique = true, nullable = false)
     private String email;
 
-    // TODO add validation for password
-    @NotNull
+    @JsonIgnore
+    @NotBlank(message = "Password required.")
+    @Column(nullable = false)
     private String password;
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Event> events = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserLikes> userLikes;
+
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<AuthorityEntity> authorities;
+
+    @JsonIgnore
     private boolean accountNonExpired;
+
+    @JsonIgnore
     private boolean accountNonLocked;
+
+    @JsonIgnore
     private boolean credentialsNonExpired;
+
+    @JsonIgnore
     private boolean enabled;
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -53,6 +79,23 @@ public class User extends AbstractEntity implements UserDetails {
         this.displayName = displayName;
     }
 
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<UserLikes> getUserLikes() {
+        return userLikes;
+    }
+
+    public void setUserLikes(List<UserLikes> userLikes) {
+        this.userLikes = userLikes;
+    }
+
+    @JsonIgnore
     @Override
     public String getUsername() {
         return getEmail();
