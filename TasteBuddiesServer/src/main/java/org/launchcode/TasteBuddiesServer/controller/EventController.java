@@ -14,14 +14,19 @@ import org.launchcode.TasteBuddiesServer.data.RestaurantRepository;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
 import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
+import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
 import org.launchcode.TasteBuddiesServer.models.geocode.TranscriptGC;
 import org.launchcode.TasteBuddiesServer.models.nearbySearch.TranscriptNB;
 import org.launchcode.TasteBuddiesServer.models.place.TranscriptPlace;
+import org.launchcode.TasteBuddiesServer.services.EventService;
+import org.launchcode.TasteBuddiesServer.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,17 +42,34 @@ public class EventController {
     private RestaurantRepository restaurantRepository;
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private EventService eventService;
     @Value("${apiKey}")
     private String APIKey;
 
     @PostMapping("")
-    public ResponseEntity<?> collectRestaurantData(@RequestBody EventDTO eventDTO)
+    public ResponseEntity<?> collectRestaurantData(
+            @RequestBody EventDTO eventDTO,
+            HttpServletRequest request
+    )
             throws URISyntaxException, IOException, InterruptedException {
         TranscriptGC transcriptGC;
         TranscriptNB transcriptNB;
         TranscriptPlace transcriptPlace;
 
-        Event newEvent = new Event(eventDTO.getLocation(), eventDTO.getSearchRadius());
+        Optional<User> possibleUser = userService.getUserFromRequest(request);
+        if (possibleUser.isEmpty()) {
+            return ResponseEntity.status(403).build();
+        }
+
+        Event newEvent = new Event(
+                eventService.generateUniqueEntryCode(),
+                eventDTO.getLocation(),
+                eventDTO.getSearchRadius(),
+                possibleUser.get()
+        );
 
         String URLGC = "https://maps.googleapis.com/maps/api/geocode/json?address=";
         String URLNB = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?type=restaurant&location=";

@@ -1,23 +1,37 @@
 package org.launchcode.TasteBuddiesServer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.List;
-@Entity
-public class UserLikes extends AbstractEntity{
-    private User user;
-    @ManyToMany
-    @JoinColumn(name = "userLikes_Id")
-    private List<Restaurant> likedRestaurants = new ArrayList<>();
 
-    public UserLikes(User user, List<Restaurant> restaurants) {
-        this.user = user;
-        this.likedRestaurants = restaurants;
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+@Entity
+public class UserLikes extends AbstractEntity {
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_likes_restaurants",
+            joinColumns = @JoinColumn(name = "user_likes_restaurant"),
+            inverseJoinColumns = @JoinColumn(name = "restaurant_id")
+    )
+    private List<Restaurant> likedRestaurants;
+
+    public UserLikes(){
+
     }
-    public UserLikes(){}
+
+    public UserLikes(User user, List<Restaurant> likedRestaurants){
+        this.user = user;
+        this.likedRestaurants = likedRestaurants;
+    }
 
     public User getUser() {
         return user;
@@ -25,6 +39,14 @@ public class UserLikes extends AbstractEntity{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Restaurant> getLikedRestaurants() {
+        return likedRestaurants;
+    }
+
+    public void setLikedRestaurants(List<Restaurant> likedRestaurants) {
+        this.likedRestaurants = likedRestaurants;
     }
 
     public List<Restaurant> getRestaurants() {

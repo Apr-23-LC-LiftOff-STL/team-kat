@@ -1,21 +1,62 @@
 package org.launchcode.TasteBuddiesServer.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Objects;
+
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 public class Restaurant {
+
     @Id
     private String id;
+    //The id field will store the place_id from the API call,
+    @NotNull
     private String name;
+
+    @NotNull
     private String address;
 
-    public Restaurant(String id, String name, String address){
+    @NotNull
+    private int priceLevel;
+
+    @NotNull
+    private float rating;
+
+    @JsonBackReference
+    @ManyToMany(mappedBy = "availableRestaurants", fetch = FetchType.LAZY)
+    private List<Event> events = new ArrayList<>();
+
+    public Restaurant() {
+
+    }
+
+    public Restaurant(String id, String name, String address) {
+        this(id, name, address, 0, 0.0f);
+    }
+
+    public Restaurant(String id, String name, String address, int priceLevel, float rating) {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.priceLevel = priceLevel;
+        this.rating = rating;
     }
-    public Restaurant(){}
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
 
     public String getId() {
         return id;
@@ -39,6 +80,22 @@ public class Restaurant {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public int getPriceLevel() {
+        return priceLevel;
+    }
+
+    public void setPriceLevel(int priceLevel) {
+        this.priceLevel = priceLevel;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 
     @Override
