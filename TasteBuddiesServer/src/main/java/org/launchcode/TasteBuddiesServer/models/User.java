@@ -27,7 +27,9 @@ public class User extends AbstractEntity implements UserDetails {
 
 
     @NotBlank(message = "Password required.")
-    @Size(min = 6,max = 30, message = "Password must be between 6 and 30 characters.")
+//    moving this requirement to the registration DTO because the stored password is excrypted with
+//    bcrypt which makes it more than 30 characters.
+//    @Size(min = 6,max = 30, message = "Password must be between 6 and 30 characters.")
     @Column(nullable = false)
     private String password;
 
@@ -37,7 +39,7 @@ public class User extends AbstractEntity implements UserDetails {
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private UserLikes userLikes;
+    private List<UserLikes> userLikes;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<AuthorityEntity> authorities;
@@ -77,11 +79,11 @@ public class User extends AbstractEntity implements UserDetails {
         this.events = events;
     }
 
-    public UserLikes getUserLikes() {
+    public List<UserLikes> getUserLikes() {
         return userLikes;
     }
 
-    public void setUserLikes(UserLikes userLikes) {
+    public void setUserLikes(List<UserLikes> userLikes) {
         this.userLikes = userLikes;
     }
 

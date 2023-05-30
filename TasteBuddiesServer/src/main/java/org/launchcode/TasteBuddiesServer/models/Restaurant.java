@@ -29,8 +29,12 @@ public class Restaurant {
     @ManyToMany(mappedBy = "availableRestaurants", fetch = FetchType.LAZY)
     private List<Event> events = new ArrayList<>();
 
-    public Restaurant(){
+    public Restaurant() {
 
+    }
+
+    public Restaurant(String id, String name, String address) {
+        this(id, name, address, 0, 0.0f);
     }
 
     public Restaurant(String id, String name, String address, int priceLevel, float rating) {
