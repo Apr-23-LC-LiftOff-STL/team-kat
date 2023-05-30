@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 
+import javax.persistence.OneToMany;
 
 @Entity
 public class Event extends AbstractEntity {
@@ -75,9 +76,9 @@ public class Event extends AbstractEntity {
         this.entryCode = entryCode;
     }
 
-//    @OneToMany
-//    @JoinColumn(name = "event_id")
-//    private List<UserLikes> userLikedRestaurants = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "event_id")
+    private List<UserLikes> userLikedRestaurants = new ArrayList<>();
 
     public String getLocation() {
         return location;

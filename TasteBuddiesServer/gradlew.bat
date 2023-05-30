@@ -88,4 +88,15 @@ exit /b %EXIT_CODE%
 :mainEnd
 if "%OS%"=="Windows_NT" endlocal
 
+:run
+@echo off
+setlocal
+set GRADLE_OPTS=
+if "%USE_GRADLE_OPTS%" == "true" (
+    set GRADLE_OPTS=%GRADLE_OPTS% %JAVA_OPTS%
+)
+call "%~dp0\gradlew.bat" bootRun %*
+endlocal
+goto :eof
+
 :omega
