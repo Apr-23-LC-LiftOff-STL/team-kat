@@ -1,14 +1,16 @@
-package org.launchcode.TasteBuddiesServer.controller.Services;
+package org.launchcode.TasteBuddiesServer.services;
 
-import org.launchcode.TasteBuddiesServer.controller.EventCreateRequest;
+import org.launchcode.TasteBuddiesServer.models.dto.CreateEventDTO;
 import org.launchcode.TasteBuddiesServer.data.EventRepository;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
 import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class EventService {
 
     @Autowired
@@ -20,7 +22,7 @@ public class EventService {
     public static final char[] UPPERCASE_LETTERS = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     public static final int ENTRY_CODE_LENGTH = 6;
 
-    public Event createEvent(EventCreateRequest request, String userEmail) {
+    public Event createEvent(CreateEventDTO request, String userEmail) {
         Event event = new Event();
         event.setLocation(request.getLocation());
         event.setSearchRadius(request.getSearchRadius());
@@ -40,11 +42,12 @@ public class EventService {
             return savedEvent;
         } else {
             // handel the case when user is not found, throw exception or return default value
+            return event;
         }
 
     }
 
-    private String generateUniqueEntryCode() {
+    public String generateUniqueEntryCode() {
         //Implement unique entry
 
         String roomCode;

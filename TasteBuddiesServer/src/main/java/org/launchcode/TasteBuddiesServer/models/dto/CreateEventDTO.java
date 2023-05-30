@@ -1,8 +1,8 @@
-package org.launchcode.TasteBuddiesServer.controller;
+package org.launchcode.TasteBuddiesServer.models.dto;
 
 import java.util.List;
 
-public class EventCreateRequest {
+public class CreateEventDTO {
 
     private List<Long> userId;
     private String location;

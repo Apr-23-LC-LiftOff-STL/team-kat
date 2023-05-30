@@ -51,7 +51,7 @@ public class Event extends AbstractEntity {
 
     }
 
-    public Event(String entryCode,String location, String searchRadius, User user) {
+    public Event(String entryCode, String location, String searchRadius, User user) {
         this.entryCode = entryCode;
         this.location = location;
         this.searchRadius = searchRadius;
