@@ -39,4 +39,12 @@ export class EventService {
     )
   }
 
+  public saveLikeOrDislike(liked: boolean, eventId: number): void {
+    this.http.post(
+      EVENT_API + 'liked',
+      JSON.stringify({eventId, liked}),
+      httpOptions
+    )
+  }
+
 }
