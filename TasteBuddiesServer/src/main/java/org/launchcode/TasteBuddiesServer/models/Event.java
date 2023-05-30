@@ -1,5 +1,7 @@
 package org.launchcode.TasteBuddiesServer.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class Event extends AbstractEntity {
     )
     private List<User> users = new ArrayList<>();
 
+    @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "event_restaurants",

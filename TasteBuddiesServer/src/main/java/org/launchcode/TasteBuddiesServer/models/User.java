@@ -1,5 +1,7 @@
 package org.launchcode.TasteBuddiesServer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 public class User extends AbstractEntity implements UserDetails {
 
@@ -25,7 +28,7 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
-
+    @JsonIgnore
     @NotBlank(message = "Password required.")
 //    moving this requirement to the registration DTO because the stored password is excrypted with
 //    bcrypt which makes it more than 30 characters.
@@ -33,7 +36,7 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Event> events = new ArrayList<>();
 
@@ -41,11 +44,20 @@ public class User extends AbstractEntity implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserLikes> userLikes;
 
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<AuthorityEntity> authorities;
+
+    @JsonIgnore
     private boolean accountNonExpired;
+
+    @JsonIgnore
     private boolean accountNonLocked;
+
+    @JsonIgnore
     private boolean credentialsNonExpired;
+
+    @JsonIgnore
     private boolean enabled;
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -87,6 +99,7 @@ public class User extends AbstractEntity implements UserDetails {
         this.userLikes = userLikes;
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return getEmail();

@@ -1,11 +1,14 @@
 package org.launchcode.TasteBuddiesServer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 public class UserLikes extends AbstractEntity {
 
