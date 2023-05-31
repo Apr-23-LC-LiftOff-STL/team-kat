@@ -36,18 +36,28 @@ import java.util.Optional;
 @RequestMapping("/api/event")
 @CrossOrigin(origins = "http://localhost:4200")
 public class EventController {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RestaurantRepository restaurantRepository;
-    @Autowired
-    private EventRepository eventRepository;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private EventService eventService;
+    private final UserRepository userRepository;
+    private final RestaurantRepository restaurantRepository;
+    private final EventRepository eventRepository;
+    private final UserService userService;
+    private final EventService eventService;
+
     @Value("${apiKey}")
     private String APIKey;
+
+    public EventController(
+            UserRepository userRepository,
+            RestaurantRepository restaurantRepository,
+            EventRepository eventRepository,
+            UserService userService,
+            EventService eventService)
+    {
+        this.userRepository = userRepository;
+        this.restaurantRepository = restaurantRepository;
+        this.eventRepository = eventRepository;
+        this.userService = userService;
+        this.eventService = eventService;
+    }
 
     @PostMapping("")
     public ResponseEntity<?> collectRestaurantData(

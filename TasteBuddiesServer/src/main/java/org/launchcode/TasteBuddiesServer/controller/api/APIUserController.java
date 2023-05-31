@@ -22,10 +22,13 @@ import java.util.stream.Collectors;
         allowCredentials = "true")
 public class APIUserController {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
+
+    public APIUserController(UserRepository userRepository, JwtUtil jwtUtil) {
+        this.userRepository = userRepository;
+        this.jwtUtil = jwtUtil;
+    }
 
     @GetMapping("all")
     public ResponseEntity<?> getAllUsers() {
