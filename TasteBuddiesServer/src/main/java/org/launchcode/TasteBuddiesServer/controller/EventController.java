@@ -16,11 +16,12 @@ import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
+import org.launchcode.TasteBuddiesServer.models.geocode.Location;
 import org.launchcode.TasteBuddiesServer.models.geocode.TranscriptGC;
 import org.launchcode.TasteBuddiesServer.models.nearbySearch.TranscriptNB;
+import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.models.place.TranscriptPlace;
-import org.launchcode.TasteBuddiesServer.services.EventService;
-import org.launchcode.TasteBuddiesServer.services.UserService;
+import org.launchcode.TasteBuddiesServer.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -46,8 +47,20 @@ public class EventController {
     private UserService userService;
     @Autowired
     private EventService eventService;
+    private NearbyService nearbyService;
+    private GeocodeService geocodeService;
+    private PlaceService placeService;
+
     @Value("${apiKey}")
     private String APIKey;
+
+    @PostMapping("places")
+    public ResponseEntity<?> makeRequestToPlacesAPI(
+            HttpServletRequest request,
+            @RequestBody PlacesRequestDTO placesRequestDTO
+    ) {
+
+    }
 
     @PostMapping("")
     public ResponseEntity<?> collectRestaurantData(
@@ -55,9 +68,7 @@ public class EventController {
             HttpServletRequest request
     )
             throws URISyntaxException, IOException, InterruptedException {
-        TranscriptGC transcriptGC;
-        TranscriptNB transcriptNB;
-        TranscriptPlace transcriptPlace;
+
 
         Optional<User> possibleUser = userService.getUserFromRequest(request);
         if (possibleUser.isEmpty()) {
@@ -71,77 +82,26 @@ public class EventController {
                 possibleUser.get()
         );
 
-        String URLGC = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-        String URLNB = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?type=restaurant&location=";
-        String URLPlace = "https://maps.googleapis.com/maps/api/place/details/json?place_id=";
-
-        Gson gson = new Gson();
-        HttpClient httpClient = HttpClient.newHttpClient();
-        HttpRequest getRequest = HttpRequest.newBuilder()
-                .uri(new URI(URLGC+eventDTO.getLocation()+"&key="+APIKey))
-                .build();
-        HttpResponse<String> getResponse = httpClient
-                .send(getRequest, HttpResponse.BodyHandlers.ofString());
-
-        transcriptGC = gson.fromJson(getResponse.body(), TranscriptGC.class);
-
-        String lat = transcriptGC.getResults().get(0).getGeometry().getLocation().getLat();
-        String lng = transcriptGC.getResults().get(0).getGeometry().getLocation().getLng();
-
-        HttpRequest getRequestNB = HttpRequest.newBuilder()
-                .uri(new URI(URLNB+lat+"%2C"+lng+"&radius="+eventDTO.getSearchRadius()+"&key="+APIKey))
-                .build();
-        HttpResponse<String> getResponseNB = httpClient.send(getRequestNB, HttpResponse.BodyHandlers.ofString());
-        transcriptNB = gson.fromJson(getResponseNB.body(), TranscriptNB.class);
-
-        List<String> place_ids = new ArrayList<>();
-        String pageToken = transcriptNB.getNext_page_token();
-
-        for(int i=0; i < transcriptNB.getResults().size(); i++){
-            String place_id = transcriptNB.getResults().get(i).getPlace_id();
-            place_ids.add(place_id);
-        }
-
-        while(pageToken != null){
-            Date currentDate = new Date();
-            Date futureDate = new Date();
-            futureDate.setTime(currentDate.getTime()+2000);
-            while(futureDate.getTime() > currentDate.getTime()){
-                currentDate = new Date();
-            }
-            HttpRequest getRequestNB2 = HttpRequest.newBuilder()
-                    .uri(new URI(URLNB+lat+"%2C"+lng+"&radius="+eventDTO.getSearchRadius()+"&key="+APIKey+"&pagetoken="+pageToken))
-                    .build();
-            HttpResponse<String> getResponseNB2 = httpClient.send(getRequestNB2, HttpResponse.BodyHandlers.ofString());
-            transcriptNB = gson.fromJson(getResponseNB2.body(), TranscriptNB.class);
-
-            pageToken = transcriptNB.getNext_page_token();
-
-            for(int j=0; j < transcriptNB.getResults().size(); j++){
-                String place_id = transcriptNB.getResults().get(j).getPlace_id();
-                place_ids.add(place_id);
-            }
-        }
-
+        Location location = geocodeService.getGeocodeFromAddress(eventDTO.getLocation());
+        List<String> placeIDs = nearbyService.getNearbyIDsFromLocationAndSearchRadius(location, eventDTO.getSearchRadius());
         List<Restaurant> restaurants = new ArrayList<>();
 
-        for(int place_num = 0; place_num < place_ids.size(); place_num++){
-            HttpRequest getRequestPlace = HttpRequest.newBuilder()
-                    .uri(new URI(URLPlace+place_ids.get(place_num)+"&key="+APIKey))
-                    .build();
-            HttpResponse<String> getResponsePlace = httpClient.send(getRequestPlace, HttpResponse.BodyHandlers.ofString());
-            transcriptPlace = gson.fromJson(getResponsePlace.body(), TranscriptPlace.class);
+        for (String placeID : placeIDs) {
 
-            String id = place_ids.get(place_num);
-            String name = transcriptPlace.getResult().getName();
-            String address = transcriptPlace.getResult().getFormatted_address();
-            List<String> types = transcriptPlace.getResult().getTypes();
+            ResultsPlace resultsPlace = placeService.getRestaurantFromPlaceID(placeID);
 
-            if(!restaurantRepository.existsById(id)) {
+            List<String> types = resultsPlace.getTypes();
+
+            if(!restaurantRepository.existsById(placeID)) {
                 if(!(types.contains("gas_station") || types.contains("convenience_store"))){
-                    restaurantRepository.save(new Restaurant(id, name, address));
-                    Optional<Restaurant> result = restaurantRepository.findById(id);
-                    restaurants.add(result.get());
+                    restaurantRepository
+                            .save(new Restaurant(
+                                    placeID,
+                                    resultsPlace.getName(),
+                                    resultsPlace.getFormatted_address()
+                            ));
+                    Optional<Restaurant> possibleRestaurant = restaurantRepository.findById(placeID);
+                    restaurants.add(possibleRestaurant.get());
                 }
             }
         }
