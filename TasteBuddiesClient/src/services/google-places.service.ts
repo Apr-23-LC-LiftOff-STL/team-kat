@@ -6,7 +6,7 @@ import axios from 'axios';
 })
 export class GooglePlacesService {
 
-  private apiKey = ''; //Enter your API key here
+  private apiKey = 'AIzaSyDTDdRCcrr3w5o6H_DdVHS7twjKKuAljeQ'; //Enter your API key here
   
   async getNearbyPlaces(latLng: string, radius: string, keyword: string): Promise<any> {
 
