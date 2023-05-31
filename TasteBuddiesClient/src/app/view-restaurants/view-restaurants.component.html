@@ -1,6 +1,108 @@
 <div *ngIf="restaurants.length > 0">
-    <h2>Restaurants</h2>
-    <ul>
-      <li *ngFor="let restaurant of restaurants">{{ restaurant.name }}</li>
-    </ul>
+  <div *ngIf="currentIndex < restaurants.length">
+    <h3>{{ restaurants[currentIndex].name }}</h3>
+    <p>{{ restaurants[currentIndex].vicinity }}</p>
+    <p>Place ID: {{ restaurants[currentIndex].place_id }}</p>
+    <p>Types:  {{ restaurants[currentIndex].types.join(', ') }}</p>
+    <!-- <img *ngIf="restaurants[currentIndex].photoUrl" [src]="restaurants[currentIndex].photoUrl" alt="Restaurant Photo"> -->
+    
+    <button *ngIf="!user1Completed"(click)="likeRestaurant('user1')">Like</button> <!-- If user1 has not completed voting then the restaurants will be stored in likedRestaurantsUser1 array  -->
+    <button *ngIf="user1Completed"(click)="likeRestaurant('user2')">Like</button> <!-- If user2 has completed voting then the restaurants will be stored in likedRestaurantsUser2 array -->
+    <button (click)="dislikeRestaurant()">Dislike</button>
   </div>
+
+  <div>
+    <!-- If user1 has completed voting but user two has not display a button for user two to press to start voting  -->
+    <div *ngIf="endOfList === true && mutuallyLikedRestaurants.length === 0 && user1Completed && !user2Completed">
+      <h2>All Restaurants Viewed</h2>
+      <h2>User2: Your turn!</h2>
+      <p>User1 Completed: {{ user1Completed }}</p>
+      <p>User2 Completed: {{ user2Completed }}</p>
+
+      <button (click)="restartViewingForUser2()">User2 Start</button>
+
+      <!-- Begin array population tests -->
+      <div *ngIf="likedRestaurantsUser1.length > 0">
+        <h3>Restaurants Liked by User1</h3>
+        <ul>
+          <li *ngFor="let restaurant of likedRestaurantsUser1">{{ restaurant.name }}</li>
+        </ul>
+      </div>
+
+      <div *ngIf="likedRestaurantsUser2.length > 0">
+        <h3>Restaurants Liked by User2</h3>
+        <ul>
+          <li *ngFor="let restaurant of likedRestaurantsUser2">{{ restaurant.name }}</li>
+        </ul>
+      </div>
+      <!--End array population tests -->
+
+    </div>
+
+    <!-- If both users have completed voting with no mutually liked restaurants display message and give option to start over  -->
+    <div *ngIf="endOfList === true && mutuallyLikedRestaurants.length === 0 && user1Completed && user2Completed">
+      <h2>All Restaurants Viewed</h2>
+      <h3>No Restaurant Matches Found</h3>
+      <p>User1 Completed: {{ user1Completed }}</p>
+      <p>User2 Completed: {{ user2Completed }}</p>
+      <p>
+        Try again? 
+        <button (click)="restartEvent()">Start Over</button>
+      </p>
+
+      <!-- Begin array population tests -->
+      <div *ngIf="likedRestaurantsUser1.length > 0">
+        <h3>Restaurants Liked by User1</h3>
+        <ul>
+          <li *ngFor="let restaurant of likedRestaurantsUser1">{{ restaurant.name }}</li>
+        </ul>
+      </div>
+
+      <div *ngIf="likedRestaurantsUser2.length > 0">
+        <h3>Restaurants Liked by User2</h3>
+        <ul>
+          <li *ngFor="let restaurant of likedRestaurantsUser2">{{ restaurant.name }}</li>
+        </ul>
+      </div>
+
+      <div *ngIf="mutuallyLikedRestaurants.length > 0">
+        <h3>Matched Restaurants!</h3>
+        <ul>
+          <li *ngFor="let restaurant of mutuallyLikedRestaurants">{{ restaurant.name }}</li>
+        </ul>
+      </div>
+      <!--End array population tests -->
+    </div>
+
+    <!-- If both users have completed voting with and there are matches, display mutually liked restaurants and the option to run it again.  -->
+    <div *ngIf="endOfList === true && mutuallyLikedRestaurants.length > 0">
+      <h1>Mutually Liked Restaurants:</h1>
+      <div *ngFor="let restaurant of mutuallyLikedRestaurants">
+        <h3>{{ restaurant.name }}</h3>
+        <p>{{ restaurant.vicinity }}</p>
+        <p>Types:  {{ restaurant.types.join(', ') }}</p>
+        <!-- <img *ngIf="restaurant.photoUrl" [src]="restaurant.photoUrl" alt="Restaurant Photo"> -->
+      </div>
+      <p>Run it back?</p>
+      <button (click)="restartEvent()">Start Over</button>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<!-- 
+  <div *ngIf="restaurants.length > 0">
+    <div *ngFor="let restaurant of restaurants">
+      <h3>{{ restaurant.name }}</h3>
+      <p>{{ restaurant.vicinity }}</p>
+      <p>Types: {{ restaurant.types.join(', ') }}</p>
+      <img *ngIf="restaurant.photoUrl" [src]="restaurant.photoUrl" alt="Restaurant Photo">
+  </div>
+</div>
+-->
+
+
