@@ -25,7 +25,6 @@ public class PlaceService {
     public ResultsPlace getRestaurantFromPlaceID(String placeID) throws URISyntaxException, IOException, InterruptedException {
 
         final String URLPlace = "https://maps.googleapis.com/maps/api/place/details/json";
-        TranscriptPlace transcriptPlace;
         Gson gson = new Gson();
 
         HttpClient httpClient = HttpClient.newHttpClient();

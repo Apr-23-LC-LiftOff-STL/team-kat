@@ -3,11 +3,7 @@ package org.launchcode.TasteBuddiesServer.controller;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 import org.launchcode.TasteBuddiesServer.data.EventRepository;
 import org.launchcode.TasteBuddiesServer.data.RestaurantRepository;
@@ -17,10 +13,7 @@ import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
 import org.launchcode.TasteBuddiesServer.models.geocode.Location;
-import org.launchcode.TasteBuddiesServer.models.geocode.TranscriptGC;
-import org.launchcode.TasteBuddiesServer.models.nearbySearch.TranscriptNB;
 import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
-import org.launchcode.TasteBuddiesServer.models.place.TranscriptPlace;
 import org.launchcode.TasteBuddiesServer.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,20 +39,15 @@ public class EventController {
     private UserService userService;
     @Autowired
     private EventService eventService;
+    @Autowired
     private NearbyService nearbyService;
+    @Autowired
     private GeocodeService geocodeService;
+    @Autowired
     private PlaceService placeService;
 
     @Value("${apiKey}")
     private String APIKey;
-
-    @PostMapping("places")
-    public ResponseEntity<?> makeRequestToPlacesAPI(
-            HttpServletRequest request,
-            @RequestBody PlacesRequestDTO placesRequestDTO
-    ) {
-
-    }
 
     @PostMapping("")
     public ResponseEntity<?> collectRestaurantData(
