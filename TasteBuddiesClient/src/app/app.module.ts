@@ -17,10 +17,11 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { HeaderComponent } from './common/header/header.component';
 import { NavBarButtonComponent } from './common/nav-bar/nav-bar-button/nav-bar-button.component';
-import { EventComponent } from './event/event.component';
+import { EventComponent } from './events/event.component';
 import { AccountComponent } from './account/account.component';
-import { UserEventsComponent } from './user-events/user-events.component';
+import { UserEventsComponent } from './events/user-events/user-events.component';
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
+import { EventFormComponent } from './events/event-form/event-form.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.co
     EventComponent,
     AccountComponent,
     UserEventsComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    EventFormComponent
   ],
   imports: [
     BrowserModule,

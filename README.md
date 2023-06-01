@@ -7,7 +7,11 @@
 1. Navigate to the \TasteBuddiesClient folder and run `npm install`
 
 ### Spring Boot
-- ❗ Open intelliJ to the `team-kat/TasteBuddiesServer`/ directory. This is required for IntelliJ to recognize the Gradle project and run it at all.
+- ❗ Open intelliJ to the `team-kat/TasteBuddiesServer`/ directory. This is required for IntelliJ to recognize the Gradle project and run it at all
+- You should have a gradle button on the right side of your window (once IntelliJ finishes loading the project). In the gradle menu launch the application with Tasks>application>bootRun. [See here for instructions if you need help](https://education.launchcode.org/java-web-development/chapters/spring-intro/initialize.html#running-a-spring-project)
+- Create the file `TasteBuddiesServer/src/main/resources/application-dev.properties` to hold the Google Places API key (ask Ricky, Brad, or Nathan if you need it)
+	- This is a key=value pair in the form of `apiKey = API_KEY_HERE`
+- Edit your run configuration for TasteBuddiesServer [bootRun]. In the environment variables section add the line `spring.profiles.active=dev;`. This tells spring to launch with the dev profile enabled which reads the apiKey from application-dev.properties
 - Follow steps below for DB setup.
 
 
