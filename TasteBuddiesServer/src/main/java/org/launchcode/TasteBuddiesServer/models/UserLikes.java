@@ -24,9 +24,7 @@ public class UserLikes extends AbstractEntity {
     )
     private List<Restaurant> likedRestaurants;
 
-    public UserLikes(){
-
-    }
+    public UserLikes(){ }
 
     public UserLikes(User user, List<Restaurant> likedRestaurants){
         this.user = user;

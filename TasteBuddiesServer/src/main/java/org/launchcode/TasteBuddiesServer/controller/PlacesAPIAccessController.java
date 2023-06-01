@@ -2,7 +2,6 @@ package org.launchcode.TasteBuddiesServer.controller;
 
 import org.launchcode.TasteBuddiesServer.models.dto.PlacesRequestDTO;
 import org.launchcode.TasteBuddiesServer.services.PlaceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin(
         origins = "http://localhost:4200",
         allowCredentials = "true")
-public class RestaurantController {
+public class PlacesAPIAccessController {
     private final PlaceService placeService;
 
     @Value("${apiKey}")
     private String APIKey;
 
-    public RestaurantController(PlaceService placeService) {
+    public PlacesAPIAccessController(PlaceService placeService) {
         this.placeService = placeService;
     }
 
