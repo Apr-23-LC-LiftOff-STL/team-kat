@@ -59,8 +59,6 @@ public class EventController {
     @PostMapping("")
     public ResponseEntity<?> getEventFromId(@RequestBody int eventId) {
 
-        System.out.println(eventId);
-
         if (eventId <= 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
