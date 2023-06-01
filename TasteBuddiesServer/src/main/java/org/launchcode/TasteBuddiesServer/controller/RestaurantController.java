@@ -15,11 +15,14 @@ import javax.servlet.http.HttpServletRequest;
         origins = "http://localhost:4200",
         allowCredentials = "true")
 public class RestaurantController {
-    @Autowired
-    private PlaceService placeService;
+    private final PlaceService placeService;
 
     @Value("${apiKey}")
     private String APIKey;
+
+    public RestaurantController(PlaceService placeService) {
+        this.placeService = placeService;
+    }
 
     @GetMapping
     public ResponseEntity<?> makeRequestToPlacesAPI(
