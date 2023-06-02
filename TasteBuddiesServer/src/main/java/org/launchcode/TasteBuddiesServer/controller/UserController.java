@@ -1,4 +1,4 @@
-package org.launchcode.TasteBuddiesServer.controller.api;
+package org.launchcode.TasteBuddiesServer.controller;
 
 import org.launchcode.TasteBuddiesServer.config.JwtUtil;
 import org.launchcode.TasteBuddiesServer.data.EventRepository;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(
         origins = "http://localhost:4200",
         allowCredentials = "true")
-public class APIUserController {
+public class UserController {
 
     @Autowired
     private UserRepository userRepository;
