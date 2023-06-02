@@ -3,8 +3,6 @@ package org.launchcode.TasteBuddiesServer.controller.api;
 import org.launchcode.TasteBuddiesServer.config.JwtUtil;
 import org.launchcode.TasteBuddiesServer.data.EventRepository;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
-import org.launchcode.TasteBuddiesServer.models.AbstractEntity;
-import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,12 +60,4 @@ public class APIUserController {
 
         return ResponseEntity.status(200).body(userDTO);
     }
-
-    @GetMapping("events")
-    public ResponseEntity<?> getEvents() {
-        return ResponseEntity.status(200).body(eventRepository.findAll());
-    }
-
-
-
 }
