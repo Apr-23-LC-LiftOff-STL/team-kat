@@ -82,11 +82,7 @@ public class EventController {
             if(!restaurantRepository.existsById(placeID)) {
                 if(!(types.contains("gas_station") || types.contains("convenience_store"))){
                     restaurantRepository
-                            .save(new Restaurant(
-                                    placeID,
-                                    resultsPlace.getName(),
-                                    resultsPlace.getFormatted_address()
-                            ));
+                            .save(new Restaurant(placeID, newEvent));
                     Optional<Restaurant> possibleRestaurant = restaurantRepository.findById(placeID);
                     restaurants.add(possibleRestaurant.get());
                 }

@@ -34,6 +34,7 @@ extends AbstractEntity
 - String searchRadius  
 - List \<User\> users  
 - List \<Restaurant\> availableRestaurants  
+- List \<UserLikes\> userLikedRestaurants
 - Date createdDate  
 - Date timeForMeal   // allows for checking if a restaurant is open for the event  
 

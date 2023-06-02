@@ -24,11 +24,6 @@ public class Event extends AbstractEntity {
     @NotNull
     private String searchRadius;
 
-    //fetchtype to "LAZY" for performance
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     //defining a many-to-one relationship between two entities and specifying that the related entity should be fetched lazily to optimize performance.
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -47,20 +42,22 @@ public class Event extends AbstractEntity {
     )
     private List<Restaurant> availableRestaurants = new ArrayList<>();
 
+    @OneToMany
+    @JoinColumn(name = "event_id")
+    private List<UserLikes> userLikedRestaurants = new ArrayList<>();
+
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    public Event(){
+    public Event(){ }
 
-    }
-
-    public Event(String entryCode, String location, String searchRadius, User user) {
+    public Event(String entryCode, String location, String searchRadius, User initialUser) {
         this.entryCode = entryCode;
         this.location = location;
         this.searchRadius = searchRadius;
-        this.user = user;
         this.createdDate = new Date();
+        this.users.add(initialUser);
     }
 
     public List<Restaurant> getAvailableRestaurants() {
@@ -79,10 +76,6 @@ public class Event extends AbstractEntity {
         this.entryCode = entryCode;
     }
 
-    @OneToMany
-    @JoinColumn(name = "event_id")
-    private List<UserLikes> userLikedRestaurants = new ArrayList<>();
-
     public String getLocation() {
         return location;
     }
@@ -97,14 +90,6 @@ public class Event extends AbstractEntity {
 
     public void setSearchRadius(String searchRadius) {
         this.searchRadius = searchRadius;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Date getCreatedDate() {
@@ -123,12 +108,12 @@ public class Event extends AbstractEntity {
         this.users = users;
     }
 
-//    public List<UserLikes> getUserLikedRestaurants() {
-//        return userLikedRestaurants;
-//    }
+    public List<UserLikes> getUserLikedRestaurants() {
+        return userLikedRestaurants;
+    }
 
-//    public void setUserLikedRestaurants(List<UserLikes> userLikedRestaurants) {
-//        this.userLikedRestaurants = userLikedRestaurants;
-//    }
+    public void setUserLikedRestaurants(List<UserLikes> userLikedRestaurants) {
+        this.userLikedRestaurants = userLikedRestaurants;
+    }
 
 }
