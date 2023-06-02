@@ -1,7 +1,10 @@
 package org.launchcode.TasteBuddiesServer.controller.api;
 
 import org.launchcode.TasteBuddiesServer.config.JwtUtil;
+import org.launchcode.TasteBuddiesServer.data.EventRepository;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
+import org.launchcode.TasteBuddiesServer.models.AbstractEntity;
+import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,8 @@ public class APIUserController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EventRepository eventRepository;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -53,10 +58,16 @@ public class APIUserController {
         if (possibleUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+        UserDTO userDTO = new UserDTO(possibleUser.get());
 
-        UserDTO user = new UserDTO(possibleUser.get());
-
-        return ResponseEntity.status(200).body(user);
+        return ResponseEntity.status(200).body(userDTO);
     }
+
+    @GetMapping("events")
+    public ResponseEntity<?> getEvents() {
+        return ResponseEntity.status(200).body(eventRepository.findAll());
+    }
+
+
 
 }

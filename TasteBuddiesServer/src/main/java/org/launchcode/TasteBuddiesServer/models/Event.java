@@ -50,14 +50,19 @@ public class Event extends AbstractEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date mealTime;
+
     public Event(){ }
 
-    public Event(String entryCode, String location, String searchRadius, User initialUser) {
+    public Event(String entryCode, String location, String searchRadius, User initialUser, Date mealTime) {
         this.entryCode = entryCode;
         this.location = location;
         this.searchRadius = searchRadius;
         this.createdDate = new Date();
         this.users.add(initialUser);
+        this.mealTime = mealTime;
     }
 
     public List<Restaurant> getAvailableRestaurants() {
@@ -116,4 +121,11 @@ public class Event extends AbstractEntity {
         this.userLikedRestaurants = userLikedRestaurants;
     }
 
+    public Date getMealTime() {
+        return mealTime;
+    }
+
+    public void setMealTime(Date mealTime) {
+        this.mealTime = mealTime;
+    }
 }

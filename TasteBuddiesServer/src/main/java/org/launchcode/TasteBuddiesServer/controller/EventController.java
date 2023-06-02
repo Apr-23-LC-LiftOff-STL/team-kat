@@ -1,7 +1,5 @@
 package org.launchcode.TasteBuddiesServer.controller;
 
-import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -11,7 +9,7 @@ import org.launchcode.TasteBuddiesServer.data.UserRepository;
 import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.User;
-import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.CreateEventFormDTO;
 import org.launchcode.TasteBuddiesServer.models.geocode.Location;
 import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.services.*;
@@ -51,7 +49,7 @@ public class EventController {
 
     @PostMapping("")
     public ResponseEntity<?> collectRestaurantData(
-            @RequestBody EventDTO eventDTO,
+            @RequestBody CreateEventFormDTO eventDTO,
             HttpServletRequest request
     )
             throws URISyntaxException, IOException, InterruptedException {
@@ -66,7 +64,8 @@ public class EventController {
                 eventService.generateUniqueEntryCode(),
                 eventDTO.getLocation(),
                 eventDTO.getSearchRadius(),
-                possibleUser.get()
+                possibleUser.get(),
+                eventDTO.getMealTime()
         );
 
         Location location = geocodeService.getGeocodeFromAddress(eventDTO.getLocation());

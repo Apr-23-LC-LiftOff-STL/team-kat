@@ -1,15 +1,17 @@
 package org.launchcode.TasteBuddiesServer.models.dto;
 
+import org.launchcode.TasteBuddiesServer.models.AbstractEntity;
 import org.launchcode.TasteBuddiesServer.models.User;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDTO {
 
     private int id;
     private String displayName;
     private String email;
-
-    // TODO Add events, and other user data
-
+    private List<Integer> eventIDs;
 
     public UserDTO(int id, String displayName, String email) {
         this.id = id;
@@ -21,6 +23,10 @@ public class UserDTO {
         this.id = user.getId();
         this.displayName = user.getDisplayName();
         this.email = user.getEmail();
+        this.eventIDs = user.getEvents()
+                .stream()
+                .map(AbstractEntity::getId)
+                .collect(Collectors.toList());
     }
 
     public int getId() {
@@ -45,5 +51,13 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Integer> getEventIDs() {
+        return eventIDs;
+    }
+
+    public void setEventIDs(List<Integer> eventIDs) {
+        this.eventIDs = eventIDs;
     }
 }
