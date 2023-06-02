@@ -1,4 +1,4 @@
-package org.launchcode.TasteBuddiesServer.controller;
+package org.launchcode.TasteBuddiesServer.controllers;
 
 import org.launchcode.TasteBuddiesServer.config.JwtUtil;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;

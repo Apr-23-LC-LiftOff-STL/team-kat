@@ -1,4 +1,4 @@
-package org.launchcode.TasteBuddiesServer.controller;
+package org.launchcode.TasteBuddiesServer.controllers;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

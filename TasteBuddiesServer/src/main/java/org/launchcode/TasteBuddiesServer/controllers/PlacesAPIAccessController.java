@@ -1,4 +1,4 @@
-package org.launchcode.TasteBuddiesServer.controller;
+package org.launchcode.TasteBuddiesServer.controllers;
 
 import org.launchcode.TasteBuddiesServer.models.dto.PlacesRequestDTO;
 import org.launchcode.TasteBuddiesServer.services.PlaceService;
