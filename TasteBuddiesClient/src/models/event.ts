@@ -3,32 +3,36 @@ import { User } from "./user";
 export class Event {
 
     id: number;
-    location: string; // zip code? Address?
-    date: Date;
-    searchRadius: string;  // meters?
     entryCode: string; // six characters. Numbers too?
+    location: string; // zip code? Address?
+    searchRadius: string;  // meters?
+    restaurants: Array<String>;
+    currentUser: User;
+    otherUsers: Array<User>;
+    mealTime: Date;
     users: Array<User>;
 
-    // TODO: implement these
-    // availableRestaurants: Array<Restauraunt> = new Array();
-    // likedRestauraunts: Map<User, Array<Restauraunt>> = new Map();
 
 
 
     constructor(
-        id: number = 0,
-        location: string = '90210',
-        date = new Date("2023/07/01"),
-        searchRadius: string = '1000', 
-        entryCode: string = 'ABCDEF',
-        users: Array<User> = [new User(0, 'demo', 'also demo')],
+        id: number,
+        location: string,
+        date: Date,
+        searchRadius: string, 
+        restaurants: Array<String>,
+        entryCode: string,
+        currentUser: User,
+        otherUsers: Array<User>,
         ) {
             this.id = id;
             this.location = location;
-            this.date = date;
+            this.mealTime = date;
             this.searchRadius = searchRadius;
+            this.restaurants = restaurants;
             this.entryCode = entryCode;
-            this.users = users;
+            this.currentUser = currentUser;
+            this.otherUsers = otherUsers;
         }
 
 }

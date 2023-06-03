@@ -28,6 +28,14 @@ public class UserLikes extends AbstractEntity {
     )
     private List<Restaurant> likedRestaurants;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_dislikes_restaurants",
+            joinColumns = @JoinColumn(name = "user_dislikes_restaurant"),
+            inverseJoinColumns = @JoinColumn(name = "restaurant_id")
+    )
+    private List<Restaurant> dislikedRestaurants;
+
     public UserLikes(){ }
 
     public UserLikes(User user, List<Restaurant> likedRestaurants){
