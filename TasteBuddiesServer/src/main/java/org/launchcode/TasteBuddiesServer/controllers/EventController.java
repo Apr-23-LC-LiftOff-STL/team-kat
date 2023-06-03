@@ -15,6 +15,7 @@ import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/event")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(
+        origins = "http://localhost:4200",
+        allowCredentials = "true"
+)
 public class EventController {
     @Autowired
     private UserRepository userRepository;
@@ -48,6 +52,36 @@ public class EventController {
     private String APIKey;
 
     @PostMapping("")
+    public ResponseEntity<?> getEventFromId(@RequestBody int eventId) {
+
+        System.out.println(eventId);
+
+        if (eventId <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        Optional<Event> possibleEvent = eventRepository.findById(eventId);
+
+        if (possibleEvent.isEmpty()) {
+            return ResponseEntity.status(204).body(null);
+        }
+
+        return ResponseEntity.status(200).body(possibleEvent.get());
+    }
+
+    @GetMapping("all")
+    public ResponseEntity<?> getAllEvents(HttpServletRequest request) {
+
+        List<Event> possibleEvents = (List<Event>) eventRepository.findAll();
+
+        if (possibleEvents.size() == 0) {
+            return ResponseEntity.status(204).body(null);
+        }
+
+        return ResponseEntity.status(200).body(eventRepository.findAll());
+    }
+
+    @PostMapping("create")
     public ResponseEntity<?> collectRestaurantData(
             @RequestBody CreateEventFormDTO eventDTO,
             HttpServletRequest request
