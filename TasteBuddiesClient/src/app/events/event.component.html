@@ -5,16 +5,18 @@
         <div *ngIf="currentRestaurant != null; else noNextEvent">
             <div class="row p-2">
                 <h4 class="col-auto m-auto">{{ currentRestaurant.name }}</h4>
+                <!-- TODO: query the places api for the details of the restaurant -->
+                <h4 class="col-auto m-auto">{{ currentRestaurant.id }}</h4>
             </div>
             <div class="row p-2">
                 <div class="col-auto m-auto text-center">
                     <!-- TODO: call google api to get place images -->
+                    <!-- TODO: before that finish the controller... -->
                     PLACEHOLDER <br> FOR <br> IMAGES
                 </div>
             </div>
             <div class="row p-2">
                 <div class="col-auto m-auto">
-                    <!-- TODO: Center these buttons -->
                     <button class="btn btn-success mx-3" (click)="yesToRestaurant(true)">Yes</button>
                     <button class="btn btn-danger mx-3" (click)="yesToRestaurant(false)">No</button>
                 </div>
@@ -49,8 +51,8 @@
     </ol>
     <h3>Restaurants</h3>
     <ol>
-        <li *ngFor="let restaurant of event.restaurants">
-            <span>Restaurant ID: {{restaurant.id}}</span>
+        <li *ngFor="let restaurant of restaurants">
+            <span>Restaurant ID: {{ restaurant.id }}</span>
         </li>
     </ol>
 </div>

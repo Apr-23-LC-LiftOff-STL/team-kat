@@ -7,7 +7,7 @@ export class Event {
     entryCode: string; // six characters. Numbers too?
     location: string; // zip code? Address?
     searchRadius: string;  // meters?
-    restaurants: Array<String>;
+    restaurants: Array<Restaurant>;
     currentUser: User;
     otherUsers: Array<User>;
     mealTime: Date;
@@ -17,7 +17,7 @@ export class Event {
         location: string,
         date: Date,
         searchRadius: string, 
-        restaurants: Array<String>,
+        restaurants: Array<Restaurant>,
         entryCode: string,
         currentUser: User,
         otherUsers: Array<User>,

@@ -15,6 +15,7 @@ export class EventComponent implements OnInit {
   event$: Observable<any>;
   event: Event;
   currentRestaurant: Restaurant;
+  // restaurantIDs: Array<string>;
   restaurants: Array<Restaurant>;
 
   constructor(
@@ -33,7 +34,7 @@ export class EventComponent implements OnInit {
     this.event$.subscribe({
       next: res => {
         this.event = res;
-        this.restaurants = this.event.availableRestaurants;
+        this.restaurants = this.event.restaurants;
         this.nextRestaurant();
       },
       error: e => {
