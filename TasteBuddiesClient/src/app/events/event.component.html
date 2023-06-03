@@ -19,11 +19,7 @@
     <h3>Restaurants</h3>
     <ol>
         <li *ngFor="let restaurant of event.availableRestaurants">
-            <ul>
-                <li>Restaurant ID: {{restaurant.id}}</li>
-                <li>Restaurant name: {{restaurant.name}}</li>
-                <li>Restaurant address: {{restaurant.address}}</li>
-            </ul>
+            <span>Restaurant ID: {{restaurant.id}}</span>
         </li>
     </ol>
 </div>
