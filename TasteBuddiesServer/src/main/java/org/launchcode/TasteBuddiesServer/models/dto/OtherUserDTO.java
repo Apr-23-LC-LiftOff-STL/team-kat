@@ -6,27 +6,25 @@ import org.launchcode.TasteBuddiesServer.models.User;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserDTO {
+/**
+ * This is to return users, other than the logged-in user.
+ * It prevents sending the events the other user is in,
+ * and the other user's email
+ */
+
+public class OtherUserDTO {
 
     private int id;
     private String displayName;
-    private String email;
-    private List<Integer> eventIDs;
 
-    public UserDTO(int id, String displayName, String email) {
+    public OtherUserDTO(int id, String displayName) {
         this.id = id;
         this.displayName = displayName;
-        this.email = email;
     }
 
-    public UserDTO(User user) {
+    public OtherUserDTO(User user) {
         this.id = user.getId();
         this.displayName = user.getDisplayName();
-        this.email = user.getEmail();
-        this.eventIDs = user.getEvents()
-                .stream()
-                .map(AbstractEntity::getId)
-                .collect(Collectors.toList());
     }
 
     public int getId() {
@@ -45,19 +43,4 @@ public class UserDTO {
         this.displayName = displayName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public List<Integer> getEventIDs() {
-        return eventIDs;
-    }
-
-    public void setEventIDs(List<Integer> eventIDs) {
-        this.eventIDs = eventIDs;
-    }
 }

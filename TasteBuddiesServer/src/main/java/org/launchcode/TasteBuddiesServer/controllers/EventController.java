@@ -10,6 +10,7 @@ import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.CreateEventFormDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
 import org.launchcode.TasteBuddiesServer.models.geocode.Location;
 import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.services.*;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/event")
@@ -52,9 +54,10 @@ public class EventController {
     private String APIKey;
 
     @PostMapping("")
-    public ResponseEntity<?> getEventFromId(@RequestBody int eventId) {
-
-        System.out.println(eventId);
+    public ResponseEntity<?> getEventFromId(
+            @RequestBody int eventId,
+            HttpServletRequest request
+    ) {
 
         if (eventId <= 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -66,44 +69,58 @@ public class EventController {
             return ResponseEntity.status(204).body(null);
         }
 
-        return ResponseEntity.status(200).body(possibleEvent.get());
+        Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
+        if (possibleCurrentUser.isEmpty()) {
+            return ResponseEntity.status(403).build();
+        }
+
+        return ResponseEntity.status(200).body(new EventDTO(possibleEvent.get(), possibleCurrentUser.get()));
     }
 
     @GetMapping("all")
     public ResponseEntity<?> getAllEvents(HttpServletRequest request) {
 
         List<Event> possibleEvents = (List<Event>) eventRepository.findAll();
-
         if (possibleEvents.size() == 0) {
             return ResponseEntity.status(204).body(null);
         }
 
-        return ResponseEntity.status(200).body(eventRepository.findAll());
+        Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
+        if (possibleCurrentUser.isEmpty()) {
+            return ResponseEntity.status(403).build();
+        }
+
+        List<EventDTO> allEvents = ((List<Event>) eventRepository.findAll())
+                .stream()
+                .map(event -> new EventDTO(event, possibleCurrentUser.get()))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(200).body(allEvents);
     }
 
     @PostMapping("create")
     public ResponseEntity<?> collectRestaurantData(
-            @RequestBody CreateEventFormDTO eventDTO,
+            @RequestBody CreateEventFormDTO createEventFormDTO,
             HttpServletRequest request
     )
             throws URISyntaxException, IOException, InterruptedException {
 
 
-        Optional<User> possibleUser = userService.getUserFromRequest(request);
-        if (possibleUser.isEmpty()) {
+        Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
+        if (possibleCurrentUser.isEmpty()) {
             return ResponseEntity.status(403).build();
         }
 
         Event newEvent = new Event(
                 eventService.generateUniqueEntryCode(),
-                eventDTO.getLocation(),
-                eventDTO.getSearchRadius(),
-                possibleUser.get(),
-                eventDTO.getMealTime()
+                createEventFormDTO.getLocation(),
+                createEventFormDTO.getSearchRadius(),
+                possibleCurrentUser.get(),
+                createEventFormDTO.getMealTime()
         );
 
-        Location location = geocodeService.getGeocodeFromAddress(eventDTO.getLocation());
-        List<String> placeIDs = nearbyService.getNearbyIDsFromLocationAndSearchRadius(location, eventDTO.getSearchRadius());
+        Location location = geocodeService.getGeocodeFromAddress(createEventFormDTO.getLocation());
+        List<String> placeIDs = nearbyService.getNearbyIDsFromLocationAndSearchRadius(location, createEventFormDTO.getSearchRadius());
         List<Restaurant> restaurants = new ArrayList<>();
 
         for (String placeID : placeIDs) {

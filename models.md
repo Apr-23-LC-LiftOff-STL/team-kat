@@ -5,7 +5,7 @@ Entities should NOT be returned directly to the frontend as they can contain sen
 
 eg
 ```
-UserDTO {
+CurrentUserDTO {
 	String displayName
 	String email
 	UserLikes eventUserLike

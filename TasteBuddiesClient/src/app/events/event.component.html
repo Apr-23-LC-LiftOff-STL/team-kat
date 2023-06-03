@@ -5,7 +5,17 @@
     <p>location:  {{ event.location }}</p>
     <p>date: {{ event.date }}</p>
     <p>search radius: {{ event.searchRadius }}</p>
-    <p>users: {{ event.users }}</p>
+    <p>users:</p>
+    <ol>
+        <li *ngFor="let user of event.users">
+            <ul>
+                <li>{{user.id}}</li>
+                <li>{{user.displayName}}</li>
+                <li>{{user.email}}</li>
+                <li>{{user.userLikes}}</li>
+            </ul>
+        </li>
+    </ol>
     <h3>Restaurants</h3>
     <ol>
         <li *ngFor="let restaurant of event.availableRestaurants">

@@ -1,10 +1,8 @@
 package org.launchcode.TasteBuddiesServer.models.dto;
 
-import org.launchcode.TasteBuddiesServer.models.AbstractEntity;
-import org.launchcode.TasteBuddiesServer.models.Event;
-import org.launchcode.TasteBuddiesServer.models.Restaurant;
-import org.launchcode.TasteBuddiesServer.models.UserLikes;
+import org.launchcode.TasteBuddiesServer.models.*;
 
+import javax.print.attribute.standard.MediaSize;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,9 +11,10 @@ public class EventDTO {
     private String entryCode;
     private String location;
     private String searchRadius;
-    private List<Integer> userIDs;
+    private CurrentUserDTO currentUser;
+    private List<OtherUserDTO> otherUsers;
     private List<Restaurant> restaurants;
-    private List<UserLikes> userLikes;
+//    private List<UserLikes> userLikes;
     private Date mealTime;
 
     public EventDTO() {
@@ -24,30 +23,36 @@ public class EventDTO {
     public EventDTO(String entryCode,
                     String location,
                     String searchRadius,
-                    List<Integer> userIDs,
+                    User currentUser,
+                    List<User> otherUsers,
                     List<Restaurant> restaurants,
-                    List<UserLikes> userLikes,
                     Date mealTime
     ) {
         this.entryCode = entryCode;
         this.location = location;
         this.searchRadius = searchRadius;
-        this.userIDs = userIDs;
+        this.currentUser = new CurrentUserDTO(currentUser);
+        this.otherUsers = otherUsers
+                .stream()
+                .filter(user -> user.getId() != this.currentUser.getId())
+                .map(OtherUserDTO::new)
+                .collect(Collectors.toList());
         this.restaurants = restaurants;
-        this.userLikes = userLikes;
         this.mealTime = mealTime;
     }
 
-    public EventDTO(Event event) {
-        this.entryCode = event.getEntryCode();
-        this.location = event.getLocation();
-        this.searchRadius = event.getSearchRadius();
-        this.userIDs = event.getUsers()
-                .stream()
-                .map(AbstractEntity::getId)
-                .collect(Collectors.toList());
+    public EventDTO(Event event, User currentUser) {
+        this(
+                event.getEntryCode(),
+                event.getLocation(),
+                event.getSearchRadius(),
+                currentUser,
+                event.getUsers(),
+                event.getAvailableRestaurants(),
+                event.getMealTime()
+        );
+
         this.restaurants = event.getAvailableRestaurants();
-        this.userLikes = event.getUserLikedRestaurants();
         this.mealTime = event.getMealTime();
     }
 
@@ -75,12 +80,20 @@ public class EventDTO {
         this.searchRadius = searchRadius;
     }
 
-    public List<Integer> getUserIDs() {
-        return userIDs;
+    public CurrentUserDTO getCurrentUser() {
+        return currentUser;
     }
 
-    public void setUserIDs(List<Integer> userIDs) {
-        this.userIDs = userIDs;
+    public void setCurrentUser(CurrentUserDTO currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public List<OtherUserDTO> getOtherUsers() {
+        return otherUsers;
+    }
+
+    public void setOtherUsers(List<OtherUserDTO> otherUsers) {
+        this.otherUsers = otherUsers;
     }
 
     public List<Restaurant> getRestaurants() {
@@ -89,14 +102,6 @@ public class EventDTO {
 
     public void setRestaurants(List<Restaurant> restaurants) {
         this.restaurants = restaurants;
-    }
-
-    public List<UserLikes> getUserLikes() {
-        return userLikes;
-    }
-
-    public void setUserLikes(List<UserLikes> userLikes) {
-        this.userLikes = userLikes;
     }
 
     public Date getMealTime() {
