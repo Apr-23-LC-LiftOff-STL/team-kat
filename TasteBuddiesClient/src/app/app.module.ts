@@ -9,7 +9,6 @@ import { RegistrationFormComponent } from './auth/registration-form/registration
 import { LoginFormComponent } from './auth/login-form/login-form.component';
 
 import { httpInterceptorProviders } from 'src/helpers/http.intercepter';
-import { AuthWalkthroughComponent } from './auth/auth-walkthrough/auth-walkthrough.component';
 import { HomeComponent } from './home/home.component';
 import { NavBarComponent } from './common/nav-bar/nav-bar.component';
 import { FooterComponent } from './common/footer/footer.component';
@@ -28,7 +27,6 @@ import { EventFormComponent } from './events/event-form/event-form.component';
     AppComponent,
     RegistrationFormComponent,
     LoginFormComponent,
-    AuthWalkthroughComponent,
     HomeComponent,
     NavBarComponent,
     FooterComponent,
