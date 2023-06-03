@@ -1,15 +1,18 @@
 package org.launchcode.TasteBuddiesServer.controllers;
 
-import org.launchcode.TasteBuddiesServer.models.dto.PlacesRequestDTO;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.launchcode.TasteBuddiesServer.services.PlaceService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.InputStream;
+import java.nio.file.Files;
 
 @RestController
-@RequestMapping("/api/restaurant")
+@RequestMapping("/api/places")
 @CrossOrigin(
         origins = "http://localhost:4200",
         allowCredentials = "true")
@@ -23,8 +26,8 @@ public class PlacesAPIAccessController {
         this.placeService = placeService;
     }
 
-    @GetMapping
-    public ResponseEntity<?> makeRequestToPlacesAPI(
+    @GetMapping("restaurant")
+    public ResponseEntity<?> getPlaceFromPlacesAPI(
             @RequestParam String placeID
     ) {
         try {
@@ -39,20 +42,46 @@ public class PlacesAPIAccessController {
         }
     }
 
-    @PostMapping("")
-    public ResponseEntity<?> makeRequestToPlacesAPI(
-            HttpServletRequest request,
-            @RequestBody PlacesRequestDTO placesRequestDTO
+    /**
+     *
+     * @param photo_reference - Places API photo reference
+     * @param maxwidth int - optional, but at least one of the dimension parameters are required
+     * @param maxheight - int - optional, but at least one of the dimension parameters are required
+     * @return
+     *
+     * NOT YET WORKING. I'm still trying to get this image passed properly. Right now this will handle pngs, sort of.
+     */
+    @GetMapping(
+            value = "image",
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public ResponseEntity<?> getImageFromPlacesAPI(
+            @RequestParam String photo_reference,
+            @RequestParam(required = false) Integer maxwidth,
+            @RequestParam(required = false) Integer maxheight
     ) {
+        if (maxheight == null && maxwidth == null) {
+            return ResponseEntity.status(400).build();
+        }
+
+        if (maxwidth == null) {
+            maxwidth = 0;
+        }
+
+        if (maxheight == null) {
+            maxheight = 0;
+        }
+
         try {
-            return ResponseEntity
-                    .status(200)
-                    .body(placeService.getRestaurantFromPlaceID(placesRequestDTO.getPlaceID()));
+            ByteArrayResource resource = new ByteArrayResource(placeService.getImageFromPhotoReference(photo_reference, maxheight, maxwidth));
+            return ResponseEntity.status(200).body(resource);
         } catch (Exception e) {
             System.out.println(e);
-            return ResponseEntity
-                    .status(400)
-                    .build();
         }
+
+        return ResponseEntity.status(500).build();
+
     }
+
+
 }
