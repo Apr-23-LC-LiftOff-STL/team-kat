@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EventDTO {
+    private int id;
     private String entryCode;
     private String location;
     private String searchRadius;
@@ -18,7 +19,8 @@ public class EventDTO {
     public EventDTO() {
     }
 
-    public EventDTO(String entryCode,
+    public EventDTO(int id,
+                    String entryCode,
                     String location,
                     String searchRadius,
                     User currentUser,
@@ -26,6 +28,7 @@ public class EventDTO {
                     List<Restaurant> restaurants,
                     Date mealTime
     ) {
+        this.id = id;
         this.entryCode = entryCode;
         this.location = location;
         this.searchRadius = searchRadius;
@@ -41,6 +44,7 @@ public class EventDTO {
 
     public EventDTO(Event event, User currentUser) {
         this(
+                event.getId(),
                 event.getEntryCode(),
                 event.getLocation(),
                 event.getSearchRadius(),
@@ -52,6 +56,14 @@ public class EventDTO {
 
         this.restaurants = event.getAvailableRestaurants();
         this.mealTime = event.getMealTime();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEntryCode() {

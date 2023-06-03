@@ -3,22 +3,28 @@
 <div *ngIf="event$ | async as event"> 
     <p>id: {{ event.id }}</p>
     <p>location:  {{ event.location }}</p>
-    <p>date: {{ event.date }}</p>
+    <p>date: {{ event.mealTime }}</p>
     <p>search radius: {{ event.searchRadius }}</p>
-    <p>users:</p>
+    <h3>users:</h3>
+    <p>Current user:</p>
+        <ul>
+            <li>{{event.currentUser.id}}</li>
+            <li>{{event.currentUser.displayName}}</li>
+            <li>{{event.currentUser.email}}</li> 
+            <li>{{event.currentUser.userLikes}}</li>
+        </ul>
+    <p>Other users:</p>
     <ol>
-        <li *ngFor="let user of event.users">
+        <li *ngFor="let user of event.otherUsers">
             <ul>
                 <li>{{user.id}}</li>
                 <li>{{user.displayName}}</li>
-                <li>{{user.email}}</li>
-                <li>{{user.userLikes}}</li>
             </ul>
         </li>
     </ol>
     <h3>Restaurants</h3>
     <ol>
-        <li *ngFor="let restaurant of event.availableRestaurants">
+        <li *ngFor="let restaurant of event.restaurants">
             <span>Restaurant ID: {{restaurant.id}}</span>
         </li>
     </ol>

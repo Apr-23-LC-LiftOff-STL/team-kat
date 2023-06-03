@@ -10,10 +10,6 @@ export class Event {
     currentUser: User;
     otherUsers: Array<User>;
     mealTime: Date;
-    users: Array<User>;
-
-
-
 
     constructor(
         id: number,

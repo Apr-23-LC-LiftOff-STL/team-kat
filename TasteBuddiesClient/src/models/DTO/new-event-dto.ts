@@ -1,8 +1,8 @@
 export class NewEventDTO {
 
     location: string; // zip code? Address?
-    date: Date;
     searchRadius: string;  // meters?
+    mealTime: Date;
 
     constructor(
         location: string = '63103',
