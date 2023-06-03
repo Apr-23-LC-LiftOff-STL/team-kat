@@ -6,7 +6,7 @@ import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.LoginFormDTO;
 import org.launchcode.TasteBuddiesServer.models.dto.RegistrationFormDTO;
 import org.launchcode.TasteBuddiesServer.models.dto.TokenDTO;
-import org.launchcode.TasteBuddiesServer.models.dto.UserDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.CurrentUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,11 +52,6 @@ public class AuthController {
             return ResponseEntity.status(200).body(new TokenDTO(jwtUtil.generateToken(user)));
         }
         return ResponseEntity.status(400).body("Some error has occurred.");
-    }
-
-    @GetMapping("/authenticated")
-    public ResponseEntity<?> authenticationTest() {
-        return ResponseEntity.status(200).body(new UserDTO(-1, "This is an email", "email@gmail.com"));
     }
 
     @PostMapping("/register")
