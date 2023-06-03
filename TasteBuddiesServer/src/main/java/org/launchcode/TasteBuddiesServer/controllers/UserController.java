@@ -1,12 +1,11 @@
-package org.launchcode.TasteBuddiesServer.controller.api;
+package org.launchcode.TasteBuddiesServer.controllers;
 
 import org.launchcode.TasteBuddiesServer.config.JwtUtil;
+import org.launchcode.TasteBuddiesServer.data.EventRepository;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
 import org.launchcode.TasteBuddiesServer.models.User;
-import org.launchcode.TasteBuddiesServer.models.dto.SearchDTO;
-import org.launchcode.TasteBuddiesServer.models.dto.UserDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.CurrentUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +21,12 @@ import java.util.stream.Collectors;
 @CrossOrigin(
         origins = "http://localhost:4200",
         allowCredentials = "true")
-public class APIUserController {
+public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EventRepository eventRepository;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -37,9 +38,9 @@ public class APIUserController {
             return ResponseEntity.status(204).body(null);
         }
 
-        List<UserDTO> users = possibleUsers
+        List<CurrentUserDTO> users = possibleUsers
                 .stream()
-                .map(UserDTO::new)
+                .map(CurrentUserDTO::new)
                 .collect(Collectors.toList());
 
         return ResponseEntity.status(200).body(users);
@@ -55,10 +56,8 @@ public class APIUserController {
         if (possibleUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+        CurrentUserDTO userDTO = new CurrentUserDTO(possibleUser.get());
 
-        UserDTO user = new UserDTO(possibleUser.get());
-
-        return ResponseEntity.status(200).body(user);
+        return ResponseEntity.status(200).body(userDTO);
     }
-
 }

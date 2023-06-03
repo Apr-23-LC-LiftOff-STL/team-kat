@@ -1,6 +1,6 @@
 package org.launchcode.TasteBuddiesServer.services;
 
-import org.launchcode.TasteBuddiesServer.models.dto.CreateEventDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.CreateEventFormDTO;
 import org.launchcode.TasteBuddiesServer.data.EventRepository;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
 import org.launchcode.TasteBuddiesServer.models.Event;
@@ -22,7 +22,7 @@ public class EventService {
     public static final char[] UPPERCASE_LETTERS = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     public static final int ENTRY_CODE_LENGTH = 6;
 
-    public Event createEvent(CreateEventDTO request, String userEmail) {
+    public Event createEvent(CreateEventFormDTO request, String userEmail) {
         Event event = new Event();
         event.setLocation(request.getLocation());
         event.setSearchRadius(request.getSearchRadius());

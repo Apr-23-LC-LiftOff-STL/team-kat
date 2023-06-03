@@ -1,26 +1,30 @@
 package org.launchcode.TasteBuddiesServer.models.dto;
 
+import org.launchcode.TasteBuddiesServer.models.AbstractEntity;
 import org.launchcode.TasteBuddiesServer.models.User;
 
-public class UserDTO {
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * This is to return users, other than the logged-in user.
+ * It prevents sending the events the other user is in,
+ * and the other user's email
+ */
+
+public class OtherUserDTO {
 
     private int id;
     private String displayName;
-    private String email;
 
-    // TODO Add events, and other user data
-
-
-    public UserDTO(int id, String displayName, String email) {
+    public OtherUserDTO(int id, String displayName) {
         this.id = id;
         this.displayName = displayName;
-        this.email = email;
     }
 
-    public UserDTO(User user) {
+    public OtherUserDTO(User user) {
         this.id = user.getId();
         this.displayName = user.getDisplayName();
-        this.email = user.getEmail();
     }
 
     public int getId() {
@@ -39,11 +43,4 @@ public class UserDTO {
         this.displayName = displayName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
