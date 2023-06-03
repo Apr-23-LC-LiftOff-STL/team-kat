@@ -38,10 +38,6 @@ export class AuthenticationService {
     );
   }
 
-  corsCheck(): Observable<any> {
-    return this.http.get(AUTH_API + 'authenticated', httpOptions)
-  }
-
   logout(): void {
     this.storageService.clearJwt();
   }

@@ -1,21 +1,12 @@
 package org.launchcode.TasteBuddiesServer.models.dto;
 
-import java.util.List;
+import java.util.Date;
 
-public class CreateEventDTO {
+public class CreateEventFormDTO {
 
-    private List<Long> userId;
     private String location;
     private String searchRadius;
-
-
-    public List<Long> getUserId() {
-        return userId;
-    }
-
-    public void setUserId(List<Long> userId) {
-        this.userId = userId;
-    }
+    private Date mealTime;
 
     public String getLocation() {
         return location;
@@ -31,5 +22,13 @@ public class CreateEventDTO {
 
     public void setSearchRadius(String searchRadius) {
         this.searchRadius = searchRadius;
+    }
+
+    public Date getMealTime() {
+        return mealTime;
+    }
+
+    public void setMealTime(Date mealTime) {
+        this.mealTime = mealTime;
     }
 }
