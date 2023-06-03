@@ -2,7 +2,6 @@ package org.launchcode.TasteBuddiesServer.models.dto;
 
 import org.launchcode.TasteBuddiesServer.models.*;
 
-import javax.print.attribute.standard.MediaSize;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +13,6 @@ public class EventDTO {
     private CurrentUserDTO currentUser;
     private List<OtherUserDTO> otherUsers;
     private List<Restaurant> restaurants;
-//    private List<UserLikes> userLikes;
     private Date mealTime;
 
     public EventDTO() {
