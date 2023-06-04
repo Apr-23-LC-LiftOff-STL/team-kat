@@ -11,6 +11,7 @@ import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.CreateEventFormDTO;
 import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.JoinEventDTO;
 import org.launchcode.TasteBuddiesServer.models.geocode.Location;
 import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.services.*;
@@ -146,7 +147,25 @@ public class EventController {
     }
 
     @PostMapping("join")
-    public ResponseEntity<?> joinEvent(){
+    public ResponseEntity<?> joinEvent(
+            @RequestBody JoinEventDTO joinEventDTO,
+            HttpServletRequest request
+            ) throws URISyntaxException, IOException, InterruptedException {
+
+        Optional<User> possibleUser = userService.getUserFromRequest(request);
+        if(possibleUser.isEmpty()){
+            return ResponseEntity.status(403).build();
+        }
+
+        Optional<Event> possibleEvent = eventRepository.findByEntryCode(joinEventDTO.getEntryCode());
+        if(possibleEvent.isEmpty()){
+            return ResponseEntity.status(403).build();
+        }
+        Event currentEvent = possibleEvent.get();
+        List<User> moreUsers = currentEvent.getUsers();
+        moreUsers.add(possibleUser.get());
+        currentEvent.setUsers(moreUsers);
+        eventRepository.save(currentEvent);
         return ResponseEntity.status(200).build();
     }
 }
