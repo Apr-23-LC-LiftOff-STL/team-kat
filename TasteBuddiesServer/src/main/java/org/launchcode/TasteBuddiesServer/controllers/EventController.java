@@ -128,7 +128,7 @@ public class EventController {
             ResultsPlace resultsPlace = placeService.getRestaurantFromPlaceID(placeID);
 
             List<String> types = resultsPlace.getTypes();
-
+//          todo: create else branch to put restaurant data in event even if it exists in restaurant repository
             if(!restaurantRepository.existsById(placeID)) {
                 if(!(types.contains("gas_station") || types.contains("convenience_store"))){
                     restaurantRepository
