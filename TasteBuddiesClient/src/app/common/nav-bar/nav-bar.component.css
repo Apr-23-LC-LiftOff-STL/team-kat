@@ -1,0 +1,42 @@
+nav.navbar {
+    color: #FFC0CB;
+}
+
+a.navbar-brand {
+    font-size: 35px;
+    color: #FDFD96;
+    background-color: #FFC0CB;
+    padding: 0.3rem 2rem;
+    border-radius: 30px;
+}
+
+
+
+
+ul.nav-pills a.nav-link {
+    background-color: #FDFD96;
+    color: #FF69B4;
+    font-size: 12px;
+    border-radius: 15px;
+    padding: 0.3rem 2rem;
+}
+li.btn.btn-primary.rounded-pill {
+    background-color: #FDFD96;
+    border-radius: 15px;
+    padding: 0.3rem 2rem;
+}
+.btn-primary{
+
+
+}
+
+
+ul.nav-pills a.nav-link:hover {
+    color: #FF69B4;
+}
+
+
+
+ul.nav-pills a.nav-link {
+    color: #FFC0CB;
+}

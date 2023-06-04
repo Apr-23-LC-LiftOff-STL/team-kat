@@ -1,30 +1,32 @@
 <div class="container">
-    <div class="row">
-        <div class="col card p-2 m-3" style="background-color: #fefefe;">
-            <h3 class="mx-auto">Upcoming events</h3>
-            <ul>
-                <li *ngFor="let event of upcommingEvents">{{event.entryCode}}</li>
-            </ul>
-        </div>
-        <div class="col card p-2 m-3" style="background-color: #fefefe;">
-            <h3 class="mx-auto">
-                Past events
-            </h3>
-            <ul>
-                <li *ngFor="let event of pastEvents">{{event.entryCode}}</li>
-            </ul>
-        </div>
+  <div class="row">
+    <div class="col card p-3 m-3 bg-light">
+      <h3 class="text-center mb-4">Upcoming Events</h3>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let event of upcommingEvents">
+          {{ event.entryCode }}
+        </li>
+      </ul>
     </div>
+    <div class="col card p-3 m-3 bg-light">
+      <h3 class="text-center mb-4">Past Events</h3>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let event of pastEvents">
+          {{ event.entryCode }}
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
 
-<ul>
-    <li>
-        {{user.id}}
-    </li>
-    <li>
-        {{user.email}}
-    </li>
-    <li>
-        {{user.displayName}}
-    </li>
+<ul class="list-unstyled mt-5">
+  <li class="mb-2">
+    <strong>User ID:</strong> {{ user.id }}
+  </li>
+  <li class="mb-2">
+    <strong>Email:</strong> {{ user.email }}
+  </li>
+  <li>
+    <strong>Display Name:</strong> {{ user.displayName }}
+  </li>
 </ul>

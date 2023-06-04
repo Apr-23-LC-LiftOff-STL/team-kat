@@ -1,4 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-/* body {
-    background-color: #fcfcfc;
-} */
+
+.navbar {
+      color: #FDFD96;
+}
+
+body {
+    background-color: #FDFD96;
+}
+
