@@ -39,4 +39,11 @@ export class EventService {
     )
   }
 
+  public joinEvent(entryCode: string):Observable<any> {
+    return this.http.post(
+      EVENT_API + 'join',
+      JSON.stringify(entryCode),
+      httpOptions
+    )
+  }
 }
