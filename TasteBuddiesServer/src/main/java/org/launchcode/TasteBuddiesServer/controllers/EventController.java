@@ -80,19 +80,22 @@ public class EventController {
     @GetMapping("all")
     public ResponseEntity<?> getAllEvents(HttpServletRequest request) {
 
-        List<Event> possibleEvents = (List<Event>) eventRepository.findAll();
-        if (possibleEvents.size() == 0) {
-            return ResponseEntity.status(204).body(null);
-        }
-
         Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
         if (possibleCurrentUser.isEmpty()) {
             return ResponseEntity.status(403).build();
         }
 
-        List<EventDTO> allEvents = ((List<Event>) eventRepository.findAll())
+        List<Event> events = eventRepository.findAllByUsers(possibleCurrentUser.get());
+
+        if (events.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        List<EventDTO> allEvents = ((List<Event>) events)
                 .stream()
-                .map(event -> new EventDTO(event, possibleCurrentUser.get()))
+                .map(event -> {
+                    return new EventDTO(event, possibleCurrentUser.get());
+                })
                 .collect(Collectors.toList());
 
         return ResponseEntity.status(200).body(allEvents);
