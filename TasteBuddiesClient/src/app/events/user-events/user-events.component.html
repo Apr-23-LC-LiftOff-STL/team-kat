@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+        <div class="col card p-2 m-3">
+            <h3 class="mx-auto">Upcoming events</h3>
+
+            <ul *ngIf="upcommingEvents.length > 0; else noUpcommingEvents">
+                <li *ngFor="let event of upcommingEvents">
+                    <a routerLink="./{{event.id}}">{{event.entryCode}}</a>
+                </li>
+            </ul>
+            <ng-template #noUpcommingEvents>
+                <p class="m-auto text-secondary">Woops! Nothing here yet</p>
+            </ng-template>
+        </div>
+        <div class="col card p-2 m-3">
+            <h3 class="mx-auto">
+                Past events
+            </h3>
+            <ul *ngIf="pastEvents.length > 0; else noPastEvents">
+                <li *ngFor="let event of pastEvents">
+                    <a routerLink="./{{event.id}}">{{event.entryCode}}</a>
+                </li>
+            </ul>
+            <ng-template #noPastEvents>
+                <p class="m-auto text-secondary">Woops! Nothing here yet</p>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class="row">
+        <div>
+            <a class="btn btn-primary" routerLink="./create" role="button">
+                New Event
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<h1>Event Component</h1>
+<h2>DUMMY OUTPUT PLEASE CHANGE ME</h2>
+<div *ngIf="event$ | async as event"> 
+    <p>id: {{ event.id }}</p>
+    <p>location:  {{ event.location }}</p>
+    <p>date: {{ event.mealTime }}</p>
+    <p>search radius: {{ event.searchRadius }}</p>
+    <h3>users:</h3>
+    <p>Current user:</p>
+        <ul>
+            <li>{{event.currentUser.id}}</li>
+            <li>{{event.currentUser.displayName}}</li>
+            <li>{{event.currentUser.email}}</li> 
+            <li>{{event.currentUser.userLikes}}</li>
+        </ul>
+    <p>Other users:</p>
+    <ol>
+        <li *ngFor="let user of event.otherUsers">
+            <ul>
+                <li>{{user.id}}</li>
+                <li>{{user.displayName}}</li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Restaurants</h3>
+    <ol>
+        <li *ngFor="let restaurant of event.restaurants">
+            <span>Restaurant ID: {{restaurant.id}}</span>
+        </li>
+    </ol>
+</div>

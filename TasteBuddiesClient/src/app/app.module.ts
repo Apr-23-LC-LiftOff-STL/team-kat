@@ -9,7 +9,6 @@ import { RegistrationFormComponent } from './auth/registration-form/registration
 import { LoginFormComponent } from './auth/login-form/login-form.component';
 
 import { httpInterceptorProviders } from 'src/helpers/http.intercepter';
-import { AuthWalkthroughComponent } from './auth/auth-walkthrough/auth-walkthrough.component';
 import { HomeComponent } from './home/home.component';
 import { NavBarComponent } from './common/nav-bar/nav-bar.component';
 import { FooterComponent } from './common/footer/footer.component';
@@ -17,17 +16,17 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { HeaderComponent } from './common/header/header.component';
 import { NavBarButtonComponent } from './common/nav-bar/nav-bar-button/nav-bar-button.component';
-import { EventComponent } from './event/event.component';
+import { EventComponent } from './events/event.component';
 import { AccountComponent } from './account/account.component';
-import { UserEventsComponent } from './user-events/user-events.component';
+import { UserEventsComponent } from './events/user-events/user-events.component';
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
+import { EventFormComponent } from './events/event-form/event-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationFormComponent,
     LoginFormComponent,
-    AuthWalkthroughComponent,
     HomeComponent,
     NavBarComponent,
     FooterComponent,
@@ -38,7 +37,8 @@ import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.co
     EventComponent,
     AccountComponent,
     UserEventsComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    EventFormComponent
   ],
   imports: [
     BrowserModule,
