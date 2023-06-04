@@ -42,13 +42,12 @@ public class PlacesAPIAccessController {
      * @param photo_reference - Places API photo reference
      * @param maxwidth int - optional, but at least one of the dimension parameters are required
      * @param maxheight - int - optional, but at least one of the dimension parameters are required
-     * @return
+     * @return ResponseEntity<>
      *
-     * NOT YET WORKING. I'm still trying to get this image passed properly. Right now this will handle pngs, sort of.
+     *
      */
     @GetMapping(
-            value = "image",
-            produces = MediaType.IMAGE_PNG_VALUE
+            value = "image"
     )
     public ResponseEntity<?> getImageFromPlacesAPI(
             @RequestParam String photo_reference,
