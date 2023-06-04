@@ -1,15 +1,10 @@
 package org.launchcode.TasteBuddiesServer.controllers;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.launchcode.TasteBuddiesServer.services.PlaceService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.InputStream;
-import java.nio.file.Files;
 
 @RestController
 @RequestMapping("/api/places")

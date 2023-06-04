@@ -1,7 +1,6 @@
 package org.launchcode.TasteBuddiesServer.services;
 
 import com.google.gson.Gson;
-import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.models.place.TranscriptPlace;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,14 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -64,22 +58,6 @@ public class PlaceService {
         return places;
     }
 
-
-    /**
-     *
-     * @param photoReference
-     * @param maxheight
-     * @param maxwidth
-     * @return
-     * @throws IOException
-     * @throws InterruptedException
-     * @throws URISyntaxException
-     *
-     * NOT YET WORKING - this will be the general idea for this service, but it isn't working yet. I'm not totally sure
-     * how to handle the http response properly. It will probably wind up with an object container to handle some
-     * other potential properties from the places api
-     *
-     */
     public ResponseEntity<byte[]> getImageFromPhotoReference(String photoReference, int maxheight, int maxwidth)
             throws IOException, InterruptedException, URISyntaxException
     {
