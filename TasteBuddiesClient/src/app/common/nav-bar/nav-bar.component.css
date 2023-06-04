@@ -13,6 +13,7 @@ a.navbar-brand {
 
 
 
+
 ul.nav-pills a.nav-link {
     background-color: #FDFD96;
     color: #FF69B4;
@@ -25,10 +26,7 @@ li.btn.btn-primary.rounded-pill {
     border-radius: 15px;
     padding: 0.3rem 2rem;
 }
-.btn-primary{
 
-
-}
 
 
 ul.nav-pills a.nav-link:hover {
