@@ -5,7 +5,11 @@ import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.models.place.TranscriptPlace;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -76,36 +80,36 @@ public class PlaceService {
      * other potential properties from the places api
      *
      */
-    public byte[] getImageFromPhotoReference(String photoReference, int maxheight, int maxwidth)
+    public ResponseEntity<byte[]> getImageFromPhotoReference(String photoReference, int maxheight, int maxwidth)
             throws IOException, InterruptedException, URISyntaxException
     {
-        final String URLPlace = "https://maps.googleapis.com/maps/api/place/photo?";
         StringBuilder stringBuilder = new StringBuilder();
-
+        final String URLPlace = "https://maps.googleapis.com/maps/api/place/photo?";
         stringBuilder.append(URLPlace);
         stringBuilder.append("photo_reference=").append(photoReference);
 
         if (maxheight >= 0) {
             stringBuilder.append("&maxheight=").append(maxheight);
         }
-
         if (maxwidth >= 0) {
             stringBuilder.append("&maxwidth=").append(maxwidth);
         }
 
         stringBuilder.append("&key=").append(APIKey);
+        String photoURL = stringBuilder.toString();
 
-        String myURL = stringBuilder.toString();
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<byte[]> response = restTemplate.getForEntity(photoURL, byte[].class);
 
-        HttpClient httpClient = HttpClient.newHttpClient();
-        HttpRequest getRequestPhoto = HttpRequest.newBuilder()
-                .uri(new URI(stringBuilder.toString()))
-                .build();
-        HttpResponse<byte[]> getResponsePlace = httpClient.send(getRequestPhoto, HttpResponse.BodyHandlers.ofByteArray());
+        if (response.getStatusCode() != HttpStatus.OK) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
+        }
 
-//        Image image = new ImageIcon(getResponsePlace.body()).getImage();
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .header("Content-Type", response.getHeaders().getContentType().toString())
+                .body(response.getBody());
 
-        return getResponsePlace.body();
     }
 
 }

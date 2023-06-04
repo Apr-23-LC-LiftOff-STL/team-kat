@@ -73,8 +73,8 @@ public class PlacesAPIAccessController {
         }
 
         try {
-            ByteArrayResource resource = new ByteArrayResource(placeService.getImageFromPhotoReference(photo_reference, maxheight, maxwidth));
-            return ResponseEntity.status(200).body(resource);
+            ResponseEntity<byte[]> result = placeService.getImageFromPhotoReference(photo_reference, maxheight, maxwidth);
+            return result;
         } catch (Exception e) {
             System.out.println(e);
         }
