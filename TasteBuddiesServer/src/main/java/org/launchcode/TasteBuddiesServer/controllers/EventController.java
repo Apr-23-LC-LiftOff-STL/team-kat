@@ -144,4 +144,9 @@ public class EventController {
 
         return ResponseEntity.status(200).build();
     }
+
+    @PostMapping("join")
+    public ResponseEntity<?> joinEvent(){
+        return ResponseEntity.status(200).build();
+    }
 }
