@@ -2,6 +2,7 @@ package org.launchcode.TasteBuddiesServer.data;
 
 import org.launchcode.TasteBuddiesServer.models.Event;
 
+import org.launchcode.TasteBuddiesServer.models.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +14,7 @@ public interface EventRepository extends CrudRepository <Event, Integer> {
     List<Event> findByLocation(String location);
 
     Optional<Event> findByEntryCode(String entryCode);
+
+    List<Event> findAllByUsers(User user);
+
 }
