@@ -10,6 +10,7 @@ import { EventService } from 'src/services/event.service';
 })
 export class EventJoinComponent implements OnInit { 
   joinEvent: JoinEventDto = new JoinEventDto;
+  errorMessage: string;
 
   constructor(
     private router: Router,
@@ -26,6 +27,7 @@ export class EventJoinComponent implements OnInit {
         },
         error: (e) => {
           console.error(e.message);
+          this.errorMessage = "room code does not exist"
         }
       })
   }
