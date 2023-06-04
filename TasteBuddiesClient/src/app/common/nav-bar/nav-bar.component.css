@@ -9,7 +9,10 @@ a.navbar-brand {
     padding: 0.3rem 2rem;
     border-radius: 30px;
 }
+nav.navbar.navbar-expand-lg.bg-light {
+    background-color: #464646 !important;
 
+}
 
 
 
