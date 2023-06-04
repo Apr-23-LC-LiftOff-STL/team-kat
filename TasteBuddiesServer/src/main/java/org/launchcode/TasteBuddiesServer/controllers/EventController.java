@@ -130,14 +130,15 @@ public class EventController {
 
             List<String> types = resultsPlace.getTypes();
 //          todo: create else branch to put restaurant data in event even if it exists in restaurant repository
-            if(!restaurantRepository.existsById(placeID)) {
-                if(!(types.contains("gas_station") || types.contains("convenience_store"))){
+            if(!(types.contains("gas_station") || types.contains("convenience_store"))){
+                if(!restaurantRepository.existsById(placeID)){
                     restaurantRepository
                             .save(new Restaurant(placeID, newEvent));
-                    Optional<Restaurant> possibleRestaurant = restaurantRepository.findById(placeID);
-                    restaurants.add(possibleRestaurant.get());
                 }
+                Optional<Restaurant> possibleRestaurant = restaurantRepository.findById(placeID);
+                restaurants.add(possibleRestaurant.get());
             }
+
         }
 
         newEvent.setAvailableRestaurants(restaurants);
