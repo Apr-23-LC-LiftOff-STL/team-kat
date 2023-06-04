@@ -2,7 +2,6 @@ package org.launchcode.TasteBuddiesServer.controllers;
 
 import org.launchcode.TasteBuddiesServer.services.PlaceService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,9 +45,7 @@ public class PlacesAPIAccessController {
      *
      *
      */
-    @GetMapping(
-            value = "image"
-    )
+    @GetMapping("image")
     public ResponseEntity<?> getImageFromPlacesAPI(
             @RequestParam String photo_reference,
             @RequestParam(required = false) Integer maxwidth,

@@ -1,5 +1,7 @@
 package org.launchcode.TasteBuddiesServer.models.place;
 
+import org.launchcode.TasteBuddiesServer.models.place.photo.Photo;
+
 import java.util.List;
 
 public class ResultsPlace {
@@ -7,12 +9,14 @@ public class ResultsPlace {
     private String name;
     private String formatted_address;
     private List<String> types;
+    private List<Photo> photos;
 
-    public ResultsPlace(String place_id, String name, String formatted_address, List<String> types) {
+    public ResultsPlace(String place_id, String name, String formatted_address, List<String> types, List<Photo> photos) {
         this.place_id = place_id;
         this.name = name;
         this.formatted_address = formatted_address;
         this.types = types;
+        this.photos = photos;
     }
 
     public String getPlace_id() {
@@ -46,4 +50,8 @@ public class ResultsPlace {
     public void setFormatted_address(String formatted_address) {
         this.formatted_address = formatted_address;
     }
+
+    public List<Photo> getPhotos() { return photos; }
+
+    public void setPhotos(List<Photo> photos) { this.photos = photos; }
 }

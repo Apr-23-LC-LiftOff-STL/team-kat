@@ -35,14 +35,14 @@ export class PlacesService {
       throw Error("Either or both maxwidth or maxheight are required");
     }
 
-    let url = EVENT_API + 'photo?' +
+    let url = EVENT_API + 'image?' +
     'photo_reference=' + photoReference;
 
-    if (maxwidth! > 0) {
+    if (maxwidth! > 0 && maxwidth !== undefined) {
       url += '&maxwidth=' + maxwidth;
     }
 
-    if (maxwidth! > 0) {
+    if (maxheight! > 0  && maxheight !== undefined) {
       url += '&maxheight=' + maxheight;
     }
 

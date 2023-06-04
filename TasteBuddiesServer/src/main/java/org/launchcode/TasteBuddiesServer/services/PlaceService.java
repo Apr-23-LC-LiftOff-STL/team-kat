@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,6 +20,9 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(
+        origins = "http://localhost:4200",
+        allowCredentials = "true")
 @Service
 public class PlaceService {
 
@@ -66,10 +70,10 @@ public class PlaceService {
         stringBuilder.append(URLPlace);
         stringBuilder.append("photo_reference=").append(photoReference);
 
-        if (maxheight >= 0) {
+        if (maxheight > 0) {
             stringBuilder.append("&maxheight=").append(maxheight);
         }
-        if (maxwidth >= 0) {
+        if (maxwidth > 0) {
             stringBuilder.append("&maxwidth=").append(maxwidth);
         }
 
