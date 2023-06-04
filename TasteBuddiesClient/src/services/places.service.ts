@@ -1,7 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { NewEventDTO } from 'src/models/DTO/new-event-dto';
 
 const EVENT_API = 'http://localhost:8080/api/places/';
 
@@ -46,7 +45,7 @@ export class PlacesService {
       url += '&maxheight=' + maxheight;
     }
 
-    return this.http.get(url)
+    return this.http.get(url, { responseType: 'blob' })
 
   }
 
