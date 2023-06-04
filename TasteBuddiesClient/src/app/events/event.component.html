@@ -1,6 +1,33 @@
 <h1>Event Component</h1>
 <h2>DUMMY OUTPUT PLEASE CHANGE ME</h2>
-<div *ngIf="event$ | async as event"> 
+
+<div class="col-auto card m-auto p-3">
+    <div *ngIf="currentRestaurant != null; else noNextEvent">
+        <div class="row p-2">
+            <!-- TODO: query the places api for the details of the restaurant -->
+            <h4 class="col-auto m-auto">{{ currentRestaurant }}</h4>
+        </div>
+        <div class="row p-2">
+            <div class="col-auto m-auto text-center">
+                <div *ngIf="isPhotoLoading; else imgPlaceholder" id="primary-photo">
+                    <img [src]="currentPhoto" alt="">
+                </div>
+                <!-- TODO: call google api to get place images -->
+                <!-- TODO: before that finish the controller... -->
+                <ng-template #imgPlaceholder>PLACEHOLDER <br> FOR <br> IMAGES</ng-template>
+            </div>
+        </div>
+        <div class="row p-2">
+            <div class="col-auto m-auto">
+            </div>
+        </div>
+    </div>
+    <ng-template #noNextEvent>
+        <p class="m-auto text-secondary">Woops! Nothing was here :/</p>
+    </ng-template>
+</div>
+
+<!-- <div *ngIf="event$ | async as event"> 
     <p>id: {{ event.id }}</p>
     <p>location:  {{ event.location }}</p>
     <p>date: {{ event.mealTime }}</p>
@@ -28,4 +55,4 @@
             <span>Restaurant ID: {{restaurant.id}}</span>
         </li>
     </ol>
-</div>
+</div> -->
