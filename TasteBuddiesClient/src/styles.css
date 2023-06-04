@@ -21,10 +21,9 @@
           0px 0px 7.2px -7px rgba(0, 0, 0, 0.046),
           0px 0px 24px -7px rgba(255, 165, 0, 1)
         ;
+        color: #90EE90;
   }
-div.container{
-    color: #FFA500;
-}
-div.container:hover {
-     color: #90EE90;
+
+div.container {
+     color: #FFA500;
 }
