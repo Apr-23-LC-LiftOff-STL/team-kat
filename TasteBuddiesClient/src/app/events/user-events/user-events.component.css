@@ -1,7 +1,21 @@
 div.col.card.p-2.m-3 {
-     background-color: #F0FFF0;
+     background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1115360003172335637/PIZZZAA.png");
+           background-position: center center;
+           background-size: cover;
+           background-repeat: no-repeat;
+
 
 }
+
+div.col.card.p-2.m-4 {
+     background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1115360039889281044/ooushi.png");
+           background-position: center center;
+           background-size: cover;
+           background-repeat: no-repeat;
+
+
+}
+
 p.m-auto.text-secondary {
 
     font-size: 13px;
