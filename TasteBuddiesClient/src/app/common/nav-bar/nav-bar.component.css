@@ -26,19 +26,22 @@ nav.navbar.navbar-expand-lg.bg-light{
 nav.navbar.navbar-expand-lg.bg-light {
     background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1115338519817244722/TASTE.gif") !important;
     background-position: center center;
-}
+    background-size: cover;
+    background-repeat: no-repeat;
 
+}
 
 
 
 ul.nav-pills a.nav-link {
-    background-color: #FF1493;
+
     font-size: 12px;
     border-radius: 15px;
     padding: 0.3rem 2rem;
+    padding-top: 650px;
 }
 li.btn.btn-primary.rounded-pill {
-
+    margin-top: 655px;
     border-radius: 15px;
     padding: 0.3rem 2rem;
 }

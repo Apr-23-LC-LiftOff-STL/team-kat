@@ -2,8 +2,15 @@
 
 body {
     background-color:  #D2B48C;
-
 }
+
+main {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+
+
 a.btn.btn-primary {
     color:  #F0FFF0;
     background-color:  #FF1493;
@@ -56,9 +63,13 @@ a.btn.btn-primary:hover {
          8.8px 5.4px 33.4px rgba(144, 238, 144, 1),
          21px 13px 80px rgba(0, 0, 0, 0.07)
        ;
-       border-radius: 35px;
-        transition: 1.5s;
-        height: 500px;
+      border-radius: 35px;
+      transition: 1.5s;
+      height: 300px;
+      background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1115350791797080065/Untitled_11_7_in.png");
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
 
   }
 
