@@ -1,15 +1,10 @@
 package org.launchcode.TasteBuddiesServer.controllers;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.services.PlaceService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.InputStream;
-import java.nio.file.Files;
 
 @RestController
 @RequestMapping("/api/places")
@@ -31,9 +26,10 @@ public class PlacesAPIAccessController {
             @RequestParam String placeID
     ) {
         try {
+            ResultsPlace result = placeService.getRestaurantFromPlaceID(placeID);
             return ResponseEntity
                     .status(200)
-                    .body(placeService.getRestaurantFromPlaceID(placeID));
+                    .body(result);
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity
@@ -47,14 +43,11 @@ public class PlacesAPIAccessController {
      * @param photo_reference - Places API photo reference
      * @param maxwidth int - optional, but at least one of the dimension parameters are required
      * @param maxheight - int - optional, but at least one of the dimension parameters are required
-     * @return
+     * @return ResponseEntity<>
      *
-     * NOT YET WORKING. I'm still trying to get this image passed properly. Right now this will handle pngs, sort of.
+     *
      */
-    @GetMapping(
-            value = "image",
-            produces = MediaType.IMAGE_PNG_VALUE
-    )
+    @GetMapping("image")
     public ResponseEntity<?> getImageFromPlacesAPI(
             @RequestParam String photo_reference,
             @RequestParam(required = false) Integer maxwidth,
@@ -73,8 +66,8 @@ public class PlacesAPIAccessController {
         }
 
         try {
-            ByteArrayResource resource = new ByteArrayResource(placeService.getImageFromPhotoReference(photo_reference, maxheight, maxwidth));
-            return ResponseEntity.status(200).body(resource);
+            ResponseEntity<byte[]> result = placeService.getImageFromPhotoReference(photo_reference, maxheight, maxwidth);
+            return result;
         } catch (Exception e) {
             System.out.println(e);
         }
