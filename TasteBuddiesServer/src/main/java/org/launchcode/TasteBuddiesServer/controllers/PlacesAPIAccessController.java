@@ -1,5 +1,6 @@
 package org.launchcode.TasteBuddiesServer.controllers;
 
+import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.services.PlaceService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,10 @@ public class PlacesAPIAccessController {
             @RequestParam String placeID
     ) {
         try {
+            ResultsPlace result = placeService.getRestaurantFromPlaceID(placeID);
             return ResponseEntity
                     .status(200)
-                    .body(placeService.getRestaurantFromPlaceID(placeID));
+                    .body(result);
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity

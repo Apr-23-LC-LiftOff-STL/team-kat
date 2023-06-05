@@ -18,7 +18,7 @@ export class EventComponent implements OnInit {
   restaurantDetails: {
     place_id: string,
     name: string,
-    formatted_adress: string,
+    formatted_address: string,
     types: Array<string>,
     photos: Array<{
       photo_reference: string;
@@ -57,7 +57,13 @@ export class EventComponent implements OnInit {
         console.error(e);
       }
     })
+  }
 
+  yesToRestaurant(choice: boolean): void {
+
+    // TODO: Call event service to save result of choice, update position of user on backend. 
+
+    this.nextRestaurant();
   }
 
   private nextRestaurant(): void {
@@ -66,7 +72,6 @@ export class EventComponent implements OnInit {
       next: res => {
         this.restaurantDetails = res;
         this.loadPhoto(this.restaurantDetails.photos[0].photo_reference)
-        // this.loadPhoto('AZose0lbXPf2rHelg5TC_ackUKpNu3Vt5mZLgJ9WuX-B07W1QieYjlKKeiTlhNtgO1nMYlH_y4fNXB-kjvm2gl6KX_7l4gW3GemG5yNHgDJle7a0qHPlhsCabNdCl_5qwnhTm8PDfzmXx8WCH0F6bI-0MUKVLgFnrutTnXlzJyr9_zXlJLHH') // dummy request
       },
       error: e => {
         console.error(e);

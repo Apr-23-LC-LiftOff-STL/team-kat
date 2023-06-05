@@ -9,9 +9,9 @@ public class ResultsPlace {
     private String name;
     private String formatted_address;
     private List<String> types;
-    private List<Photo> photos;
+    private Photo[] photos;
 
-    public ResultsPlace(String place_id, String name, String formatted_address, List<String> types, List<Photo> photos) {
+    public ResultsPlace(String place_id, String name, String formatted_address, List<String> types, Photo[] photos) {
         this.place_id = place_id;
         this.name = name;
         this.formatted_address = formatted_address;
@@ -51,7 +51,11 @@ public class ResultsPlace {
         this.formatted_address = formatted_address;
     }
 
-    public List<Photo> getPhotos() { return photos; }
+    public Photo[] getPhotos() {
+        return photos;
+    }
 
-    public void setPhotos(List<Photo> photos) { this.photos = photos; }
+    public void setPhotos(Photo[] photos) {
+        this.photos = photos;
+    }
 }
