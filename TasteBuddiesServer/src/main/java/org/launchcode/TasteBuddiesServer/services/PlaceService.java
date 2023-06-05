@@ -1,26 +1,28 @@
 package org.launchcode.TasteBuddiesServer.services;
 
 import com.google.gson.Gson;
-import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.models.place.TranscriptPlace;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(
+        origins = "http://localhost:4200",
+        allowCredentials = "true")
 @Service
 public class PlaceService {
 
@@ -60,52 +62,36 @@ public class PlaceService {
         return places;
     }
 
-
-    /**
-     *
-     * @param photoReference
-     * @param maxheight
-     * @param maxwidth
-     * @return
-     * @throws IOException
-     * @throws InterruptedException
-     * @throws URISyntaxException
-     *
-     * NOT YET WORKING - this will be the general idea for this service, but it isn't working yet. I'm not totally sure
-     * how to handle the http response properly. It will probably wind up with an object container to handle some
-     * other potential properties from the places api
-     *
-     */
-    public byte[] getImageFromPhotoReference(String photoReference, int maxheight, int maxwidth)
+    public ResponseEntity<byte[]> getImageFromPhotoReference(String photoReference, int maxheight, int maxwidth)
             throws IOException, InterruptedException, URISyntaxException
     {
-        final String URLPlace = "https://maps.googleapis.com/maps/api/place/photo?";
         StringBuilder stringBuilder = new StringBuilder();
-
+        final String URLPlace = "https://maps.googleapis.com/maps/api/place/photo?";
         stringBuilder.append(URLPlace);
         stringBuilder.append("photo_reference=").append(photoReference);
 
-        if (maxheight >= 0) {
+        if (maxheight > 0) {
             stringBuilder.append("&maxheight=").append(maxheight);
         }
-
-        if (maxwidth >= 0) {
+        if (maxwidth > 0) {
             stringBuilder.append("&maxwidth=").append(maxwidth);
         }
 
         stringBuilder.append("&key=").append(APIKey);
+        String photoURL = stringBuilder.toString();
 
-        String myURL = stringBuilder.toString();
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<byte[]> response = restTemplate.getForEntity(photoURL, byte[].class);
 
-        HttpClient httpClient = HttpClient.newHttpClient();
-        HttpRequest getRequestPhoto = HttpRequest.newBuilder()
-                .uri(new URI(stringBuilder.toString()))
-                .build();
-        HttpResponse<byte[]> getResponsePlace = httpClient.send(getRequestPhoto, HttpResponse.BodyHandlers.ofByteArray());
+        if (response.getStatusCode() != HttpStatus.OK) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
+        }
 
-//        Image image = new ImageIcon(getResponsePlace.body()).getImage();
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .header("Content-Type", response.getHeaders().getContentType().toString())
+                .body(response.getBody());
 
-        return getResponsePlace.body();
     }
 
 }
