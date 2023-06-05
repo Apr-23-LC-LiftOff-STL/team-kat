@@ -1,0 +1,16 @@
+<h1>Enter Room Code</h1>
+<div>
+    <form (ngSubmit)="onSubmit()">
+        <label for="entryCode">Room Code</label><br>
+        <input type="text" 
+        onkeyup="this.value = this.value.toUpperCase();" 
+        id="entryCode" 
+        name="entryCode" 
+        [(ngModel)] = "joinEvent.entryCode"><br>
+        <input type="submit" value="Join Event"><br>
+    </form>
+    <div *ngIf="errorMessage" style="color: red;">
+        {{errorMessage}}
+    </div>
+</div>
+<!-- <p>event-join works!</p> -->
