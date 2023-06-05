@@ -4,13 +4,13 @@ nav.navbar {
 
 a.navbar-brand {
     font-size: 35px;
-    color: #90EE90;
+    color: #F0FFF0;
     background-color: #FF8C00;
     padding: 0.3rem 2rem;
     border-radius: 30px;
 }
 nav.navbar.navbar-expand-lg.bg-light {
-    background-color: #464646 !important;
+    background-color: #FF1493 !important;
 
 }
 
@@ -18,13 +18,13 @@ nav.navbar.navbar-expand-lg.bg-light {
 
 
 ul.nav-pills a.nav-link {
-    background-color: #90EE90;
+    background-color: #FF1493;
     font-size: 12px;
     border-radius: 15px;
     padding: 0.3rem 2rem;
 }
 li.btn.btn-primary.rounded-pill {
-    background-color: #FF8C00;
+
     border-radius: 15px;
     padding: 0.3rem 2rem;
 }
@@ -34,10 +34,10 @@ li.btn.btn-primary.rounded-pill {
 ul.nav-pills a.nav-link:hover {
     color: #FF8C00;
     box-shadow:
-              0px 0px 1.1px -7px rgba(255, 165, 0, 1),
-              0px 0px 3px -7px rgba(255, 165, 0, 1),
-              0px 0px 7.2px -7px rgba(0, 0, 0, 0.046),
-              0px 0px 24px -7px rgba(255, 165, 0, 1)
+              0px 0px 1.1px -7px rgba(255, 140, 0, 1),
+              0px 0px 3px -7px rgba(255, 140, 0, 1),
+              0px 0px 7.2px -7px rgba(255, 140, 0, 1),
+              0px 0px 24px -7px rgba(255, 140, 0, 1)
             ;
 
 }

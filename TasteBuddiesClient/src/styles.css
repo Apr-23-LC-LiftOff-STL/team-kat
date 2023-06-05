@@ -1,11 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-    background-color: #464646;
+    background-image: url("https://garden.spoonflower.com/c/12437363/p/f/m/yzsgxwK4KYJ2nyFNq3Y_rxfPd1Ous-GYY7ndRytAMsL27OOrPqnF/Vintage%20Mid-century%20Modern%20Abstract%20Geometric%20Balancing%20Shapes%20in%20Bright%20Bold%20Vibrant%20Fuchsia%20Pink%20and%20Hot%20Tangerine%20Orange.jpg");
+    background-position: center center;
+    background-repeat: repeat;
+
+
 }
 a.btn.btn-primary {
-    color: #FF8C00;
-    background-color: #90EE90;
+    color:  #F0FFF0;
+    background-color:  #FF1493;
     box-shadow:
       0px 0px 1.1px -7px rgba(255, 165, 0, 1),
       0px 0px 3px -7px rgba(255, 165, 0, 1),
@@ -16,6 +20,22 @@ a.btn.btn-primary {
 
 
 }
+
+a.btn.btn-secondary {
+    color:  #F0FFF0;
+    background-color:  #FF1493;
+    box-shadow:
+      0px 0px 1.1px -7px rgba(255, 165, 0, 1),
+      0px 0px 3px -7px rgba(255, 165, 0, 1),
+      0px 0px 7.2px -7px rgba(0, 0, 0, 0.046),
+      0px 0px 24px -7px rgba(255, 165, 0, 1)
+    ;
+    margin-left: 30px;
+    border: #90EE90;
+}
+
+
+
 
 a.btn.btn-primary:hover {
   box-shadow:
