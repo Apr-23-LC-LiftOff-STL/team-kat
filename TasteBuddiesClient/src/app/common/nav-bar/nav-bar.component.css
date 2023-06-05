@@ -24,7 +24,7 @@ nav.navbar.navbar-expand-lg.bg-light{
     border-radius: 30px;
 }*/
 nav.navbar.navbar-expand-lg.bg-light {
-    background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1115338519817244722/TASTE.gif") !important;
+    background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1115367698294128842/TASTEyyy.gif") !important;
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -41,12 +41,14 @@ ul.nav-pills a.nav-link {
     padding-top: 650px;
 }
 li.btn.btn-primary.rounded-pill {
-    margin-top: 655px;
     border-radius: 15px;
     padding: 0.3rem 2rem;
 }
 
+li.nav-item {
+    height: 50px;
 
+}
 
 ul.nav-pills a.nav-link:hover {
     color: #FF8C00;
@@ -62,5 +64,5 @@ ul.nav-pills a.nav-link:hover {
 
 
 ul.nav-pills a.nav-link {
-    color: #FFA500;
+
 }
