@@ -1,5 +1,5 @@
 nav.navbar {
-    color: #FFC0CB;
+
 }
 
 nav.navbar.navbar-expand-lg.bg-light{
@@ -16,18 +16,17 @@ nav.navbar.navbar-expand-lg.bg-light{
 
 }
 
-
 /*a.navbar-brand {
     font-size: 35px;
     color: #F0FFF0;
     background-color: #FF8C00;
     padding: 0.3rem 2rem;
     border-radius: 30px;
-}
-nav.navbar.navbar-expand-lg.bg-light {
-    background-color: #FF1493 !important;
-
 }*/
+nav.navbar.navbar-expand-lg.bg-light {
+    background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1115338519817244722/TASTE.gif") !important;
+    background-position: center center;
+}
 
 
 

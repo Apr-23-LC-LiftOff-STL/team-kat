@@ -1,10 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-    background-image: url("https://garden.spoonflower.com/c/12437363/p/f/m/yzsgxwK4KYJ2nyFNq3Y_rxfPd1Ous-GYY7ndRytAMsL27OOrPqnF/Vintage%20Mid-century%20Modern%20Abstract%20Geometric%20Balancing%20Shapes%20in%20Bright%20Bold%20Vibrant%20Fuchsia%20Pink%20and%20Hot%20Tangerine%20Orange.jpg");
-    background-position: center center;
-    background-repeat: repeat;
-
+    background-color:  #D2B48C;
 
 }
 a.btn.btn-primary {
@@ -61,6 +58,8 @@ a.btn.btn-primary:hover {
        ;
        border-radius: 35px;
         transition: 1.5s;
+        height: 500px;
+
   }
 
   /* On mouse-over, add a deeper shadow */
