@@ -1,19 +1,36 @@
 <h1>Event Component</h1>
+<h2>DUMMY OUTPUT PLEASE CHANGE ME</h2>
 
 <div class="row">
     <div class="col-auto card m-auto p-3">
         <div *ngIf="currentRestaurant != null; else noNextEvent">
             <div class="row p-2">
-                <h4 class="col-auto m-auto">{{ currentRestaurant.name }}</h4>
-                <!-- TODO: query the places api for the details of the restaurant -->
-                <h4 class="col-auto m-auto">{{ currentRestaurant.id }}</h4>
+                <h4 class="col-auto m-auto">{{ restaurantDetails.name }}</h4>
             </div>
             <div class="row p-2">
                 <div class="col-auto m-auto text-center">
-                    <!-- TODO: call google api to get place images -->
-                    <!-- TODO: before that finish the controller... -->
-                    PLACEHOLDER <br> FOR <br> IMAGES
+                    <div *ngIf="!isPhotoLoading; else imgPlaceholder" id="primary-photo">
+                        <div *ngIf="restaurantDetails.photos; else noPhotosFound">
+                            <img [src]="currentPhoto" alt="" id="restaurant-photo">
+                        </div>
+                        <ng-template #noPhotosFound>
+                            No photos to display
+                        </ng-template>
+                    </div>
+                    <ng-template #imgPlaceholder>
+                        <div *ngIf="isPhotoLoading">
+                            LOADING <br>
+                            IMAGES
+                        </div>
+                    </ng-template>
                 </div>
+            </div>
+            <div>
+                <h4>Dummy outputs:</h4>
+                <p>{{ restaurantDetails.formatted_address }}</p>
+                <span *ngFor="let type of restaurantDetails.types">
+                    <span>{{ type }}, </span>
+                </span>
             </div>
             <div class="row p-2">
                 <div class="col-auto m-auto">
@@ -23,36 +40,7 @@
             </div>
         </div>
         <ng-template #noNextEvent>
-            <p class="m-auto text-secondary">Woops! Nothing was here :/</p>
+            <p class="m-auto text-secondary">Woops! No restaurants to display :/</p>
         </ng-template>
     </div>
-    
-    <h2>DUMMY OUTPUT PLEASE CHANGE ME</h2>
-    <p>id: {{ event.id }}</p>
-    <p>location:  {{ event.location }}</p>
-    <p>date: {{ event.mealTime }}</p>
-    <p>search radius: {{ event.searchRadius }}</p>
-    <h3>users:</h3>
-    <p>Current user:</p>
-        <ul>
-            <li>{{event.currentUser.id}}</li>
-            <li>{{event.currentUser.displayName}}</li>
-            <li>{{event.currentUser.email}}</li> 
-            <li>{{event.currentUser.userLikes}}</li>
-        </ul>
-    <p>Other users:</p>
-    <ol>
-        <li *ngFor="let user of event.otherUsers">
-            <ul>
-                <li>{{user.id}}</li>
-                <li>{{user.displayName}}</li>
-            </ul>
-        </li>
-    </ol>
-    <h3>Restaurants</h3>
-    <ol>
-        <li *ngFor="let restaurant of restaurants">
-            <span>Restaurant ID: {{ restaurant.id }}</span>
-        </li>
-    </ol>
 </div>

@@ -11,6 +11,7 @@ import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.CreateEventFormDTO;
 import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.JoinEventDTO;
 import org.launchcode.TasteBuddiesServer.models.geocode.Location;
 import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.services.*;
@@ -80,19 +81,22 @@ public class EventController {
     @GetMapping("all")
     public ResponseEntity<?> getAllEvents(HttpServletRequest request) {
 
-        List<Event> possibleEvents = (List<Event>) eventRepository.findAll();
-        if (possibleEvents.size() == 0) {
-            return ResponseEntity.status(204).body(null);
-        }
-
         Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
         if (possibleCurrentUser.isEmpty()) {
             return ResponseEntity.status(403).build();
         }
 
-        List<EventDTO> allEvents = ((List<Event>) eventRepository.findAll())
+        List<Event> events = eventRepository.findAllByUsers(possibleCurrentUser.get());
+
+        if (events.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        List<EventDTO> allEvents = ((List<Event>) events)
                 .stream()
-                .map(event -> new EventDTO(event, possibleCurrentUser.get()))
+                .map(event -> {
+                    return new EventDTO(event, possibleCurrentUser.get());
+                })
                 .collect(Collectors.toList());
 
         return ResponseEntity.status(200).body(allEvents);
@@ -128,20 +132,44 @@ public class EventController {
             ResultsPlace resultsPlace = placeService.getRestaurantFromPlaceID(placeID);
 
             List<String> types = resultsPlace.getTypes();
-
-            if(!restaurantRepository.existsById(placeID)) {
-                if(!(types.contains("gas_station") || types.contains("convenience_store"))){
+//          todo: create else branch to put restaurant data in event even if it exists in restaurant repository
+            if(!(types.contains("gas_station") || types.contains("convenience_store"))){
+                if(!restaurantRepository.existsById(placeID)){
                     restaurantRepository
                             .save(new Restaurant(placeID, newEvent));
-                    Optional<Restaurant> possibleRestaurant = restaurantRepository.findById(placeID);
-                    restaurants.add(possibleRestaurant.get());
                 }
+                Optional<Restaurant> possibleRestaurant = restaurantRepository.findById(placeID);
+                restaurants.add(possibleRestaurant.get());
             }
+
         }
 
         newEvent.setAvailableRestaurants(restaurants);
         eventRepository.save(newEvent);
 
+        return ResponseEntity.status(200).build();
+    }
+
+    @PostMapping("join")
+    public ResponseEntity<?> joinEvent(
+            @RequestBody JoinEventDTO joinEventDTO,
+            HttpServletRequest request
+            ) throws URISyntaxException, IOException, InterruptedException {
+
+        Optional<User> possibleUser = userService.getUserFromRequest(request);
+        if(possibleUser.isEmpty()){
+            return ResponseEntity.status(403).build();
+        }
+
+        Optional<Event> possibleEvent = eventRepository.findByEntryCode(joinEventDTO.getEntryCode());
+        if(possibleEvent.isEmpty()){
+            return ResponseEntity.status(403).build();
+        }
+        Event currentEvent = possibleEvent.get();
+        List<User> moreUsers = currentEvent.getUsers();
+        moreUsers.add(possibleUser.get());
+        currentEvent.setUsers(moreUsers);
+        eventRepository.save(currentEvent);
         return ResponseEntity.status(200).build();
     }
 }

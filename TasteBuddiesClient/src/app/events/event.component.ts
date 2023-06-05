@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { Event } from 'src/models/event';
-import { Restaurant } from 'src/models/restaurant';
 import { EventService } from 'src/services/event.service';
+import { PlacesService } from 'src/services/places.service';
 
 @Component({
   selector: 'app-event',
@@ -14,14 +14,29 @@ export class EventComponent implements OnInit {
 
   event$: Observable<any>;
   event: Event;
-  currentRestaurant: Restaurant;
-  // restaurantIDs: Array<string>;
-  restaurants: Array<Restaurant>;
+  restaurants: Array<{id: string}>;
+  currentRestaurant: string;
+  restaurantDetails: {
+    place_id: string,
+    name: string,
+    formatted_address: string,
+    types: Array<string>,
+    photos: Array<{
+      photo_reference: string;
+      html_attributions: Array<string>;
+      height: number;
+      width: number;
+  }>
+  };
+  currentPhoto: any;
+
+  isPhotoLoading: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private eventService: EventService,
+    private placesService: PlacesService,
     ) { }
 
   ngOnInit(): void {
@@ -51,6 +66,40 @@ export class EventComponent implements OnInit {
   }
 
   private nextRestaurant(): void {
-    this.currentRestaurant = this.restaurants.shift()!;
+    this.currentRestaurant = this.restaurants.shift()?.id!;
+    this.placesService.getRestaurantDetails(this.currentRestaurant).subscribe({
+      next: res => {
+        this.restaurantDetails = res;
+        this.loadPhoto(this.restaurantDetails.photos[0].photo_reference)
+      },
+      error: e => {
+        console.error(e);
+      }
+    });
+  }
+  
+  private loadPhoto(photo_reference: string): void {
+    this.isPhotoLoading = true;
+
+    this.placesService.getPhoto(photo_reference, 400).subscribe({
+      next: res => {
+        this.createImageFromBlob(res);
+      },
+      error: e => {
+        console.error(e);
+      }
+    })
+  }
+
+  private createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      this.currentPhoto = reader.result;
+    }, false);
+    
+    if (image) {
+      reader.readAsDataURL(image);
+      this.isPhotoLoading = false;
+    }
   }
 }
