@@ -27,9 +27,6 @@ public class EventService {
     private UserLikesRepository userLikesRepository;
 
     @Autowired
-    private UserDislikesRepository userDislikesRepository;
-
-    @Autowired
     private RestaurantRepository restaurantRepository;
 
     public static final char[] UPPERCASE_LETTERS = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
@@ -123,7 +120,11 @@ public class EventService {
             restaurantToAdd.setId(restaurantId);
 
             // Add the restaurant to the liked Restaurants list
-            userLikes.getLikedRestaurants().add(restaurantToAdd);
+            if (userLikesDTO.isLike()) {
+                userLikes.getLikedRestaurants().add(restaurantToAdd);
+            } else {
+                userLikes.getDislikedRestaurants().add(restaurantToAdd);
+            }
             System.out.println(userLikes);
             userLikesRepository.save(userLikes);
             System.out.println(userLikes);
