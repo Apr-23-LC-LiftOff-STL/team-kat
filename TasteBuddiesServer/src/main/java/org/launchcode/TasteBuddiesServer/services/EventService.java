@@ -103,9 +103,7 @@ public class EventService {
         UserLikes userLikes;
 
         if (userLikesOptional.isEmpty()) {
-            System.out.println("DEBUG: Start createUserLikes");
             userLikesOptional = this.createUserLikes(user, event);
-            System.out.println("DEBUG: End createUserLikes");
         }
 
         // If UserLikes entity exists, update the liked restaurants
@@ -125,9 +123,7 @@ public class EventService {
             } else {
                 userLikes.getDislikedRestaurants().add(restaurantToAdd);
             }
-            System.out.println(userLikes);
             userLikesRepository.save(userLikes);
-            System.out.println(userLikes);
         }
     }
 
