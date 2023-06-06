@@ -20,10 +20,14 @@ public class UserLikes extends AbstractEntity {
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurant restaurant;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_likes_restaurants",
-            joinColumns = @JoinColumn(name = "user_likes_restaurant"),
+            joinColumns = @JoinColumn(name = "user_likes_id"),
             inverseJoinColumns = @JoinColumn(name = "restaurant_id")
     )
     private List<Restaurant> likedRestaurants;
@@ -31,7 +35,7 @@ public class UserLikes extends AbstractEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_dislikes_restaurants",
-            joinColumns = @JoinColumn(name = "user_dislikes_restaurant"),
+            joinColumns = @JoinColumn(name = "user_dislikes_id"),
             inverseJoinColumns = @JoinColumn(name = "restaurant_id")
     )
     private List<Restaurant> dislikedRestaurants;
@@ -57,6 +61,14 @@ public class UserLikes extends AbstractEntity {
 
     public void setLikedRestaurants(List<Restaurant> likedRestaurants) {
         this.likedRestaurants = likedRestaurants;
+    }
+
+    public List<Restaurant> getDislikedRestaurants() {
+        return dislikedRestaurants;
+    }
+
+    public void setDislikedRestaurants(List<Restaurant> dislikedRestaurants) {
+        this.dislikedRestaurants = dislikedRestaurants;
     }
 
     public List<Restaurant> getRestaurants() {
