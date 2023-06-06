@@ -121,7 +121,7 @@ public class EventService {
                 Restaurant restaurantToAdd = new Restaurant();
                 restaurantToAdd.setId(restaurantId);
 
-                // Add the restaurant to the liked restaurants list
+                // Add the restaurant to the liked restaurants list or disliked restaurants list
                 //Save to repository
                 if (userLikesDTO.isLike()) {
                     userLikes.getLikedRestaurants().add(restaurantToAdd);

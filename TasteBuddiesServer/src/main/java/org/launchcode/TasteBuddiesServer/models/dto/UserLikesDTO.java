@@ -39,10 +39,14 @@ public class UserLikesDTO {
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
     }
-    public boolean isLike() {
+    public boolean getIsLike() {
         return isLike;
     }
-    public void setLike(boolean like) {
+    public void setIsLike(boolean like) {
         isLike = like;
+    }
+
+    public boolean isLike() {
+        return this.isLike;
     }
 }

@@ -171,15 +171,15 @@ public class EventController {
         return ResponseEntity.status(200).build();
     }
 
-    @PostMapping("/{eventId}/like")
+    @PostMapping("/like")
     public ResponseEntity<?> likeRestaurant(
-            @PathVariable int eventId,
             @RequestBody UserLikesDTO userLikesDTO,
             HttpServletRequest request
 
             ) throws URISyntaxException, IOException, InterruptedException {
+
         System.out.println("Ran the event Id Controller");
-        Optional<Event> possibleEvent = eventRepository.findById(eventId);
+        Optional<Event> possibleEvent = eventRepository.findById(userLikesDTO.getEventId());
         if (possibleEvent.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -188,34 +188,11 @@ public class EventController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        userLikesDTO.setEventId(eventId);
+
         userLikesDTO.setUserId(possibleCurrentUser.get().getId());
         // Process and save user likes within the event from the method in eventService
         eventService.saveLikedRestaurant(userLikesDTO);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
-    @PostMapping("/{eventId}/dislike")
-    public ResponseEntity<?> dislikeRestaurant(
-            @PathVariable int eventId,
-            @RequestBody UserDislikeDTO userDislikesDTO,
-            HttpServletRequest request
-    ) {
-        Optional<Event> possibleEvent = eventRepository.findById(eventId);
-        if (possibleEvent.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
-        Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
-        if (possibleCurrentUser.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
-        // TODO: Add code to process user dislikes within the event
-
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
-
 }
