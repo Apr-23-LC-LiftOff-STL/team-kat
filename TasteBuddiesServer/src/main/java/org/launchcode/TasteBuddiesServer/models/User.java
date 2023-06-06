@@ -65,6 +65,7 @@ public class User extends AbstractEntity implements UserDetails {
         this.enabled = true;
         this.authorities = new HashSet<>();
         this.authorities.add(new AuthorityEntity("BASIC_USER"));
+        this.userLikes = new ArrayList<>();
     }
 
     public User(String displayName, String email, String password) {
@@ -72,6 +73,19 @@ public class User extends AbstractEntity implements UserDetails {
         this.displayName = displayName;
         this.email = email;
         this.password = "{bcrypt}" + encoder.encode(password);
+    }
+
+    public User(String displayName, String email, String password, List<Event> events, List<UserLikes> userLikes, Set<AuthorityEntity> authorities, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled) {
+        this.displayName = displayName;
+        this.email = email;
+        this.password = password;
+        this.events = events;
+        this.userLikes = userLikes;
+        this.authorities = authorities;
+        this.accountNonExpired = accountNonExpired;
+        this.accountNonLocked = accountNonLocked;
+        this.credentialsNonExpired = credentialsNonExpired;
+        this.enabled = enabled;
     }
 
     public String getDisplayName() { return displayName; }

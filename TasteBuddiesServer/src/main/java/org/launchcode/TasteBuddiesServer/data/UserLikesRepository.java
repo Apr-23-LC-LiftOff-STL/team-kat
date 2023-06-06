@@ -13,6 +13,4 @@ public interface UserLikesRepository extends CrudRepository<UserLikes, Integer> 
 
     Optional<UserLikes> findByUserAndEvent(User user, Event event);
 
-    boolean existsByEventAndUserAndRestaurantId(Event event, User user, String restaurantId);
-
 }

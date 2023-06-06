@@ -178,6 +178,9 @@ public class EventController {
             HttpServletRequest request
 
             ) throws URISyntaxException, IOException, InterruptedException {
+
+        System.out.println(userLikesDTO);
+
         Optional<Event> possibleEvent = eventRepository.findById(eventId);
         if (possibleEvent.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

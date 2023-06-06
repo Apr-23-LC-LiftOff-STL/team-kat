@@ -105,25 +105,35 @@ public class EventService {
         Optional<UserLikes> userLikesOptional = userLikesRepository.findByUserAndEvent(user, event);
         UserLikes userLikes;
 
-        if (userLikesOptional.isPresent()) {
-            // If UserLikes entity exists, update the liked restaurants
-            userLikes = userLikesOptional.get();
-            List<Restaurant> likedRestaurants = userLikes.getLikedRestaurants();
-            // Check if the restaurant already exists in the likedRestaurant list
-            boolean restaurantExists = likedRestaurants.stream()
-                    .anyMatch(restaurant -> restaurant.getId().equals(restaurantId));
-            if (!restaurantExists) {
-                // Create a new Restaurant object with the given restaurantId
-                Optional<Restaurant> restaurantOptional = restaurantRepository.findById(restaurantId);
-                if(restaurantOptional.isPresent()) {
-                    Restaurant restaurant = restaurantOptional.get();
-                    // Add the restaurant to the liked Restaurants list
-                    likedRestaurants.add(restaurant);
-                } else {
-                    throw new IllegalArgumentException("Restaurant not found");
-                }
-            }
+        if (userLikesOptional.isEmpty()) {
+            System.out.println("DEBUG: Start createUserLikes");
+            userLikesOptional = this.createUserLikes(user, event);
+            System.out.println("DEBUG: End createUserLikes");
         }
+
+        // If UserLikes entity exists, update the liked restaurants
+        userLikes = userLikesOptional.get();
+        List<Restaurant> likedRestaurants = userLikes.getLikedRestaurants();
+        // Check if the restaurant already exists in the likedRestaurant list
+        boolean restaurantExists = likedRestaurants.stream()
+                .anyMatch(restaurant -> restaurant.getId().equals(restaurantId));
+        if (!restaurantExists) {
+            // Create a new Restaurant object with the given restaurantId
+            Restaurant restaurantToAdd = new Restaurant();
+            restaurantToAdd.setId(restaurantId);
+
+            // Add the restaurant to the liked Restaurants list
+            userLikes.getLikedRestaurants().add(restaurantToAdd);
+            System.out.println(userLikes);
+            userLikesRepository.save(userLikes);
+            System.out.println(userLikes);
+        }
+    }
+
+    public Optional<UserLikes> createUserLikes(User user, Event event) {
+        UserLikes userLikes = new UserLikes(user, event);
+        userLikesRepository.save(userLikes);
+        return userLikesRepository.findByUserAndEvent(user, event);
     }
 
 }
