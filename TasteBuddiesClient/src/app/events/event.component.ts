@@ -65,9 +65,7 @@ export class EventComponent implements OnInit {
   }
 
   yesToRestaurant(choice: boolean): void {
-
-    // TODO: Call event service to save result of choice, update position of user on backend. 
-    this.saveLikedRestaurant(this.currentRestaurant);
+    this.saveLikedRestaurant(this.currentRestaurant, choice);
     this.nextRestaurant();
   }
 
@@ -85,29 +83,15 @@ export class EventComponent implements OnInit {
   }
 
   //Send liked restaurant info to server
-  saveLikedRestaurant(restaurantId: string): void {
-    const EVENT_API = 'http://localhost:8080/api/event/';
-    this.userService.getUser().subscribe(
-      (user: any) => {
-        const userId = user.id;
-        const userLikesDTO = new UserLikesDTO(
-          String(this.event.id),
-          restaurantId,
-          userId,
-          isLike: boolean
-          );
-        }
-        )
-        console.log(this.event.id);
+  saveLikedRestaurant(restaurantId: string, isLike: boolean): void {
+
+    const userLikesDTO = new UserLikesDTO(
+      String(this.event.id),
+      restaurantId,
+      isLike
+    );
     
-    this.http.post(EVENT_API + '${eventId}', UserLikesDTO).subscribe({
-      next: res => {
-        console.log('Restaurant liked successfully');
-      },
-      error: e => {
-        console.error('Error liking restaurant:', Error);
-      }
-    })
+    this.eventService.saveLike(userLikesDTO);
   }
   
   private loadPhoto(photo_reference: string): void {

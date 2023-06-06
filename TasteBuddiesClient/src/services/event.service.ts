@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NewEventDTO } from 'src/models/DTO/new-event-dto';
+import { UserLikesDTO } from 'src/models/DTO/user-likes-dto';
 
 const EVENT_API = 'http://localhost:8080/api/event/';
 
@@ -43,6 +44,14 @@ export class EventService {
     return this.http.post(
       EVENT_API + 'join',
       JSON.stringify(entryCode),
+      httpOptions
+    )
+  }
+
+  public saveLike(userLike: UserLikesDTO):Observable<any> {
+    return this.http.post(
+      EVENT_API + 'like',
+      JSON.stringify(userLike),
       httpOptions
     )
   }
