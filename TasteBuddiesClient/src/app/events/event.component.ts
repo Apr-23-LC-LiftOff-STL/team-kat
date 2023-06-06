@@ -93,7 +93,8 @@ export class EventComponent implements OnInit {
         const userLikesDTO = new UserLikesDTO(
           String(this.event.id),
           restaurantId,
-          userId
+          userId,
+          isLike: boolean
           );
         }
         )
