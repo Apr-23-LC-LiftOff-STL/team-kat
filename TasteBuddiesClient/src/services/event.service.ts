@@ -48,10 +48,10 @@ export class EventService {
     )
   }
 
-  public saveLikedRestaurant(userLikesDTO: UserLikesDTO): Observable<any> {
+  public saveLike(userLikes: UserLikesDTO): Observable<any> {
     return this.http.post(EVENT_API + 'like',
-    JSON.stringify(userLikesDTO),//Response Body in Stringified JSON format from the DTO
-    httpOptions //Sets HTTP headers defined above as Content-Type set to application/json
+    JSON.stringify(userLikes),  //Response Body in Stringified JSON format from the DTO
+    httpOptions                 //Sets HTTP headers defined above as Content-Type set to application/json
     );
   }
 

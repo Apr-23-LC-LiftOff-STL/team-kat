@@ -5,7 +5,6 @@ import { Event } from 'src/models/event';
 import { EventService } from 'src/services/event.service';
 import { PlacesService } from 'src/services/places.service';
 import { UserLikesDTO } from 'src/models/DTO/user-likes-dto';
-import { HttpClient } from '@angular/common/http';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -41,7 +40,7 @@ export class EventComponent implements OnInit {
     private eventService: EventService,
     private placesService: PlacesService,
     private userService: UserService,
-    private http: HttpClient
+    
     ) { }
 
   ngOnInit(): void {
@@ -68,6 +67,7 @@ export class EventComponent implements OnInit {
 
     // TODO: Call event service to save result of choice, update position of user on backend. 
     this.saveLikedRestaurant(this.currentRestaurant, choice);
+    console.log(this.currentRestaurant);
     this.nextRestaurant();
   }
 
@@ -93,11 +93,8 @@ export class EventComponent implements OnInit {
       isLike
     );
 
-    this.eventService.saveLikedRestaurant(userLikesDTO);
+    this.eventService.saveLike(userLikesDTO);
   }
-
-
-
 
   
   private loadPhoto(photo_reference: string): void {
