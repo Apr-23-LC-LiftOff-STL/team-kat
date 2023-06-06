@@ -4,6 +4,9 @@ import { Observable, switchMap } from 'rxjs';
 import { Event } from 'src/models/event';
 import { EventService } from 'src/services/event.service';
 import { PlacesService } from 'src/services/places.service';
+import { UserLikesDTO } from 'src/models/DTO/user-likes-dto';
+import { HttpClient } from '@angular/common/http';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-event',
@@ -37,6 +40,8 @@ export class EventComponent implements OnInit {
     private router: Router,
     private eventService: EventService,
     private placesService: PlacesService,
+    private userService: UserService,
+    private http: HttpClient
     ) { }
 
   ngOnInit(): void {
@@ -62,7 +67,7 @@ export class EventComponent implements OnInit {
   yesToRestaurant(choice: boolean): void {
 
     // TODO: Call event service to save result of choice, update position of user on backend. 
-
+    this.saveLikedRestaurant(this.currentRestaurant);
     this.nextRestaurant();
   }
 
@@ -77,6 +82,31 @@ export class EventComponent implements OnInit {
         console.error(e);
       }
     });
+  }
+
+  //Send liked restaurant info to server
+  saveLikedRestaurant(restaurantId: string): void {
+    const EVENT_API = 'http://localhost:8080/api/event/';
+    this.userService.getUser().subscribe(
+      (user: any) => {
+        const userId = user.id;
+        const userLikesDTO = new UserLikesDTO(
+          String(this.event.id),
+          restaurantId,
+          userId
+          );
+        }
+        )
+        console.log(this.event.id);
+    
+    this.http.post(EVENT_API + '${eventId}', UserLikesDTO).subscribe({
+      next: res => {
+        console.log('Restaurant liked successfully');
+      },
+      error: e => {
+        console.error('Error liking restaurant:', Error);
+      }
+    })
   }
   
   private loadPhoto(photo_reference: string): void {
