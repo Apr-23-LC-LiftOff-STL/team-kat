@@ -5,10 +5,13 @@ public class UserLikesDTO {
     private  Integer eventId;
     private  String restaurantId;
 
-    public UserLikesDTO(Integer userId, Integer eventId, String restaurantId) {
+    private boolean isLike;
+
+    public UserLikesDTO(Integer userId, Integer eventId, String restaurantId, boolean isLike) {
         this.userId = userId;
         this.eventId = eventId;
         this.restaurantId = restaurantId;
+        this.isLike = isLike;
     }
 
     public UserLikesDTO() {}
@@ -36,13 +39,10 @@ public class UserLikesDTO {
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
     }
-
-    @Override
-    public String toString() {
-        return "UserLikesDTO{" +
-                "userId=" + userId +
-                ", eventId=" + eventId +
-                ", restaurantId='" + restaurantId + '\'' +
-                '}';
+    public boolean isLike() {
+        return isLike;
+    }
+    public void setLike(boolean like) {
+        isLike = like;
     }
 }
