@@ -20,9 +20,9 @@ public class UserLikes extends AbstractEntity {
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id", nullable = false)
-    private Restaurant restaurant;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "restaurant_id", nullable = false)
+//    private Restaurant restaurant;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -45,6 +45,11 @@ public class UserLikes extends AbstractEntity {
     public UserLikes(User user, List<Restaurant> likedRestaurants){
         this.user = user;
         this.likedRestaurants = likedRestaurants;
+    }
+
+    public UserLikes(User user, Event event){
+        this.user = user;
+        this.event = event;
     }
 
     public User getUser() {

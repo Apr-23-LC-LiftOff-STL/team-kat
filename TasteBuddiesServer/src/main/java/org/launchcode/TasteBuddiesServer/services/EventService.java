@@ -97,6 +97,11 @@ public class EventService {
         Integer eventId = userLikesDTO.getEventId();
         String restaurantId = userLikesDTO.getRestaurantId();
 
+
+        System.out.println("UserID: " + userId);
+        System.out.println("EventID: " + eventId);
+        System.out.println("Restaurant ID: " + restaurantId);
+
         // Retrieve the User and Event objects based on the provided IDs
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Event not found"));
@@ -105,7 +110,10 @@ public class EventService {
         Optional<UserLikes> userLikesOptional = userLikesRepository.findByUserAndEvent(user, event);
         UserLikes userLikes;
 
-        if (userLikesOptional.isPresent()) {
+        //Check if userLikes exists.  If not create it and pull it from database by using createuserlikes method
+        if (userLikesOptional.isEmpty()) {
+            userLikesOptional = this.createUserLikes(user, event);
+        }
             // If UserLikes entity exists, update the liked restaurants
             userLikes = userLikesOptional.get();
             List<Restaurant> likedRestaurants = userLikes.getLikedRestaurants();
@@ -113,17 +121,20 @@ public class EventService {
             boolean restaurantExists = likedRestaurants.stream()
                     .anyMatch(restaurant -> restaurant.getId().equals(restaurantId));
             if (!restaurantExists) {
-                // Create a new Restaurant object with the given restaurantId
-                Optional<Restaurant> restaurantOptional = restaurantRepository.findById(restaurantId);
-                if(restaurantOptional.isPresent()) {
-                    Restaurant restaurant = restaurantOptional.get();
-                    // Add the restaurant to the liked Restaurants list
-                    likedRestaurants.add(restaurant);
-                } else {
-                    throw new IllegalArgumentException("Restaurant not found");
+                Restaurant restaurantToAdd = new Restaurant();
+                restaurantToAdd.setId(restaurantId);
+
+                // Add the restaurant to the liked restaurants list
+                //Save to repository
+                userLikes.getLikedRestaurants().add(restaurantToAdd);
+                userLikesRepository.save(userLikes);
+                System.out.println("User Likes Data: " + userLikes);
                 }
             }
+        //Create User Likes object
+        public Optional<UserLikes> createUserLikes(User user, Event event) {
+             UserLikes userLikes = new UserLikes(user, event);
+             userLikesRepository.save(userLikes);
+             return userLikesRepository.findByUserAndEvent(user, event);
         }
-    }
-
 }

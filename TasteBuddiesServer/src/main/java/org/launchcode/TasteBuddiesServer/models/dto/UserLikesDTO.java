@@ -11,6 +11,8 @@ public class UserLikesDTO {
         this.restaurantId = restaurantId;
     }
 
+    public UserLikesDTO() {}
+
     public Integer getUserId() {
         return userId;
     }
@@ -33,5 +35,14 @@ public class UserLikesDTO {
 
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
+    }
+
+    @Override
+    public String toString() {
+        return "UserLikesDTO{" +
+                "userId=" + userId +
+                ", eventId=" + eventId +
+                ", restaurantId='" + restaurantId + '\'' +
+                '}';
     }
 }
