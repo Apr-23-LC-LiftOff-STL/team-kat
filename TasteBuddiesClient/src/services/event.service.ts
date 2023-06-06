@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NewEventDTO } from 'src/models/DTO/new-event-dto';
+import { UserLikesDTO } from 'src/models/DTO/user-likes-dto';
 
 const EVENT_API = 'http://localhost:8080/api/event/';
 
@@ -46,4 +47,13 @@ export class EventService {
       httpOptions
     )
   }
+
+  public saveLikedRestaurant(userLikesDTO: UserLikesDTO): Observable<any> {
+    return this.http.post(EVENT_API + 'like',
+    JSON.stringify(userLikesDTO),//Response Body in Stringified JSON format from the DTO
+    httpOptions //Sets HTTP headers defined above as Content-Type set to application/json
+    );
+  }
+
+  
 }
