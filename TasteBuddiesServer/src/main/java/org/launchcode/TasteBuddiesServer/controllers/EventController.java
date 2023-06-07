@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import org.launchcode.TasteBuddiesServer.data.EventRepository;
 import org.launchcode.TasteBuddiesServer.data.RestaurantRepository;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
+import org.launchcode.TasteBuddiesServer.exception.UserAlreadyJoinedEventException;
 import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.User;
@@ -167,7 +168,7 @@ public class EventController {
         }
 
         if(possibleEvent.get().getUsers().contains(possibleUser.get())){
-            return ResponseEntity.status(409).build();
+            throw new UserAlreadyJoinedEventException("User has already joined this event");
         }
 
         Event currentEvent = possibleEvent.get();
