@@ -93,7 +93,12 @@ export class EventComponent implements OnInit {
       isLike
     );
 
-    this.eventService.saveLike(userLikesDTO);
+    this.eventService.saveLike(userLikesDTO).subscribe({
+      next: res => {}, //doesn't perform any specific actions when save is successful
+      error: e => {
+        console.error(e); //Displays error when save is unsuccessful
+      }
+    });
   }
 
   
