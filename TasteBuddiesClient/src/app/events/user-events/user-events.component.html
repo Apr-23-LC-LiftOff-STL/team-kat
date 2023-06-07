@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col card p-2 m-3">
+        <a class="col card p-2 m-3 card-1" routerLink="./create">
             <h3 class="mx-auto"></h3>
 
             <ul *ngIf="upcommingEvents.length > 0; else noUpcommingEvents">
@@ -11,8 +11,9 @@
             <ng-template #noUpcommingEvents>
                 <p class="m-auto text-secondary"></p>
             </ng-template>
-        </div>
-        <div class="col card p-2 m-4">
+        </a>
+
+        <div class="col card p-2 m-3 card-2">
             <h3 class="mx-auto">
 
             </h3>
@@ -25,16 +26,14 @@
                 <p class="m-auto text-secondary"></p>
             </ng-template>
         </div>
+
+
     </div>
 
-    <div class="row">
-        <div>
-            <a class="btn btn-primary" routerLink="./create" role="button">
-                New Event
+  <!--<div class="row">
+        </a>
+            <a class="btn btn-secondary" routerLink="./join" role="button">
             </a>
-            <a class="btn btn-secondary"routerLink="./join" role="button">
-                Join Event
-            </a>
-        </div>
-    </div>
+        </a>
+    </div>-->
 </div>
