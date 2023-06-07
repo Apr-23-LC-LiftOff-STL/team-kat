@@ -184,7 +184,6 @@ public class EventController {
     public ResponseEntity<?> likeRestaurant(
             @RequestBody UserLikesDTO userLikesDTO,
             HttpServletRequest request
-
             ) throws URISyntaxException, IOException, InterruptedException {
 
         Optional<Event> possibleEvent = eventRepository.findById(userLikesDTO.getEventId());
@@ -197,8 +196,19 @@ public class EventController {
         }
 
         userLikesDTO.setUserId(possibleCurrentUser.get().getId());
+
         // Process and save user likes within the event from the method in eventService
         eventService.saveLikedRestaurant(userLikesDTO);
+
+        //Check if any restaurant has been liked by all users
+        String mutuallyLikedRestaurant = eventService.getMutuallyLikedRestaurant(userLikesDTO);
+        if (mutuallyLikedRestaurant != null) {
+            System.out.println("Mutually Liked Restaurant: " + mutuallyLikedRestaurant);
+            possibleEvent.get().setMutuallyLikedRestaurant(mutuallyLikedRestaurant);
+            eventRepository.save(possibleEvent.get());
+        } else {
+            System.out.println("No Mutually Liked Restaurants");
+        }
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

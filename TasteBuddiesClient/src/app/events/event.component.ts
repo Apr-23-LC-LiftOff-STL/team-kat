@@ -5,7 +5,6 @@ import { Event } from 'src/models/event';
 import { EventService } from 'src/services/event.service';
 import { PlacesService } from 'src/services/places.service';
 import { UserLikesDTO } from 'src/models/DTO/user-likes-dto';
-import { HttpClient } from '@angular/common/http';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -41,7 +40,7 @@ export class EventComponent implements OnInit {
     private eventService: EventService,
     private placesService: PlacesService,
     private userService: UserService,
-    private http: HttpClient
+    
     ) { }
 
   ngOnInit(): void {
@@ -90,14 +89,15 @@ export class EventComponent implements OnInit {
       restaurantId,
       isLike
     );
-    
+
     this.eventService.saveLike(userLikesDTO).subscribe({
-      next: res => { },
+      next: res => {}, //doesn't perform any specific actions when save is successful
       error: e => {
-        console.error(e);
+        console.error(e); //Displays error when save is unsuccessful
       }
     });
   }
+
   
   private loadPhoto(photo_reference: string): void {
     this.isPhotoLoading = true;
