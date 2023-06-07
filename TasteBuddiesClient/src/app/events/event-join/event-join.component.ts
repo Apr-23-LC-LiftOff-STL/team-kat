@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { JoinEventDto } from 'src/models/DTO/join-event-dto';
 import { EventService } from 'src/services/event.service';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-event-join',
@@ -14,7 +15,8 @@ export class EventJoinComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private eventService: EventService
+    private eventService: EventService,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -27,7 +29,7 @@ export class EventJoinComponent implements OnInit {
         },
         error: (e) => {
           console.error(e.message);
-          this.errorMessage = "room code does not exist"
+          this.errorMessage = e.error.message;
         }
       })
   }
