@@ -64,10 +64,7 @@ export class EventComponent implements OnInit {
   }
 
   yesToRestaurant(choice: boolean): void {
-
-    // TODO: Call event service to save result of choice, update position of user on backend. 
     this.saveLikedRestaurant(this.currentRestaurant, choice);
-    console.log(this.currentRestaurant);
     this.nextRestaurant();
   }
 

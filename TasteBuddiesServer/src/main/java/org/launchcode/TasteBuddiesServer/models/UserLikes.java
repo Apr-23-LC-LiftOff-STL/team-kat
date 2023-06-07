@@ -3,6 +3,7 @@ package org.launchcode.TasteBuddiesServer.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -42,6 +43,13 @@ public class UserLikes extends AbstractEntity {
 
     public UserLikes(){ }
 
+    public UserLikes(User user, Event event) {
+        this.user = user;
+        this.event = event;
+        this.likedRestaurants = new ArrayList<>();
+        this.dislikedRestaurants = new ArrayList<>();
+    }
+
     public UserLikes(User user, List<Restaurant> likedRestaurants){
         this.user = user;
         this.likedRestaurants = likedRestaurants;
@@ -60,6 +68,14 @@ public class UserLikes extends AbstractEntity {
         this.user = user;
     }
 
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
     public List<Restaurant> getLikedRestaurants() {
         return likedRestaurants;
     }
@@ -74,13 +90,5 @@ public class UserLikes extends AbstractEntity {
 
     public void setDislikedRestaurants(List<Restaurant> dislikedRestaurants) {
         this.dislikedRestaurants = dislikedRestaurants;
-    }
-
-    public List<Restaurant> getRestaurants() {
-        return likedRestaurants;
-    }
-
-    public void setRestaurants(List<Restaurant> restaurants) {
-        this.likedRestaurants = restaurants;
     }
 }

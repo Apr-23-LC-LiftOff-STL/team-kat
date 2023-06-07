@@ -6,7 +6,6 @@ import org.launchcode.TasteBuddiesServer.models.UserLikes;
 import org.launchcode.TasteBuddiesServer.models.dto.CreateEventFormDTO;
 import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.User;
-import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
 import org.launchcode.TasteBuddiesServer.models.dto.UserLikesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -110,10 +109,11 @@ public class EventService {
         if (userLikesOptional.isEmpty()) {
             userLikesOptional = this.createUserLikes(user, event);
         }
-            // If UserLikes entity exists, update the liked restaurants
-            userLikes = userLikesOptional.get();
-            List<Restaurant> likedRestaurants = userLikes.getLikedRestaurants();
-            List<Restaurant> dislikedRestaurants = userLikes.getDislikedRestaurants();
+
+        // If UserLikes entity exists, update the liked restaurants
+        userLikes = userLikesOptional.get();
+        List<Restaurant> likedRestaurants = userLikes.getLikedRestaurants();
+        List<Restaurant> dislikedRestaurants = userLikes.getDislikedRestaurants();
 
             // Initialize the likedRestaurants list if it's null
         if (likedRestaurants == null) {
@@ -127,24 +127,25 @@ public class EventService {
             userLikes.setDislikedRestaurants(dislikedRestaurants);
         }
 
-            // Check if the restaurant already exists in the likedRestaurant list
-            boolean restaurantExists = likedRestaurants.stream()
-                    .anyMatch(restaurant -> restaurant.getId().equals(restaurantId));
-            if (!restaurantExists) {
-                Restaurant restaurantToAdd = new Restaurant();
-                restaurantToAdd.setId(restaurantId);
+        // Check if the restaurant already exists in the likedRestaurant list
+        boolean restaurantExists = likedRestaurants.stream()
+                .anyMatch(restaurant -> restaurant.getId().equals(restaurantId));
+        if (!restaurantExists) {
+            Restaurant restaurantToAdd = new Restaurant();
+            restaurantToAdd.setId(restaurantId);
 
-                // Add the restaurant to the liked restaurants list or disliked restaurants list
-                //Save to repository
-                if (userLikesDTO.isLike()) {
-                    userLikes.getLikedRestaurants().add(restaurantToAdd);
-                } else {
-                    userLikes.getDislikedRestaurants().add(restaurantToAdd);
-                }
-
-                userLikesRepository.save(userLikes);
-                }
+            // Add the restaurant to the liked restaurants list or disliked restaurants list
+            //Save to repository
+            if (userLikesDTO.isLike()) {
+                userLikes.getLikedRestaurants().add(restaurantToAdd);
+            } else {
+                userLikes.getDislikedRestaurants().add(restaurantToAdd);
             }
+
+            userLikesRepository.save(userLikes);
+            }
+        }
+
         //Create User Likes object
         public Optional<UserLikes> createUserLikes(User user, Event event) {
              UserLikes userLikes = new UserLikes(user, event);
@@ -188,4 +189,36 @@ public class EventService {
         }
 
 
+    public Optional<UserLikes> createUserLikes(User user, Event event) {
+        UserLikes userLikes = new UserLikes(user, event);
+        userLikesRepository.save(userLikes);
+        return userLikesRepository.findByUserAndEvent(user, event);
+    }
+
+    public Event filterSeenEvents(Event event, User user) {
+
+        List<Restaurant> restaurants = event.getAvailableRestaurants();
+
+        UserLikes userLikes = event.getUserLikedRestaurants().stream()
+                .filter(ul ->  ul.getUser().equals(user))
+                .findFirst()
+                .orElse(null);
+
+        try {
+            restaurants.removeIf(x -> userLikes.getLikedRestaurants().contains(x));
+        } catch (NullPointerException e) {
+            System.out.println(e);
+        }
+
+        try {
+            restaurants.removeIf(x -> userLikes.getDislikedRestaurants().contains(x));
+        } catch (NullPointerException e) {
+            System.out.println(e);
+        }
+
+        event.setAvailableRestaurants(restaurants);
+
+        return event;
+
+    }
 }

@@ -75,7 +75,9 @@ public class EventController {
             return ResponseEntity.status(403).build();
         }
 
-        return ResponseEntity.status(200).body(new EventDTO(possibleEvent.get(), possibleCurrentUser.get()));
+        Event event = eventService.filterSeenEvents(possibleEvent.get(), possibleCurrentUser.get());
+
+        return ResponseEntity.status(200).body(new EventDTO(event, possibleCurrentUser.get()));
     }
 
     @GetMapping("all")
@@ -183,7 +185,6 @@ public class EventController {
             @RequestBody UserLikesDTO userLikesDTO,
             HttpServletRequest request
             ) throws URISyntaxException, IOException, InterruptedException {
-        System.out.println("Ran the event Id Controller");
 
         Optional<Event> possibleEvent = eventRepository.findById(userLikesDTO.getEventId());
         if (possibleEvent.isEmpty()) {
@@ -193,6 +194,7 @@ public class EventController {
         if (possibleCurrentUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+
         userLikesDTO.setUserId(possibleCurrentUser.get().getId());
 
         // Process and save user likes within the event from the method in eventService
