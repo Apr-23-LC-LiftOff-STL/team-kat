@@ -55,10 +55,10 @@ public class UserLikes extends AbstractEntity {
         this.likedRestaurants = likedRestaurants;
     }
 
-    public UserLikes(User user, Event event){
-        this.user = user;
-        this.event = event;
-    }
+//    public UserLikes(User user, Event event){
+//        this.user = user;
+//        this.event = event;
+//    }
 
     public User getUser() {
         return user;

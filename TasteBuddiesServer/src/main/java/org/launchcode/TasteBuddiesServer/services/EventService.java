@@ -189,11 +189,11 @@ public class EventService {
         }
 
 
-    public Optional<UserLikes> createUserLikes(User user, Event event) {
-        UserLikes userLikes = new UserLikes(user, event);
-        userLikesRepository.save(userLikes);
-        return userLikesRepository.findByUserAndEvent(user, event);
-    }
+//    public Optional<UserLikes> createUserLikes(User user, Event event) {
+//        UserLikes userLikes = new UserLikes(user, event);
+//        userLikesRepository.save(userLikes);
+//        return userLikesRepository.findByUserAndEvent(user, event);
+//    }
 
     public Event filterSeenEvents(Event event, User user) {
 
