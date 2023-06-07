@@ -6,13 +6,15 @@ import org.launchcode.TasteBuddiesServer.models.UserLikes;
 import org.launchcode.TasteBuddiesServer.models.dto.CreateEventFormDTO;
 import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.User;
-import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
 import org.launchcode.TasteBuddiesServer.models.dto.UserLikesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Null;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -133,4 +135,30 @@ public class EventService {
         return userLikesRepository.findByUserAndEvent(user, event);
     }
 
+    public Event filterSeenEvents(Event event, User user) {
+
+        List<Restaurant> restaurants = event.getAvailableRestaurants();
+
+        UserLikes userLikes = event.getUserLikedRestaurants().stream()
+                .filter(ul ->  ul.getUser().equals(user))
+                .findFirst()
+                .orElse(null);
+
+        try {
+            restaurants.removeIf(x -> userLikes.getLikedRestaurants().contains(x));
+        } catch (NullPointerException e) {
+            System.out.println(e);
+        }
+
+        try {
+            restaurants.removeIf(x -> userLikes.getDislikedRestaurants().contains(x));
+        } catch (NullPointerException e) {
+            System.out.println(e);
+        }
+
+        event.setAvailableRestaurants(restaurants);
+
+        return event;
+
+    }
 }
