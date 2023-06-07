@@ -165,6 +165,11 @@ public class EventController {
         if(possibleEvent.isEmpty()){
             return ResponseEntity.status(403).build();
         }
+
+        if(possibleEvent.get().getUsers().contains(possibleUser.get())){
+            return ResponseEntity.status(409).build();
+        }
+
         Event currentEvent = possibleEvent.get();
         List<User> moreUsers = currentEvent.getUsers();
         moreUsers.add(possibleUser.get());
