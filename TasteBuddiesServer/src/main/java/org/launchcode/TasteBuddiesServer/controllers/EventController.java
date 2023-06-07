@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import org.launchcode.TasteBuddiesServer.data.EventRepository;
 import org.launchcode.TasteBuddiesServer.data.RestaurantRepository;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
+import org.launchcode.TasteBuddiesServer.exception.RoomCodeDoesNotExistException;
 import org.launchcode.TasteBuddiesServer.exception.UserAlreadyJoinedEventException;
 import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
@@ -164,7 +165,7 @@ public class EventController {
 
         Optional<Event> possibleEvent = eventRepository.findByEntryCode(joinEventDTO.getEntryCode());
         if(possibleEvent.isEmpty()){
-            return ResponseEntity.status(403).build();
+            throw new RoomCodeDoesNotExistException("Room Code Does Not Exist. Please try again");
         }
 
         if(possibleEvent.get().getUsers().contains(possibleUser.get())){
