@@ -11,8 +11,7 @@ import org.launchcode.TasteBuddiesServer.models.dto.UserLikesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class EventService {
@@ -114,6 +113,20 @@ public class EventService {
             // If UserLikes entity exists, update the liked restaurants
             userLikes = userLikesOptional.get();
             List<Restaurant> likedRestaurants = userLikes.getLikedRestaurants();
+            List<Restaurant> dislikedRestaurants = userLikes.getDislikedRestaurants();
+
+            // Initialize the likedRestaurants list if it's null
+        if (likedRestaurants == null) {
+            likedRestaurants = new ArrayList<>();
+            userLikes.setLikedRestaurants(likedRestaurants);
+        }
+
+        // Initialize the dislikedRestaurants list if it's null
+        if (dislikedRestaurants == null) {
+            dislikedRestaurants = new ArrayList<>();
+            userLikes.setDislikedRestaurants(dislikedRestaurants);
+        }
+
             // Check if the restaurant already exists in the likedRestaurant list
             boolean restaurantExists = likedRestaurants.stream()
                     .anyMatch(restaurant -> restaurant.getId().equals(restaurantId));
@@ -130,7 +143,6 @@ public class EventService {
                 }
 
                 userLikesRepository.save(userLikes);
-                System.out.println("User Likes Data: " + userLikes);
                 }
             }
         //Create User Likes object
@@ -139,4 +151,41 @@ public class EventService {
              userLikesRepository.save(userLikes);
              return userLikesRepository.findByUserAndEvent(user, event);
         }
+        //Check for mutually liked restaurants
+        public String getMutuallyLikedRestaurant(UserLikesDTO userLikesDTO) {
+            Integer eventId = userLikesDTO.getEventId();
+            System.out.println("Checking for Mutually Liked Restaurants in Event: " + eventId);
+
+            //Retrieve the Event object based on the provided event ID
+            Event event = eventRepository.findById(eventId)
+                    .orElseThrow(() -> new IllegalArgumentException("Event not found"));
+
+            //Create a map to store the counts of liked restaurants
+            Map<String, Integer> restaurantCounts = new HashMap<>();
+
+            //Iterate over all users in the event and their liked restaurants
+            for (User user : event.getUsers()) {
+                Optional<UserLikes> userLikesOptional = userLikesRepository.findByUserAndEvent(user, event);
+                if (userLikesOptional.isPresent()) {
+                    UserLikes userLikes = userLikesOptional.get();
+                    List<Restaurant> likedRestaurants = userLikes.getLikedRestaurants();
+                    for (Restaurant restaurant : likedRestaurants) {
+                        String restaurantId = restaurant.getId();
+                        //Increment the count for each liked restaurant
+                        restaurantCounts.put(restaurantId, restaurantCounts.getOrDefault(restaurantId, 0) + 1);
+                    }
+                }
+            }
+            //Check if any restaurant has been liked by all users
+            for (Map.Entry<String, Integer> entry : restaurantCounts.entrySet()) {
+                //If the number of likes on a restaurant is equal to the number of users in the event and greater than one.
+                if (entry.getValue() == event.getUsers().size() && entry.getValue() >= 2) {
+                    return entry.getKey(); //Returns the ID of the mutually liked restaurant
+                }
+                System.out.println("Hashmap Data: " + restaurantCounts);
+            }
+            return null; //returns null if no mutually liked restaurant is found.
+        }
+
+
 }
