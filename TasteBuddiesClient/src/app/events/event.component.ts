@@ -91,7 +91,12 @@ export class EventComponent implements OnInit {
       isLike
     );
     
-    this.eventService.saveLike(userLikesDTO);
+    this.eventService.saveLike(userLikesDTO).subscribe({
+      next: res => { },
+      error: e => {
+        console.error(e);
+      }
+    });
   }
   
   private loadPhoto(photo_reference: string): void {
