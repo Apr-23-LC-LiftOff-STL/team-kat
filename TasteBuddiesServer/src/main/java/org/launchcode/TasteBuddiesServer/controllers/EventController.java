@@ -11,9 +11,7 @@ import org.launchcode.TasteBuddiesServer.exception.UserAlreadyJoinedEventExcepti
 import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.User;
-import org.launchcode.TasteBuddiesServer.models.dto.CreateEventFormDTO;
-import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
-import org.launchcode.TasteBuddiesServer.models.dto.JoinEventDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.*;
 import org.launchcode.TasteBuddiesServer.models.geocode.Location;
 import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.services.*;
@@ -77,7 +75,9 @@ public class EventController {
             return ResponseEntity.status(403).build();
         }
 
-        return ResponseEntity.status(200).body(new EventDTO(possibleEvent.get(), possibleCurrentUser.get()));
+        Event event = eventService.filterSeenEvents(possibleEvent.get(), possibleCurrentUser.get());
+
+        return ResponseEntity.status(200).body(new EventDTO(event, possibleCurrentUser.get()));
     }
 
     @GetMapping("all")
@@ -178,5 +178,38 @@ public class EventController {
         currentEvent.setUsers(moreUsers);
         eventRepository.save(currentEvent);
         return ResponseEntity.status(200).build();
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity<?> likeRestaurant(
+            @RequestBody UserLikesDTO userLikesDTO,
+            HttpServletRequest request
+            ) throws URISyntaxException, IOException, InterruptedException {
+
+        Optional<Event> possibleEvent = eventRepository.findById(userLikesDTO.getEventId());
+        if (possibleEvent.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
+        if (possibleCurrentUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        userLikesDTO.setUserId(possibleCurrentUser.get().getId());
+
+        // Process and save user likes within the event from the method in eventService
+        eventService.saveLikedRestaurant(userLikesDTO);
+
+        //Check if any restaurant has been liked by all users
+        String mutuallyLikedRestaurant = eventService.getMutuallyLikedRestaurant(userLikesDTO);
+        if (mutuallyLikedRestaurant != null) {
+            System.out.println("Mutually Liked Restaurant: " + mutuallyLikedRestaurant);
+            possibleEvent.get().setMutuallyLikedRestaurant(mutuallyLikedRestaurant);
+            eventRepository.save(possibleEvent.get());
+        } else {
+            System.out.println("No Mutually Liked Restaurants");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

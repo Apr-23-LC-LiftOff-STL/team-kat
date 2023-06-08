@@ -4,6 +4,8 @@ import { Observable, switchMap } from 'rxjs';
 import { Event } from 'src/models/event';
 import { EventService } from 'src/services/event.service';
 import { PlacesService } from 'src/services/places.service';
+import { UserLikesDTO } from 'src/models/DTO/user-likes-dto';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-event',
@@ -37,6 +39,8 @@ export class EventComponent implements OnInit {
     private router: Router,
     private eventService: EventService,
     private placesService: PlacesService,
+    private userService: UserService,
+    
     ) { }
 
   ngOnInit(): void {
@@ -60,9 +64,7 @@ export class EventComponent implements OnInit {
   }
 
   yesToRestaurant(choice: boolean): void {
-
-    // TODO: Call event service to save result of choice, update position of user on backend. 
-
+    this.saveLikedRestaurant(this.currentRestaurant, choice);
     this.nextRestaurant();
   }
 
@@ -78,6 +80,24 @@ export class EventComponent implements OnInit {
       }
     });
   }
+
+  //Send liked restaurant info to server
+  saveLikedRestaurant(restaurantId: string, isLike: boolean): void {
+
+    const userLikesDTO = new UserLikesDTO(
+      String(this.event.id),
+      restaurantId,
+      isLike
+    );
+
+    this.eventService.saveLike(userLikesDTO).subscribe({
+      next: res => {}, //doesn't perform any specific actions when save is successful
+      error: e => {
+        console.error(e); //Displays error when save is unsuccessful
+      }
+    });
+  }
+
   
   private loadPhoto(photo_reference: string): void {
     this.isPhotoLoading = true;

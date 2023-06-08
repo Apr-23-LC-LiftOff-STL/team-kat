@@ -57,7 +57,7 @@ public class Restaurant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Restaurant that = (Restaurant) o;
-        return Objects.equals(id, that.id) && Objects.equals(events, that.events);
+        return Objects.equals(id, that.id);
     }
 
     @Override
