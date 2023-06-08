@@ -1,4 +1,4 @@
-div.col.card.p-2.m-3 {
+div.col.card.p-2.m-3.card-1{
      background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1115360003172335637/PIZZZAA.png");
            background-position: center center;
            background-size: cover;
@@ -7,7 +7,7 @@ div.col.card.p-2.m-3 {
 
 }
 
-div.col.card.p-2.m-4 {
+div.col.card.p-2.m-3.card-2{
      background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1115360039889281044/ooushi.png");
            background-position: center center;
            background-size: cover;
@@ -26,4 +26,29 @@ p.m-auto.text-secondary {
     font-size: 13px;
 
 
+}
+
+
+.h3, h3 {
+    text-align: center;
+}
+
+.scrollable-box {
+  width: 100%;
+  height: 250px;
+  overflow: auto;
+  border: 3px solid #2d5335;
+  padding: 10px;
+  color: #fff;
+  background-color:   #223826;
+  box-shadow:
+           0.6px 0.4px 2.2px rgba(0, 0, 0, 0.02),
+           1.4px 0.9px 5.3px rgba(0, 0, 0, 0.028),
+           2.6px 1.6px 10px rgba(144, 238, 144, 1),
+           4.7px 2.9px 17.9px rgba(0, 0, 0, 0.042),
+           8.8px 5.4px 33.4px rgba(144, 238, 144, 1),
+           21px 13px 80px rgba(0, 0, 0, 0.07)
+         ;
+  border-radius: 35px;
+  transition: 1.5s;
 }
