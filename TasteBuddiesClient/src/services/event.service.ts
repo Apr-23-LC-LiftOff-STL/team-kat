@@ -56,5 +56,11 @@ export class EventService {
     );
   }
 
+  public getEventResults(eventId: number): Observable<any> {
+    return this.http.get(
+      EVENT_API + eventId + '/results',
+    );
+  }
+
   
 }
