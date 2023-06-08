@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { NewEventDTO } from 'src/models/DTO/new-event-dto';
 import { UserLikesDTO } from 'src/models/DTO/user-likes-dto';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { EventResultDTO } from 'src/models/DTO/event-result-dto';
 
 const EVENT_API = 'http://localhost:8080/api/event/';
 
@@ -17,7 +19,7 @@ const httpOptions = {
 })
 export class EventService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   public createEvent(event: NewEventDTO): Observable<any> {
     return this.http.post(
@@ -56,11 +58,12 @@ export class EventService {
     );
   }
 
-  public getEventResults(eventId: number): Observable<any> {
-    return this.http.get(
-      EVENT_API + eventId + '/results',
-    );
+  public getEventResults(eventId: number): Observable<EventResultDTO> {
+    // return this.route.paramMap.pipe(
+    //   switchMap((params: ParamMap) => {
+    //     const eventId = Number.parseInt(params.get('id')!);
+        return this.http.get<EventResultDTO>(`${EVENT_API}${eventId}/result`);
+      // })
+    // );
   }
-
-  
 }
