@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'event/create', title: 'New event', component: EventFormComponent, canActivate: [AuthGuard] },
   { path: 'event/:id', title: 'Event', component: EventComponent, canActivate: [AuthGuard] },
   { path: 'event', title: 'Events', component: UserEventsComponent, canActivate: [AuthGuard] },
-  { path: 'event-page', component: EventPageComponent },
+  { path: 'event-page', title: 'Event Page', component: EventPageComponent, canActivate:[AuthGuard]},
   { path: '**', title: 'Page not found', component: PageNotFoundComponent },
 ];
 

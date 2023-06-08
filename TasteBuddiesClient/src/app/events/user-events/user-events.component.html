@@ -1,11 +1,11 @@
 <div class="container">
     <div class="row">
-        <a class="col card p-2 m-3 card-1" routerLink="./create">
+        <a class="col card p-2 m-3 card-1" routerLink="/event-page">
             <h3 class="mx-auto"></h3>
 
             <ul *ngIf="upcommingEvents.length > 0; else noUpcommingEvents">
                 <li *ngFor="let event of upcommingEvents">
-                    <a routerLink="./{{event.id}}">{{event.entryCode}}</a>
+                    <a routerLink="/event/{{event.id}}">{{event.entryCode}}</a>
                 </li>
             </ul>
             <ng-template #noUpcommingEvents>
