@@ -8,6 +8,7 @@ import org.launchcode.TasteBuddiesServer.data.RestaurantRepository;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
 import org.launchcode.TasteBuddiesServer.exception.RoomCodeDoesNotExistException;
 import org.launchcode.TasteBuddiesServer.exception.UserAlreadyJoinedEventException;
+import org.launchcode.TasteBuddiesServer.exception.UserNotInEventException;
 import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.User;
@@ -22,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -210,6 +212,26 @@ public class EventController {
             System.out.println("No Mutually Liked Restaurants");
         }
 
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping("delete")
+    public ResponseEntity<?> deleteEvent(
+            @RequestParam int eventId,
+            HttpServletRequest request
+    ) {
+        Optional<Event> possibleEvent = eventRepository.findById(eventId);
+        Optional<User> possibleUser = userService.getUserFromRequest(request);
+
+        if (possibleEvent.isEmpty() ||
+            possibleUser.isEmpty() ||
+            !possibleEvent.get()
+                    .getUsers()
+                    .contains(possibleUser.get())) {
+            throw new UserNotInEventException("User is not authorized to perform that operation");
+         }
+
+        eventRepository.deleteById(possibleEvent.get().getId());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

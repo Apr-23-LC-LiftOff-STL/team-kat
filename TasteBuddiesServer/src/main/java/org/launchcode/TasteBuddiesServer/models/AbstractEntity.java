@@ -1,9 +1,10 @@
 package org.launchcode.TasteBuddiesServer.models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 @MappedSuperclass
