@@ -31,10 +31,12 @@ nav.navbar.navbar-expand-lg.bg-light {
 
 }
 
-
+ul.navbar-nav.ms-auto.mb-2.mb-lg-0 {
+  font-family:  Georgia, serif;
+}
 
 ul.nav-pills a.nav-link {
-
+    font-family:  Georgia, serif;
     font-size: 15px;
     border-radius: 15px;
     padding: 0.1rem 0rem;
