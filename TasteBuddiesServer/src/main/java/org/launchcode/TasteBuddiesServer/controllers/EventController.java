@@ -1,6 +1,7 @@
 package org.launchcode.TasteBuddiesServer.controllers;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.launchcode.TasteBuddiesServer.data.EventRepository;
@@ -206,10 +207,34 @@ public class EventController {
             System.out.println("Mutually Liked Restaurant: " + mutuallyLikedRestaurant);
             possibleEvent.get().setMutuallyLikedRestaurant(mutuallyLikedRestaurant);
             eventRepository.save(possibleEvent.get());
+            //Redirect to the result page
+            EventDTO eventDTO = new EventDTO();
+            eventDTO .setId(userLikesDTO.getEventId());
+            eventDTO.setMutuallyLikedRestaurant(mutuallyLikedRestaurant);
+            URI resultPageUri = new URI("/api/event/" + userLikesDTO.getEventId() + "/results");
+            return ResponseEntity.status(HttpStatus.OK).location(resultPageUri).build();
         } else {
             System.out.println("No Mutually Liked Restaurants");
         }
 
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/{eventId/results")
+    public ResponseEntity<EventResultDTO> getEventResults(
+            @PathVariable int eventId,
+            HttpServletRequest request
+    ) {
+        Optional<Event> possibleEvent = eventRepository.findById(eventId);
+        if (possibleEvent.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Event event = possibleEvent.get();
+        Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
+        if (possibleCurrentUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        EventResultDTO eventResultDTO = new EventResultDTO(event, possibleCurrentUser.get());
+        return ResponseEntity.ok(eventResultDTO);
     }
 }
