@@ -3,6 +3,7 @@ package org.launchcode.TasteBuddiesServer.controllers;
 import org.launchcode.TasteBuddiesServer.exception.ErrorResponse;
 import org.launchcode.TasteBuddiesServer.exception.RoomCodeDoesNotExistException;
 import org.launchcode.TasteBuddiesServer.exception.UserAlreadyJoinedEventException;
+import org.launchcode.TasteBuddiesServer.exception.UserNotInEventException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,6 +20,12 @@ public class CustomErrorHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(RoomCodeDoesNotExistException.class)
     public ResponseEntity<Object> handleRoomCodeDoesNotExistException(RoomCodeDoesNotExistException RCDNEE){
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_ACCEPTABLE, RCDNEE.getMessage());
+        return new ResponseEntity<>(errorResponse, errorResponse.getHttpStatus());
+    }
+
+    @ExceptionHandler(UserNotInEventException.class)
+    public ResponseEntity<?> handleUserNotInEventException(UserNotInEventException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED, exception.getMessage());
         return new ResponseEntity<>(errorResponse, errorResponse.getHttpStatus());
     }
 }

@@ -1,6 +1,7 @@
 package org.launchcode.TasteBuddiesServer.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -45,7 +46,7 @@ public class Event extends AbstractEntity {
     )
     private List<Restaurant> availableRestaurants = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "event_id")
     private List<UserLikes> userLikedRestaurants = new ArrayList<>();
 
