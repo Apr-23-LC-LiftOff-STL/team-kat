@@ -208,11 +208,11 @@ public class EventController {
             possibleEvent.get().setMutuallyLikedRestaurant(mutuallyLikedRestaurant);
             eventRepository.save(possibleEvent.get());
             //Redirect to the result page
-            EventDTO eventDTO = new EventDTO();
-            eventDTO .setId(userLikesDTO.getEventId());
-            eventDTO.setMutuallyLikedRestaurant(mutuallyLikedRestaurant);
-            URI resultPageUri = new URI("/api/event/" + userLikesDTO.getEventId() + "/results");
-            return ResponseEntity.status(HttpStatus.OK).location(resultPageUri).build();
+//            EventDTO eventDTO = new EventDTO();
+//            eventDTO .setId(userLikesDTO.getEventId());
+//            eventDTO.setMutuallyLikedRestaurant(mutuallyLikedRestaurant);
+//            URI resultPageUri = new URI("/api/event/" + userLikesDTO.getEventId() + "/results");
+//            return ResponseEntity.status(HttpStatus.OK).location(resultPageUri).build();
         } else {
             System.out.println("No Mutually Liked Restaurants");
         }
@@ -220,7 +220,7 @@ public class EventController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping("/{eventId/results")
+    @GetMapping("/{eventId}/result")
     public ResponseEntity<EventResultDTO> getEventResults(
             @PathVariable int eventId,
             HttpServletRequest request
