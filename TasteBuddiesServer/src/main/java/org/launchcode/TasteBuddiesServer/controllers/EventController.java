@@ -76,9 +76,9 @@ public class EventController {
             return ResponseEntity.status(403).build();
         }
 
-        Event event = eventService.filterSeenEvents(possibleEvent.get(), possibleCurrentUser.get());
+//        Event event = eventService.filterSeenEvents(possibleEvent.get(), possibleCurrentUser.get());
 
-        return ResponseEntity.status(200).body(new EventDTO(event, possibleCurrentUser.get()));
+        return ResponseEntity.status(200).body(new EventDTO(possibleEvent.get(), possibleCurrentUser.get()));
     }
 
     @GetMapping("all")

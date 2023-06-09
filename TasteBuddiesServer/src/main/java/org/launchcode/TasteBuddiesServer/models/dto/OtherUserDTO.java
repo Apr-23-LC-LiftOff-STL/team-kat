@@ -2,6 +2,7 @@ package org.launchcode.TasteBuddiesServer.models.dto;
 
 import org.launchcode.TasteBuddiesServer.models.AbstractEntity;
 import org.launchcode.TasteBuddiesServer.models.User;
+import org.launchcode.TasteBuddiesServer.models.UserLikes;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,15 +17,18 @@ public class OtherUserDTO {
 
     private int id;
     private String displayName;
+    private List<UserLikes> userLikes;
 
-    public OtherUserDTO(int id, String displayName) {
+    public OtherUserDTO(int id, String displayName, List<UserLikes> userLikes) {
         this.id = id;
         this.displayName = displayName;
+        this.userLikes = userLikes;
     }
 
     public OtherUserDTO(User user) {
         this.id = user.getId();
         this.displayName = user.getDisplayName();
+        this.userLikes = user.getUserLikes();
     }
 
     public int getId() {
@@ -43,4 +47,11 @@ public class OtherUserDTO {
         this.displayName = displayName;
     }
 
+    public List<UserLikes> getUserLikes() {
+        return userLikes;
+    }
+
+    public void setUserLikes(List<UserLikes> userLikes) {
+        this.userLikes = userLikes;
+    }
 }

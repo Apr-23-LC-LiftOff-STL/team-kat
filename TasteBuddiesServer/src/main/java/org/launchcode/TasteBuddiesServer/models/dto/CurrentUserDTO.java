@@ -10,12 +10,10 @@ import java.util.stream.Collectors;
 public class CurrentUserDTO extends OtherUserDTO {
     private String email;
     private List<Integer> eventIDs;
-    private List<UserLikes> userLikes;
 
     public CurrentUserDTO(int id, String displayName, String email, List<UserLikes> userLikes) {
-        super(id, displayName);
+        super(id, displayName, userLikes);
         this.email = email;
-        this.userLikes = userLikes;
     }
 
     public CurrentUserDTO(User user) {
