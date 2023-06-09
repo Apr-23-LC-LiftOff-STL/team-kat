@@ -1,17 +1,17 @@
 package org.launchcode.TasteBuddiesServer.services;
 
-import org.launchcode.TasteBuddiesServer.data.*;
+import org.launchcode.TasteBuddiesServer.data.EventRepository;
+import org.launchcode.TasteBuddiesServer.data.RestaurantRepository;
+import org.launchcode.TasteBuddiesServer.data.UserLikesRepository;
+import org.launchcode.TasteBuddiesServer.data.UserRepository;
 import org.launchcode.TasteBuddiesServer.exception.EventDoesNotExistException;
 import org.launchcode.TasteBuddiesServer.exception.UserNotFoundException;
+import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
+import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.UserLikes;
 import org.launchcode.TasteBuddiesServer.models.dto.CreateEventFormDTO;
-import org.launchcode.TasteBuddiesServer.models.Event;
-import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.UserLikesDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
