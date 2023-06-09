@@ -17,14 +17,44 @@ div.col.card.p-2.m-3.card-2{
 
 }
 
+
+
+.event-link {
+  font-family:  Georgia, serif;
+  color: #223826;
+  font-size: 15px;
+  display: flex;
+}
+.event-link:hover{
+    color:  #FF4500;
+}
+
+
+.event-item {
+    list-style-type: disc;
+}
+.event-item::marker {
+    color: #223826;
+}
+
+
+
+
+.event-list {
+  display: flex;
+  flex-direction: column; /* Make items layout in a column */
+  justify-content: space-around;
+}
+
+
 p.m-auto.text-secondary {
 
-    font-size: 13px;
+    font-size: 15px;
     color:  #FF1493 !important;
 }
 
  li {
-    font-size: 13px;
+    font-size: 15px;
 
 
 }
@@ -39,11 +69,12 @@ p.m-auto.text-secondary {
 .scrollable-box {
 
   font-family:  Georgia, serif;
-  width: 100%;
-  height: 500px;
-  overflow: auto;
+  width: auto;
+  height: auto;
+  /*overflow: auto;*/
   /*border: 3px solid #2d5335;*/
   padding: 10px;
+  margin: 10px;
   color: #223826;
   background-color: #FFFDD0;
   box-shadow:
@@ -61,6 +92,8 @@ p.m-auto.text-secondary {
 
 ul {
   list-style-type: none;
+  display:flex;
+  justify-content: space-around;
 }
 
 ul li {
@@ -70,18 +103,16 @@ ul li {
 }
 
 a.link-color {
-  color: #fff;
+  color: #223826;
 }
 a.link-color:hover {
-    color: #223826;
+    color:  #FF4500;
 }
 a.link-color:active {
   color: #FF4500;
 }
 
-a.link-color:visited {
-  color: purple;
-}
+
 ul li img {
   width: 100px; /* adjust the size of the images */
   height: 100px;
