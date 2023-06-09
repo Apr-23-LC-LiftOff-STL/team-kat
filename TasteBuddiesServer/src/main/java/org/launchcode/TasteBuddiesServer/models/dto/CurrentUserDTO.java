@@ -11,13 +11,22 @@ public class CurrentUserDTO extends OtherUserDTO {
     private String email;
     private List<Integer> eventIDs;
 
-    public CurrentUserDTO(int id, String displayName, String email, List<UserLikes> userLikes) {
-        super(id, displayName, userLikes);
+    public CurrentUserDTO(int id, String displayName, String email, List<String> likes, List<String> dislikes) {
+        super(id, displayName, likes, dislikes);
         this.email = email;
     }
 
-    public CurrentUserDTO(User user) {
-        this(user.getId(), user.getDisplayName(), user.getEmail(), user.getUserLikes());
+    public CurrentUserDTO(User user, int eventId) {
+        super(
+                user.getId(),
+                user.getDisplayName(),
+                user.getUserLikes().stream()
+                        .filter(ul -> ul.getEvent().getId() == eventId)
+                        .findFirst()
+                        .orElse(new UserLikes())
+        );
+
+        this.email = user.getEmail();
         this.eventIDs = user.getEvents()
                 .stream()
                 .map(AbstractEntity::getId)

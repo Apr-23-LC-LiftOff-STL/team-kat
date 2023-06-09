@@ -201,40 +201,24 @@ public class EventController {
         // Process and save user likes within the event from the method in eventService
         eventService.saveLikedRestaurant(userLikesDTO);
 
-        //Check if any restaurant has been liked by all users
-        String mutuallyLikedRestaurant = eventService.getMutuallyLikedRestaurant(userLikesDTO);
-        if (mutuallyLikedRestaurant != null) {
-            System.out.println("Mutually Liked Restaurant: " + mutuallyLikedRestaurant);
-            possibleEvent.get().setMutuallyLikedRestaurant(mutuallyLikedRestaurant);
-            eventRepository.save(possibleEvent.get());
-            //Redirect to the result page
-//            EventDTO eventDTO = new EventDTO();
-//            eventDTO .setId(userLikesDTO.getEventId());
-//            eventDTO.setMutuallyLikedRestaurant(mutuallyLikedRestaurant);
-//            URI resultPageUri = new URI("/api/event/" + userLikesDTO.getEventId() + "/results");
-//            return ResponseEntity.status(HttpStatus.OK).location(resultPageUri).build();
-        } else {
-            System.out.println("No Mutually Liked Restaurants");
-        }
-
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping("/{eventId}/result")
-    public ResponseEntity<EventResultDTO> getEventResults(
-            @PathVariable int eventId,
-            HttpServletRequest request
-    ) {
-        Optional<Event> possibleEvent = eventRepository.findById(eventId);
-        if (possibleEvent.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        Event event = possibleEvent.get();
-        Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
-        if (possibleCurrentUser.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-        EventResultDTO eventResultDTO = new EventResultDTO(event, possibleCurrentUser.get());
-        return ResponseEntity.ok(eventResultDTO);
-    }
+//    @GetMapping("/{eventId}/result")
+//    public ResponseEntity<EventResultDTO> getEventResults(
+//            @PathVariable int eventId,
+//            HttpServletRequest request
+//    ) {
+//        Optional<Event> possibleEvent = eventRepository.findById(eventId);
+//        if (possibleEvent.isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        Event event = possibleEvent.get();
+//        Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
+//        if (possibleCurrentUser.isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//        }
+//        EventResultDTO eventResultDTO = new EventResultDTO(event, possibleCurrentUser.get());
+//        return ResponseEntity.ok(eventResultDTO);
+//    }
 }

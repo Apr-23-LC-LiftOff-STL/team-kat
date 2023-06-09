@@ -2,6 +2,7 @@ package org.launchcode.TasteBuddiesServer.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,7 +36,6 @@ public class User extends AbstractEntity implements UserDetails {
     @JsonIgnore
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Event> events = new ArrayList<>();
-
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserLikes> userLikes;

@@ -4,12 +4,15 @@ import org.launchcode.TasteBuddiesServer.config.JwtUtil;
 import org.launchcode.TasteBuddiesServer.data.EventRepository;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
 import org.launchcode.TasteBuddiesServer.models.User;
-import org.launchcode.TasteBuddiesServer.models.dto.CurrentUserDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -38,9 +41,9 @@ public class UserController {
             return ResponseEntity.status(204).body(null);
         }
 
-        List<CurrentUserDTO> users = possibleUsers
+        List<UserDTO> users = possibleUsers
                 .stream()
-                .map(CurrentUserDTO::new)
+                .map(UserDTO::new)
                 .collect(Collectors.toList());
 
         return ResponseEntity.status(200).body(users);
@@ -56,7 +59,7 @@ public class UserController {
         if (possibleUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        CurrentUserDTO userDTO = new CurrentUserDTO(possibleUser.get());
+        UserDTO userDTO = new UserDTO(possibleUser.get());
 
         return ResponseEntity.status(200).body(userDTO);
     }
