@@ -1,27 +1,28 @@
 package org.launchcode.TasteBuddiesServer.controllers;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
 import org.launchcode.TasteBuddiesServer.data.EventRepository;
 import org.launchcode.TasteBuddiesServer.data.RestaurantRepository;
-import org.launchcode.TasteBuddiesServer.data.UserRepository;
+import org.launchcode.TasteBuddiesServer.exception.EventDoesNotExistException;
 import org.launchcode.TasteBuddiesServer.exception.RoomCodeDoesNotExistException;
 import org.launchcode.TasteBuddiesServer.exception.UserAlreadyJoinedEventException;
 import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.User;
-import org.launchcode.TasteBuddiesServer.models.dto.*;
+import org.launchcode.TasteBuddiesServer.models.dto.CreateEventFormDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.JoinEventDTO;
+import org.launchcode.TasteBuddiesServer.models.dto.UserLikesDTO;
 import org.launchcode.TasteBuddiesServer.models.geocode.Location;
 import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.services.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,22 +35,23 @@ import java.util.stream.Collectors;
         allowCredentials = "true"
 )
 public class EventController {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RestaurantRepository restaurantRepository;
-    @Autowired
-    private EventRepository eventRepository;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private EventService eventService;
-    @Autowired
-    private NearbyService nearbyService;
-    @Autowired
-    private GeocodeService geocodeService;
-    @Autowired
-    private PlaceService placeService;
+    private final RestaurantRepository restaurantRepository;
+    private final EventRepository eventRepository;
+    private final UserService userService;
+    private final EventService eventService;
+    private final NearbyService nearbyService;
+    private final GeocodeService geocodeService;
+    private final PlaceService placeService;
+
+    public EventController(RestaurantRepository restaurantRepository, EventRepository eventRepository, UserService userService, EventService eventService, NearbyService nearbyService, GeocodeService geocodeService, PlaceService placeService) {
+        this.restaurantRepository = restaurantRepository;
+        this.eventRepository = eventRepository;
+        this.userService = userService;
+        this.eventService = eventService;
+        this.nearbyService = nearbyService;
+        this.geocodeService = geocodeService;
+        this.placeService = placeService;
+    }
 
     @Value("${apiKey}")
     private String APIKey;
@@ -59,21 +61,10 @@ public class EventController {
             @RequestBody int eventId,
             HttpServletRequest request
     ) {
-
-        if (eventId <= 0) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-
-        Optional<Event> possibleEvent = eventRepository.findById(eventId);
-
-        if (possibleEvent.isEmpty()) {
-            return ResponseEntity.status(204).body(null);
-        }
-
+        Event event = eventService.getEventFromId(eventId);
         User currentUser = userService.getUserFromRequest(request);
-        Event event = eventService.filterSeenEvents(possibleEvent.get(), currentUser);
-
-        return ResponseEntity.status(200).body(new EventDTO(event, currentUser));
+        Event filteredEvent = eventService.filterSeenEvents(event, currentUser);
+        return ResponseEntity.status(200).body(new EventDTO(filteredEvent, currentUser));
     }
 
     @GetMapping("all")
@@ -147,20 +138,18 @@ public class EventController {
             ) throws URISyntaxException, IOException, InterruptedException {
 
         User user = userService.getUserFromRequest(request);
-        Optional<Event> possibleEvent = eventRepository.findByEntryCode(joinEventDTO.getEntryCode());
-        if(possibleEvent.isEmpty()){
-            throw new RoomCodeDoesNotExistException("Room Code Does Not Exist. Please try again");
-        }
+        Event event = eventRepository
+                .findByEntryCode(joinEventDTO.getEntryCode())
+                .orElseThrow(() -> new RoomCodeDoesNotExistException("Room Code Does Not Exist. Please try again"));
 
-        if(possibleEvent.get().getUsers().contains(user)){
+        if(event.getUsers().contains(user)){
             throw new UserAlreadyJoinedEventException("User has already joined this event");
         }
 
-        Event currentEvent = possibleEvent.get();
-        List<User> moreUsers = currentEvent.getUsers();
+        List<User> moreUsers = event.getUsers();
         moreUsers.add(user);
-        currentEvent.setUsers(moreUsers);
-        eventRepository.save(currentEvent);
+        event.setUsers(moreUsers);
+        eventRepository.save(event);
         return ResponseEntity.status(200).build();
     }
 
@@ -170,13 +159,12 @@ public class EventController {
             HttpServletRequest request
             ) throws URISyntaxException, IOException, InterruptedException {
 
-        Optional<Event> possibleEvent = eventRepository.findById(userLikesDTO.getEventId());
-        if (possibleEvent.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        Event event = eventRepository
+                .findById(userLikesDTO.getEventId())
+                .orElseThrow(() -> new EventDoesNotExistException("Event does not exist"));
 
-        User possibleCurrentUser = userService.getUserFromRequest(request);
-        userLikesDTO.setUserId(possibleCurrentUser.getId());
+        User user = userService.getUserFromRequest(request);
+        userLikesDTO.setUserId(user.getId());
 
         // Process and save user likes within the event from the method in eventService
         eventService.saveLikedRestaurant(userLikesDTO);
@@ -185,8 +173,8 @@ public class EventController {
         String mutuallyLikedRestaurant = eventService.getMutuallyLikedRestaurant(userLikesDTO);
         if (mutuallyLikedRestaurant != null) {
             System.out.println("Mutually Liked Restaurant: " + mutuallyLikedRestaurant);
-            possibleEvent.get().setMutuallyLikedRestaurant(mutuallyLikedRestaurant);
-            eventRepository.save(possibleEvent.get());
+            event.setMutuallyLikedRestaurant(mutuallyLikedRestaurant);
+            eventRepository.save(event);
         } else {
             System.out.println("No Mutually Liked Restaurants");
         }

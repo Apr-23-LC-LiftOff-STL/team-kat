@@ -1,6 +1,8 @@
 package org.launchcode.TasteBuddiesServer.services;
 
 import org.launchcode.TasteBuddiesServer.data.*;
+import org.launchcode.TasteBuddiesServer.exception.EventDoesNotExistException;
+import org.launchcode.TasteBuddiesServer.exception.UserNotFoundException;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.UserLikes;
 import org.launchcode.TasteBuddiesServer.models.dto.CreateEventFormDTO;
@@ -8,6 +10,8 @@ import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.UserLikesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,20 +19,20 @@ import java.util.*;
 @Service
 public class EventService {
 
-    @Autowired
-    private EventRepository eventRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    private UserLikesRepository userLikesRepository;
-
-    @Autowired
-    private RestaurantRepository restaurantRepository;
+    private final EventRepository eventRepository;
+    private final UserRepository userRepository;
+    private final UserLikesRepository userLikesRepository;
+    private final RestaurantRepository restaurantRepository;
 
     public static final char[] UPPERCASE_LETTERS = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     public static final int ENTRY_CODE_LENGTH = 6;
+
+    public EventService(EventRepository eventRepository, UserRepository userRepository, UserLikesRepository userLikesRepository, RestaurantRepository restaurantRepository) {
+        this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
+        this.userLikesRepository = userLikesRepository;
+        this.restaurantRepository = restaurantRepository;
+    }
 
     public Event createEvent(CreateEventFormDTO request, String userEmail) {
         Event event = new Event();
@@ -38,21 +42,28 @@ public class EventService {
         String entryCode = generateUniqueEntryCode();
         event.setEntryCode(entryCode);
 
-        Optional<User> optionalUser = userRepository.findByEmail(userEmail);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            event.getUsers().add(user);
+        User user = userRepository
+                .findByEmail(userEmail)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-            Event savedEvent = eventRepository.save(event);
-            user.getEvents().add(savedEvent);
-            userRepository.save(user);
+        event.getUsers().add(user);
 
-            return savedEvent;
-        } else {
-            // handel the case when user is not found, throw exception or return default value
-            return event;
+        Event savedEvent = eventRepository.save(event);
+        user.getEvents().add(savedEvent);
+        userRepository.save(user);
+
+        return savedEvent;
+
+
+    }
+
+    public Event getEventFromId(int eventId) {
+
+        if (eventId <= 0) {
+            throw new EventDoesNotExistException("Event does not exist");
         }
 
+        return eventRepository.findById(eventId).orElseThrow(() -> new EventDoesNotExistException("Event does not exist"));
     }
 
     public String generateUniqueEntryCode() {
@@ -76,7 +87,7 @@ public class EventService {
 
             roomCode = codeBuilder.toString();
 
-            Optional possibleEvent = eventRepository.findByEntryCode(roomCode);
+            Optional<Event> possibleEvent = eventRepository.findByEntryCode(roomCode);
 
             if (possibleEvent.isEmpty()) {
                 break;
@@ -105,7 +116,7 @@ public class EventService {
         Optional<UserLikes> userLikesOptional = userLikesRepository.findByUserAndEvent(user, event);
         UserLikes userLikes;
 
-        //Check if userLikes exists.  If not create it and pull it from database by using createuserlikes method
+        //Check if userLikes exists.  If not create it and pull it from database by using createUserLikes method
         if (userLikesOptional.isEmpty()) {
             userLikesOptional = this.createUserLikes(user, event);
         }
@@ -187,13 +198,6 @@ public class EventService {
             }
             return null; //returns null if no mutually liked restaurant is found.
         }
-
-
-//    public Optional<UserLikes> createUserLikes(User user, Event event) {
-//        UserLikes userLikes = new UserLikes(user, event);
-//        userLikesRepository.save(userLikes);
-//        return userLikesRepository.findByUserAndEvent(user, event);
-//    }
 
     public Event filterSeenEvents(Event event, User user) {
 
