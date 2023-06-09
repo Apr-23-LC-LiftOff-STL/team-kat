@@ -70,25 +70,17 @@ public class EventController {
             return ResponseEntity.status(204).body(null);
         }
 
-        Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
-        if (possibleCurrentUser.isEmpty()) {
-            return ResponseEntity.status(403).build();
-        }
+        User currentUser = userService.getUserFromRequest(request);
+        Event event = eventService.filterSeenEvents(possibleEvent.get(), currentUser);
 
-        Event event = eventService.filterSeenEvents(possibleEvent.get(), possibleCurrentUser.get());
-
-        return ResponseEntity.status(200).body(new EventDTO(event, possibleCurrentUser.get()));
+        return ResponseEntity.status(200).body(new EventDTO(event, currentUser));
     }
 
     @GetMapping("all")
     public ResponseEntity<?> getAllEvents(HttpServletRequest request) {
 
-        Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
-        if (possibleCurrentUser.isEmpty()) {
-            return ResponseEntity.status(403).build();
-        }
-
-        List<Event> events = eventRepository.findAllByUsers(possibleCurrentUser.get());
+        User currentUser = userService.getUserFromRequest(request);
+        List<Event> events = eventRepository.findAllByUsers(currentUser);
 
         if (events.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -97,7 +89,7 @@ public class EventController {
         List<EventDTO> allEvents = ((List<Event>) events)
                 .stream()
                 .map(event -> {
-                    return new EventDTO(event, possibleCurrentUser.get());
+                    return new EventDTO(event, currentUser);
                 })
                 .collect(Collectors.toList());
 
@@ -112,16 +104,12 @@ public class EventController {
             throws URISyntaxException, IOException, InterruptedException {
 
 
-        Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
-        if (possibleCurrentUser.isEmpty()) {
-            return ResponseEntity.status(403).build();
-        }
-
+        User currentUser = userService.getUserFromRequest(request);
         Event newEvent = new Event(
                 eventService.generateUniqueEntryCode(),
                 createEventFormDTO.getLocation(),
                 createEventFormDTO.getSearchRadius(),
-                possibleCurrentUser.get(),
+                currentUser,
                 createEventFormDTO.getMealTime()
         );
 
@@ -158,23 +146,19 @@ public class EventController {
             HttpServletRequest request
             ) throws URISyntaxException, IOException, InterruptedException {
 
-        Optional<User> possibleUser = userService.getUserFromRequest(request);
-        if(possibleUser.isEmpty()){
-            return ResponseEntity.status(403).build();
-        }
-
+        User user = userService.getUserFromRequest(request);
         Optional<Event> possibleEvent = eventRepository.findByEntryCode(joinEventDTO.getEntryCode());
         if(possibleEvent.isEmpty()){
             throw new RoomCodeDoesNotExistException("Room Code Does Not Exist. Please try again");
         }
 
-        if(possibleEvent.get().getUsers().contains(possibleUser.get())){
+        if(possibleEvent.get().getUsers().contains(user)){
             throw new UserAlreadyJoinedEventException("User has already joined this event");
         }
 
         Event currentEvent = possibleEvent.get();
         List<User> moreUsers = currentEvent.getUsers();
-        moreUsers.add(possibleUser.get());
+        moreUsers.add(user);
         currentEvent.setUsers(moreUsers);
         eventRepository.save(currentEvent);
         return ResponseEntity.status(200).build();
@@ -190,12 +174,9 @@ public class EventController {
         if (possibleEvent.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
-        if (possibleCurrentUser.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
 
-        userLikesDTO.setUserId(possibleCurrentUser.get().getId());
+        User possibleCurrentUser = userService.getUserFromRequest(request);
+        userLikesDTO.setUserId(possibleCurrentUser.getId());
 
         // Process and save user likes within the event from the method in eventService
         eventService.saveLikedRestaurant(userLikesDTO);
