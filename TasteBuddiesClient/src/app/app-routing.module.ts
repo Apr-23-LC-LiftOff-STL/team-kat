@@ -17,6 +17,7 @@ const routes: Routes = [
   { path: 'login', title: 'Login', component: LoginComponent },
   { path: 'signup', title: 'Register', component: RegistrationComponent },
   { path: 'account', title: 'Account', component: AccountComponent, canActivate: [AuthGuard] },
+  { path: 'event/:id/results', title: 'Results', component: EventResultComponent, canActivate: [AuthGuard]},
   { path: 'event/join', title: 'Join Event', component: EventJoinComponent, canActivate:[AuthGuard]},
   { path: 'event/create', title: 'New event', component: EventFormComponent, canActivate: [AuthGuard] },
   { path: 'event/:id', title: 'Event', component: EventComponent, canActivate: [AuthGuard] },
