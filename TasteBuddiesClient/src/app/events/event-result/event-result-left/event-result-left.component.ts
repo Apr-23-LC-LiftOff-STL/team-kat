@@ -10,7 +10,7 @@ import { EventService } from 'src/services/event.service';
   styleUrls: ['./event-result-left.component.css']
 })
 export class EventResultLeftComponent implements OnInit {
-  eventVotingProgress: EventVotingProgress
+  eventVotingProgress: EventVotingProgress = new EventVotingProgress;
   progresses: UserVotingProgress[] = []
   numberOfAvailableRestaurants: number = 0;
   
@@ -27,30 +27,28 @@ export class EventResultLeftComponent implements OnInit {
     let eventId: number = parseInt(eventIdString);
     this.eventService.getVotingProgress(eventId).subscribe({
       next: data => {
-        const jsonObject = JSON.parse(data);
-        console.log(jsonObject.Type);
-          this.eventVotingProgress.userVotes = jsonObject;
-        console.log(this.eventVotingProgress.userVotes);
+        let hashData: Map<String, number> = new Map(Object.entries(data));
+        this.eventVotingProgress.userVotes = hashData;
+        if(this.eventVotingProgress.userVotes.has("Number of Available Restaurants")){
+          this.numberOfAvailableRestaurants = this.eventVotingProgress.userVotes.get("Number of Available Restaurants")!;
+        } else {
+          this.numberOfAvailableRestaurants = 1;
+        }
+        console.log(this.numberOfAvailableRestaurants);
+        for(let [key, value] of this.eventVotingProgress.userVotes){
+          if(key === "Number of Available Restaurants"){
+            continue;
+          }
+          let progress: UserVotingProgress = new UserVotingProgress;
+          progress.userName = key;
+          progress.ratio = (value/this.numberOfAvailableRestaurants)*100;
+          this.progresses.push(progress);
+        }
       },
       error: e =>{
         console.error(e);
       }
       
     })
-    if(this.eventVotingProgress.userVotes.has("Number of Available Restaurants")){
-      this.numberOfAvailableRestaurants = this.eventVotingProgress.userVotes.get("Number of Available Restaurants")!;
-    } else {
-      this.numberOfAvailableRestaurants = 1;
-    }
-    console.log(this.numberOfAvailableRestaurants);
-    for(let [key, value] of this.eventVotingProgress.userVotes){
-      if(key === "Number of Available Restaurants"){
-        continue;
-      }
-      let progress: UserVotingProgress = new UserVotingProgress;
-      progress.userName = key;
-      progress.ratio = (value/this.numberOfAvailableRestaurants)*100;
-      this.progresses.push(progress);
-    }
   }
 }
