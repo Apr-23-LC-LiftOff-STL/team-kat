@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
 import { NewEventDTO } from 'src/models/DTO/new-event-dto';
 import { UserLikesDTO } from 'src/models/DTO/user-likes-dto';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -55,15 +55,27 @@ export class EventService {
       EVENT_API + 'like',
       JSON.stringify(userLikes),  //Response Body in Stringified JSON format from the DTO
       httpOptions                 //Sets HTTP headers defined above as Content-Type set to application/json
+    ).pipe(
+      switchMap(() => this.checkMutuallyLikedRestaurant(parseInt(userLikes.eventId, 10)))
     );
   }
 
+  private checkMutuallyLikedRestaurant(eventId: number): Observable<any> {
+    return this.getEventResults(eventId).pipe(
+      tap((eventResults: EventResultDTO) => {
+        if (eventResults.mutuallyLikedRestaurant) {
+          //Mutually liked restaurant found, Match!
+          console.log("You have a Match!");
+
+        } else {
+          //No mutually liked restaurant yet
+          console.log("No matches yet");
+        }
+      })
+    ); 
+  }
+
   public getEventResults(eventId: number): Observable<EventResultDTO> {
-    // return this.route.paramMap.pipe(
-    //   switchMap((params: ParamMap) => {
-    //     const eventId = Number.parseInt(params.get('id')!);
         return this.http.get<EventResultDTO>(`${EVENT_API}${eventId}/result`);
-      // })
-    // );
   }
 }

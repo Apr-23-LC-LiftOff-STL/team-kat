@@ -1,19 +1,30 @@
 <h1>Event Results</h1>
 
 <div *ngIf="eventResults">
-    <h2>Mutually Liked Restaurant:  {{ eventResults.mutuallyLikedRestaurant }}</h2>
+    <div *ngIf="eventResults.mutuallyLikedRestaurant">
+      <h2>You have a match!</h2>
+      <div>
+        <h2>{{ restaurantDetails.name }}</h2>
+        <p>{{ restaurantDetails.formatted_address }}</p>
+        <img [src]="currentPhoto" *ngIf="!isPhotoLoading" alt="Restaurant Photo">
+        <div *ngIf="isPhotoLoading">Loading photo...</div>
+      </div>
+    </div>
+</div>
 
-    <!-- <h3>Users Involved:</h3>
+
+<div *ngIf="eventResults">
+
+    <h3>Users Involved:</h3>
     <ul>
-        <li *ngFor="let user of eventResults.users">{{user.name}}</li>
-    </ul> -->
-
-    <!-- <p>Total Available Restaurants: {{ eventResults.totalAvailableRestaurants }}</p> -->
-
-    <!-- <h3>Remaining Restaurants to Vote on:</h3>
-    <ul>
-        <li *ngFor="let user of eventResults.users">
-            {{ user.name }}: {{ user.remainingRestaurants }}
+        <li>CurrentUser: {{ eventResults.currentUser.displayName}}</li>
+        <li *ngFor="let user of eventResults.otherUsers">
+            Other User: {{ user.displayName }}
         </li>
-    </ul> -->
+    </ul>
+
+    <p>Total Event Restaurants: {{ eventResults.totalRestaurants }}</p>
+    <p>Users That have made at least one vote:  {{eventResults.restaurantsVoted}}</p>
+
+    <button class="btn btn-primary" (click)="goToEvent()">Return to Event Restaurants</button>
 </div>

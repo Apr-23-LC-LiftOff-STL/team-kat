@@ -6,6 +6,7 @@ import { EventService } from 'src/services/event.service';
 import { PlacesService } from 'src/services/places.service';
 import { UserLikesDTO } from 'src/models/DTO/user-likes-dto';
 import { UserService } from 'src/services/user.service';
+import { EventResultDTO } from 'src/models/DTO/event-result-dto';
 
 @Component({
   selector: 'app-event',
@@ -17,6 +18,8 @@ export class EventComponent implements OnInit {
   event$: Observable<any>;
   restaurants: Array<{id: string}>;
   currentRestaurant: string;
+  eventResults: EventResultDTO;
+  matchMessage: string;
   restaurantDetails: {
     place_id: string,
     name: string,
@@ -56,12 +59,28 @@ export class EventComponent implements OnInit {
         this.event = res;
         this.restaurants = this.event.restaurants;
         this.nextRestaurant();
+
+        //Check if there is a match at initialization of Event page
+        this.eventService.getEventResults(this.event.id).subscribe({
+          next: res => {
+            if(res.mutuallyLikedRestaurant) {
+              this.matchMessage = "You Have a Match!";
+            } else {
+              this.matchMessage = "No Matches yet, Keep Voting!"
+            }
+          },
+          error: e => {
+            console.error(e);
+          }
+        });
       },
       error: e => {
         console.error(e);
       }
-    })
+    });
   }
+    
+  
 
   yesToRestaurant(choice: boolean): void {
     this.saveLikedRestaurant(this.currentRestaurant, choice);
@@ -91,11 +110,34 @@ export class EventComponent implements OnInit {
     );
 
     this.eventService.saveLike(userLikesDTO).subscribe({
-      next: res => {}, //doesn't perform any specific actions when save is successful
+      next: res => {
+        if (res.mutuallyLikedRestaurant) {
+          this.matchMessage = "You Have A Match!";
+        } else {
+          this.matchMessage = "No Matches yet, Keep Voting";
+        }
+      }, 
       error: e => {
         console.error(e); //Displays error when save is unsuccessful
       }
     });
+  }
+
+  //Get results To provide the ability to display if a match has been found
+  // getEventResults(eventId: number): void {
+  //   this.eventService.getEventResults(eventId).subscribe({
+  //     next: res => {
+  //       this.eventResults = res;
+  //     },
+  //     error: e => {
+  //       console.log(e);
+  //     }
+  //   })
+  // }
+
+  //Create method to view result page
+  viewResult(): void {
+      this.router.navigate(['/event', this.event.id, 'result']); 
   }
 
   

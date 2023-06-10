@@ -39,6 +39,15 @@
                 </div>
             </div>
         </div>
+
+        <div class="row p-2">
+            <div class="col-auto m-auto">
+              <p *ngIf="matchMessage">{{ matchMessage }}</p>
+              <button class="btn btn-primary" (click)="viewResult()">View Result</button>
+            </div>
+        </div>
+        
+        
         <ng-template #noNextEvent>
             <p class="m-auto text-secondary">Woops! No restaurants to display :/</p>
         </ng-template>
