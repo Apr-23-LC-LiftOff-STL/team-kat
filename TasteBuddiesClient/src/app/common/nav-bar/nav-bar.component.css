@@ -15,16 +15,16 @@ nav.navbar.navbar-expand-lg.bg-light{
 
 }
 
-/*a.navbar-brand {
+a.navbar-brand {
     font-family:  Georgia, serif;
     font-size: 15px;
     color: #fff;
     padding: 0.3rem 2rem;
     border-radius: 30px;
-}*/
+}
 nav.navbar.navbar-expand-lg.bg-light {
 
-    background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1116198450338467870/TASTEyyy.gif") !important;
+    background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1117210448161427577/cover1.png") !important;
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;

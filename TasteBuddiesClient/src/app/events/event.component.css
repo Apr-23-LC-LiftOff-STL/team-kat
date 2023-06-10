@@ -1,0 +1,17 @@
+h1 {
+ padding-top: 40px;
+ padding-bottom: 40px;
+ font-size: 45px;
+ text-align: center;
+ color: #fff;
+}
+
+
+div.col-auto.card.m-auto.p-3.card-1 {
+    background-color: #223826;
+    color: #fff;
+    font-size: 18px;
+    height: 100%;
+    width: 100%;
+}
+
