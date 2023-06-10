@@ -123,18 +123,6 @@ export class EventComponent implements OnInit {
     });
   }
 
-  //Get results To provide the ability to display if a match has been found
-  // getEventResults(eventId: number): void {
-  //   this.eventService.getEventResults(eventId).subscribe({
-  //     next: res => {
-  //       this.eventResults = res;
-  //     },
-  //     error: e => {
-  //       console.log(e);
-  //     }
-  //   })
-  // }
-
   //Create method to view result page
   viewResult(): void {
       this.router.navigate(['/event', this.event.id, 'result']); 
