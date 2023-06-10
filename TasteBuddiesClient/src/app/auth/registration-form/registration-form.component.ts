@@ -11,7 +11,7 @@ import { AuthenticationService } from 'src/services/authentication.service';
 
 export class RegistrationFormComponent implements OnInit {
 
-  regModel: Registration = new Registration('nathan@example.net', 'BATS!', 'password');
+  regModel: Registration;
   isSignupFailed = false;
   submitted: boolean = false;
   response: any;
