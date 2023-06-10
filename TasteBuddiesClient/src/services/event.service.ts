@@ -5,6 +5,7 @@ import { NewEventDTO } from 'src/models/DTO/new-event-dto';
 import { UserLikesDTO } from 'src/models/DTO/user-likes-dto';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { EventResultDTO } from 'src/models/DTO/event-result-dto';
+import { EventVotingProgress } from 'src/models/DTO/event-voting-progress';
 
 const EVENT_API = 'http://localhost:8080/api/event/';
 
@@ -65,5 +66,9 @@ export class EventService {
         return this.http.get<EventResultDTO>(`${EVENT_API}${eventId}/result`);
       // })
     // );
+  }
+
+  public getVotingProgress(eventId: number): Observable<any> {
+    return this.http.get<any>(`${EVENT_API}${eventId}/votingProgress`);
   }
 }

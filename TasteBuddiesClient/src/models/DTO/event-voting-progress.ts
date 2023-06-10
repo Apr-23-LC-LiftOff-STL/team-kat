@@ -1,17 +1,9 @@
+import { HttpClient } from "@angular/common/http";
 import { User } from "../user";
+import { EventService } from "src/services/event.service";
 
 export class EventVotingProgress {
-    userVotes: Map<String, number> = new Map<String, number>([
-        ["User1", 26],
-        ["User2", 24],
-        ["User3", 14]
-    ]);
-    availableRestaurants: number = 30; 
+    userVotes: Map<String, number> = new Map<String, number>()
     
-    constructor(){
-        // this.userLikes = userLikes;
-        // this.userDislikes = userDislikes;
-        // this.availableRestaurants = availablerestaurants;
-    }
-    
+    constructor(){}
 }
