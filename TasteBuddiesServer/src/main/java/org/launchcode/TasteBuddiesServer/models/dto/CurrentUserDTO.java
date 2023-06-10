@@ -23,7 +23,8 @@ public class CurrentUserDTO extends OtherUserDTO {
                 user.getUserLikes().stream()
                         .filter(ul -> ul.getEvent().getId() == eventId)
                         .findFirst()
-                        .orElse(new UserLikes())
+                        .orElse(new UserLikes(user, user.getEvents().get(0)))   // note: this is spaghetti to
+                                                                                // prevent a null object
         );
 
         this.email = user.getEmail();

@@ -1,1 +1,12 @@
-<p>user-progress works!</p>
+<!-- TODO: figure out how to space these with bootstrap -->
+<!-- Names should be left justified, and bars right justified -->
+<label
+    class="mr-auto"
+    for="{{ user.displayName }}-progressBar">{{ user.displayName }}&nbsp;
+</label>
+<progress 
+    class="ml-auto"
+    id="{{ user.displayName }}-progressBar" 
+    max="{{event.restaurants.length}}" 
+    value="{{progress}}">
+</progress>
