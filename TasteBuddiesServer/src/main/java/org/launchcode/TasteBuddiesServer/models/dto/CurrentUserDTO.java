@@ -10,16 +10,24 @@ import java.util.stream.Collectors;
 public class CurrentUserDTO extends OtherUserDTO {
     private String email;
     private List<Integer> eventIDs;
-    private List<UserLikes> userLikes;
 
-    public CurrentUserDTO(int id, String displayName, String email, List<UserLikes> userLikes) {
-        super(id, displayName);
+    public CurrentUserDTO(int id, String displayName, String email, List<String> likes, List<String> dislikes) {
+        super(id, displayName, likes, dislikes);
         this.email = email;
-        this.userLikes = userLikes;
     }
 
-    public CurrentUserDTO(User user) {
-        this(user.getId(), user.getDisplayName(), user.getEmail(), user.getUserLikes());
+    public CurrentUserDTO(User user, int eventId) {
+        super(
+                user.getId(),
+                user.getDisplayName(),
+                user.getUserLikes().stream()
+                        .filter(ul -> ul.getEvent().getId() == eventId)
+                        .findFirst()
+                        .orElse(new UserLikes(user, user.getEvents().get(0)))   // note: this is spaghetti to
+                                                                                // prevent a null object
+        );
+
+        this.email = user.getEmail();
         this.eventIDs = user.getEvents()
                 .stream()
                 .map(AbstractEntity::getId)

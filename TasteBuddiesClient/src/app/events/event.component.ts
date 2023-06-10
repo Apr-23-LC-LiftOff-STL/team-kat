@@ -15,7 +15,7 @@ import { UserService } from 'src/services/user.service';
 export class EventComponent implements OnInit {
 
   event$: Observable<any>;
-  restaurants: Array<{id: string}>;
+  restaurantsToShow: Array<{id: string}>;
   currentRestaurant: string;
   restaurantDetails: {
     place_id: string,
@@ -27,7 +27,7 @@ export class EventComponent implements OnInit {
       html_attributions: Array<string>;
       height: number;
       width: number;
-  }>
+    }>
   };
   currentPhoto: any;
   event: Event;
@@ -40,7 +40,6 @@ export class EventComponent implements OnInit {
     private eventService: EventService,
     private placesService: PlacesService,
     private userService: UserService,
-    
     ) { }
 
   ngOnInit(): void {
@@ -54,7 +53,9 @@ export class EventComponent implements OnInit {
     this.event$.subscribe({
       next: res => {
         this.event = res;
-        this.restaurants = this.event.restaurants;
+        this.restaurantsToShow = this.event.restaurants
+          .filter(r => !this.event.currentUser.likes.includes(r.id))
+          .filter(r => !this.event.currentUser.dislikes.includes(r.id));
         this.nextRestaurant();
       },
       error: e => {
@@ -65,11 +66,15 @@ export class EventComponent implements OnInit {
 
   yesToRestaurant(choice: boolean): void {
     this.saveLikedRestaurant(this.currentRestaurant, choice);
+    if (choice) {
+      this.event.currentUser.likes.push(this.currentRestaurant);
+    } 
+      
     this.nextRestaurant();
   }
 
   private nextRestaurant(): void {
-    this.currentRestaurant = this.restaurants.shift()?.id!;
+    this.currentRestaurant = this.restaurantsToShow.shift()?.id!;
     this.placesService.getRestaurantDetails(this.currentRestaurant).subscribe({
       next: res => {
         this.restaurantDetails = res;

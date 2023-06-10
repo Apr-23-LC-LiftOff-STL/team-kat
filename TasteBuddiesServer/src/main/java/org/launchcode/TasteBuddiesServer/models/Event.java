@@ -1,5 +1,6 @@
 package org.launchcode.TasteBuddiesServer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -23,9 +24,6 @@ public class Event extends AbstractEntity {
 
     @NotNull
     private String searchRadius;
-
-    @Column(name = "mutually_liked_restaurant_id")
-    private String mutuallyLikedRestaurant;
 
     //defining a many-to-one relationship between two entities and specifying that the related entity should be fetched lazily to optimize performance.
     @ManyToMany(fetch = FetchType.LAZY)
@@ -132,11 +130,4 @@ public class Event extends AbstractEntity {
         this.mealTime = mealTime;
     }
 
-    public String getMutuallyLikedRestaurant() {
-        return mutuallyLikedRestaurant;
-    }
-
-    public void setMutuallyLikedRestaurant(String mutuallyLikedRestaurant) {
-        this.mutuallyLikedRestaurant = mutuallyLikedRestaurant;
-    }
 }

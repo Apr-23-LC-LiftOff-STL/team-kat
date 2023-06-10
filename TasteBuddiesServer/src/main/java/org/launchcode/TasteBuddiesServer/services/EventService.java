@@ -199,6 +199,7 @@ public class EventService {
             return null; //returns null if no mutually liked restaurant is found.
         }
 
+
     public Event filterSeenEvents(Event event, User user) {
 
         List<Restaurant> restaurants = event.getAvailableRestaurants();

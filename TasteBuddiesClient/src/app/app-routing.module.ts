@@ -10,6 +10,7 @@ import { AuthGuardService as AuthGuard } from 'src/services/auth-guard.service';
 import { EventFormComponent } from './events/event-form/event-form.component';
 import { EventComponent } from './events/event.component';
 import { EventJoinComponent } from './events/event-join/event-join.component';
+import { EventResultComponent } from './events/event-result/event-result.component';
 
 const routes: Routes = [
   { path: '', title: 'Taste Buddies', component: HomeComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'event/create', title: 'New event', component: EventFormComponent, canActivate: [AuthGuard] },
   { path: 'event/:id', title: 'Event', component: EventComponent, canActivate: [AuthGuard] },
   { path: 'event', title: 'Events', component: UserEventsComponent, canActivate: [AuthGuard] },
+  { path: 'event/:id/result', component: EventResultComponent, canActivate: [AuthGuard] },
   { path: '**', title: 'Page not found', component: PageNotFoundComponent },
 ];
 

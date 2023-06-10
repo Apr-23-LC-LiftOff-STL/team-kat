@@ -16,6 +16,8 @@ public class EventDTO {
     private List<Restaurant> restaurants;
     private Date mealTime;
 
+//    private String mutuallyLikedRestaurant;
+
     public EventDTO() {
     }
 
@@ -32,11 +34,11 @@ public class EventDTO {
         this.entryCode = entryCode;
         this.location = location;
         this.searchRadius = searchRadius;
-        this.currentUser = new CurrentUserDTO(currentUser);
+        this.currentUser = new CurrentUserDTO(currentUser, id);
         this.otherUsers = otherUsers
                 .stream()
                 .filter(user -> user.getId() != this.currentUser.getId())
-                .map(OtherUserDTO::new)
+                .map(ou -> new OtherUserDTO(ou, this.id))
                 .collect(Collectors.toList());
         this.restaurants = restaurants;
         this.mealTime = mealTime;
@@ -121,5 +123,6 @@ public class EventDTO {
     public void setMealTime(Date mealTime) {
         this.mealTime = mealTime;
     }
+
 }
 

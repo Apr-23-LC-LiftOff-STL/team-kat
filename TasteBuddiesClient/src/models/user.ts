@@ -2,6 +2,8 @@ export class User {
     id: number;
     email: String;
     displayName: String;
+    likes: Array<String>;
+    dislikes: Array<String>;
     userLikes: Array<{
         event: number,
         likedRestaurant: Array<string>,
@@ -12,6 +14,8 @@ export class User {
         id: number, 
         email: String, 
         displayName: String,
+        likes: Array<String>,
+        dislikes: Array<String>,
         userLikes: Array<{
             event: number,
             likedRestaurant: Array<string>,
@@ -22,6 +26,8 @@ export class User {
         this.id = id;
         this.email = email;
         this.displayName = displayName;
+        this.likes = likes;
+        this.dislikes = dislikes;
         this.userLikes = userLikes;
     }
 
