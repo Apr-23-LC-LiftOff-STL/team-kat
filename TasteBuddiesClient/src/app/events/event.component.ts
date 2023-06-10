@@ -125,13 +125,13 @@ export class EventComponent implements OnInit {
   }
 
   onSubmit(): void{
-    this.eventService.getEventResults(this.event.id).subscribe({
-      next: res => {
+    // this.eventService.getEventResults(this.event.id).subscribe({
+    //   next: res => {
         this.router.navigate([`/event/${this.event.id}/results`]);
-      },
-      error: e => {
-        console.error(e);
-      }
-    })
+    //   },
+    //   error: e => {
+    //     console.error(e);
+    //   }
+    // })
   }
 }

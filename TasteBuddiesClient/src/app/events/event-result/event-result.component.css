@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+.left-half {
+    width: 50%;
+}
+.right-half {
+    width: 50%;
+}
