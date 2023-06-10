@@ -17,10 +17,7 @@ export class EventResultLeftComponent implements OnInit {
     for(let [key, value] of this.eventVotingProgress.userVotes){
       let progress: UserVotingProgress = new UserVotingProgress;
       progress.userName = key;
-      console.log(progress.userName);
       progress.ratio = (value/this.eventVotingProgress.availableRestaurants)*100;
-      console.log(progress.ratio);
-      console.log(progress);
       this.progresses.push(progress);
     }
   }
