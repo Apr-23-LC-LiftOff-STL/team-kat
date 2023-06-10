@@ -1,0 +1,50 @@
+h1 {
+    padding-left: 11px;
+    padding-top: 25px;
+    font-family:  Georgia, serif;
+    font-size: 45px;
+    color: #fff;
+}
+
+
+div.col.card.p-2.m-3.card-6 {
+    background-color: #223826;
+    color: #fff;
+    font-size: 18px;
+    width: 300px;
+    height: 200px;
+
+
+}
+
+
+form.ng-untouched.ng-pristine.ng-valid {
+    padding-left: 11px;
+    padding-top: 5px;
+    font-family:  Georgia, serif;
+    font-size: 18px;
+    color: #fff;
+
+}
+
+input.entry-code {
+    margin-top: 3px;
+    width: 100px;
+    font-family:  Georgia, serif;
+    font-size: 18px;
+
+}
+
+
+input.btn.btn-join {
+
+    font-size: 16px;
+    margin-top: 11px;
+    color: #223826;
+    background-color: #fff;
+    border-radius: 7px;
+    padding: 0.3rem 1rem;
+}
+
+
+

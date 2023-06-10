@@ -1,5 +1,5 @@
-form.ng-untouched.ng-pristine.ng-valid {
-    padding-top: 150px;
+div.container {
+    padding-top: 40px;
 
 }
 div.row{
@@ -25,7 +25,7 @@ div.col.card.p-2.m-3.card-4 {
 }
 
 input.btn.btn-success {
-    font-size: 12px;
+    font-size: 16px;
     margin-top: 11px;
     margin-left: 150px;
     color: #223826;
