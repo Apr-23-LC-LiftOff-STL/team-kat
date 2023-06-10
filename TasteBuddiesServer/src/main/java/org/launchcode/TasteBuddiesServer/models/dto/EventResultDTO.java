@@ -8,14 +8,18 @@ import java.util.stream.Collectors;
 
 public class EventResultDTO {
     private int eventId;
-    private String mutuallyLikedRestaurant;
+    private String mutuallyLikedRestaurant;  //Make into restaurants into a list??
     private List<OtherUserDTO> otherUsers;
     private CurrentUserDTO currentUser;
     private int totalRestaurants;
     private int restaurantsVoted;
+//    private int restaurantsVotedUser;
+//    private int NumberOfUsers;
 
     public EventResultDTO(Event event, User currentUser) {
         this.eventId = event.getId();
+        this.totalRestaurants = event.getAvailableRestaurants().size();
+        this.restaurantsVoted = event.getUserLikedRestaurants().size();
         this.mutuallyLikedRestaurant = event.getMutuallyLikedRestaurant();
         this.currentUser = new CurrentUserDTO(currentUser);
         this.otherUsers = event.getUsers()
@@ -23,6 +27,9 @@ public class EventResultDTO {
                 .filter(user -> user.getId() != currentUser.getId())
                 .map(OtherUserDTO::new)
                 .collect(Collectors.toList());
+//        this.restaurantsVotedUser = currentUser.getUserLikes().size();
+//        this.NumberOfUsers = event.getUsers().size();
+
     }
 
     public int getEventId() {
@@ -72,4 +79,8 @@ public class EventResultDTO {
     public void setRestaurantsVoted(int restaurantsVoted) {
         this.restaurantsVoted = restaurantsVoted;
     }
+
+//    public int getRestaurantsVotedUser() { return restaurantsVotedUser; }
+
+//    public void setRestaurantsVotedUser(int restaurantsVotedUser) { this.restaurantsVotedUser = restaurantsVotedUser; }
 }

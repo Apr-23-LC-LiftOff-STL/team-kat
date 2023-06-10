@@ -2,6 +2,7 @@ package org.launchcode.TasteBuddiesServer.models.dto;
 
 import org.launchcode.TasteBuddiesServer.models.AbstractEntity;
 import org.launchcode.TasteBuddiesServer.models.User;
+import org.launchcode.TasteBuddiesServer.models.UserLikes;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
  */
 
 public class OtherUserDTO {
-
+//add userLIkes
     private int id;
     private String displayName;
 
@@ -42,5 +43,4 @@ public class OtherUserDTO {
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
-
 }
