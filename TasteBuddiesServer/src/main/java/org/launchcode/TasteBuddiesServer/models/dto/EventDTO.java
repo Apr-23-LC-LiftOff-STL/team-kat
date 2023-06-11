@@ -16,6 +16,8 @@ public class EventDTO {
     private List<Restaurant> restaurants;
     private Date mealTime;
 
+    private String mutuallyLikedRestaurant;
+
     public EventDTO() {
     }
 
@@ -121,5 +123,9 @@ public class EventDTO {
     public void setMealTime(Date mealTime) {
         this.mealTime = mealTime;
     }
+
+    public String getMutuallyLikedRestaurant() { return mutuallyLikedRestaurant; }
+
+    public void setMutuallyLikedRestaurant(String mutuallyLikedRestaurant) { this.mutuallyLikedRestaurant = mutuallyLikedRestaurant; }
 }
 
