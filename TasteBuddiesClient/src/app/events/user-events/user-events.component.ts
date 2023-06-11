@@ -26,7 +26,7 @@ export class UserEventsComponent implements OnInit {
       this.eventService.getEvents().subscribe({
         next: res => {
           for (let event of res) {
-            if (Number.parseInt(res.date) > new Date().getTime()) {
+            if (Number.parseInt(event.mealTime) > new Date().getTime()) {
               this.upcommingEvents.push(event)
             } else {
               this.pastEvents.push(event)
