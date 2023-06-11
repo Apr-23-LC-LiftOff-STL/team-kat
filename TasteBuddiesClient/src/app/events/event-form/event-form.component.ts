@@ -23,11 +23,14 @@ export class EventFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const formData = new NewEventDTO(
-      this.newEvent.location, 
-      this.newEvent.searchRadius,
-      String(Number.parseFloat(this.newEvent.searchRadius) * 1609.344)
-      )
+
+    console.log(this.newEvent)
+
+    // copy the newEvent data so we can manipulate it without updating the template
+    const formData = Object.assign(this.newEvent)
+    formData.searchRadius = String(Number.parseFloat(this.newEvent.searchRadius) * 1609.344);
+    
+    console.log(formData)
 
     this.eventService.createEvent(formData).subscribe({
       next: res => {
