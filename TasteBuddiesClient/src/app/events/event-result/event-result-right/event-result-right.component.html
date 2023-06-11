@@ -10,12 +10,12 @@
         <div *ngIf="isPhotoLoading">Loading photo...</div>
       </div>
     </div>
-</div>
+</div><br>
 
 
 <div *ngIf="eventResults">
 
-    <h3>Users Involved:</h3>
+    <!-- <h3>Users Involved:</h3>
     <ul>
         <li>CurrentUser: {{ eventResults.currentUser.displayName}}</li>
         <li *ngFor="let user of eventResults.otherUsers">
@@ -24,7 +24,7 @@
     </ul>
 
     <p>Total Event Restaurants: {{ eventResults.totalRestaurants }}</p>
-    <p>Users That have made at least one vote:  {{eventResults.restaurantsVoted}}</p>
+    <p>Users That have made at least one vote:  {{eventResults.restaurantsVoted}}</p> -->
 
     <button class="btn btn-primary" (click)="goToEvent()">Return to Event Restaurants</button>
 </div>
