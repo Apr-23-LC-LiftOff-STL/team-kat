@@ -1,11 +1,10 @@
-<script>console.log(this.progresses)</script>
+
 <h1>Voting progess of All Users</h1>
-<ul>
-    <li *ngFor="let progress of progresses">
+<div class="container">
+    <div *ngFor="let progress of progresses">
         <h2>{{progress.userName}}</h2>
-        <div class="progress-bar">
-            <div class="progress" [style.width.%]="progress.ratio" style="background-color: blue;"></div>
-            <div class="progress-text">{{progress.ratio}}%</div>
+        <div class="progress col">
+            <div class="progress-bar" role="progressbar" [style.width.%]="progress.ratio">{{progress.ratio}}%</div>
         </div>
-    </li><br>
-</ul>
+    </div>
+</div>
