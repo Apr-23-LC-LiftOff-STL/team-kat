@@ -22,6 +22,9 @@ import { UserEventsComponent } from './events/user-events/user-events.component'
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { EventFormComponent } from './events/event-form/event-form.component';
 import { EventJoinComponent } from './events/event-join/event-join.component';
+import { EventResultComponent } from './events/event-result/event-result.component';
+import { EventResultLeftComponent } from './events/event-result/event-result-left/event-result-left.component';
+import { EventResultRightComponent } from './events/event-result/event-result-right/event-result-right.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,10 @@ import { EventJoinComponent } from './events/event-join/event-join.component';
     UserEventsComponent,
     PageNotFoundComponent,
     EventFormComponent,
-    EventJoinComponent
+    EventJoinComponent,
+    EventResultComponent,
+    EventResultLeftComponent,
+    EventResultRightComponent
   ],
   imports: [
     BrowserModule,

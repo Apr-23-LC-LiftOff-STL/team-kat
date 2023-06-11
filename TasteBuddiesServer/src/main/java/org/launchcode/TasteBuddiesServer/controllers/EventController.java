@@ -3,6 +3,8 @@ package org.launchcode.TasteBuddiesServer.controllers;
 import org.launchcode.TasteBuddiesServer.data.EventRepository;
 import org.launchcode.TasteBuddiesServer.data.RestaurantRepository;
 import org.launchcode.TasteBuddiesServer.exception.EventDoesNotExistException;
+import org.launchcode.TasteBuddiesServer.data.UserLikesRepository;
+import org.launchcode.TasteBuddiesServer.data.UserRepository;
 import org.launchcode.TasteBuddiesServer.exception.RoomCodeDoesNotExistException;
 import org.launchcode.TasteBuddiesServer.exception.UserAlreadyJoinedEventException;
 import org.launchcode.TasteBuddiesServer.models.Event;
@@ -12,6 +14,8 @@ import org.launchcode.TasteBuddiesServer.models.dto.CreateEventFormDTO;
 import org.launchcode.TasteBuddiesServer.models.dto.EventDTO;
 import org.launchcode.TasteBuddiesServer.models.dto.JoinEventDTO;
 import org.launchcode.TasteBuddiesServer.models.dto.UserLikesDTO;
+import org.launchcode.TasteBuddiesServer.models.UserLikes;
+import org.launchcode.TasteBuddiesServer.models.dto.*;
 import org.launchcode.TasteBuddiesServer.models.geocode.Location;
 import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
 import org.launchcode.TasteBuddiesServer.services.*;
@@ -26,6 +30,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -42,8 +47,9 @@ public class EventController {
     private final NearbyService nearbyService;
     private final GeocodeService geocodeService;
     private final PlaceService placeService;
+    private final UserLikesRepository userLikesRepository;
 
-    public EventController(RestaurantRepository restaurantRepository, EventRepository eventRepository, UserService userService, EventService eventService, NearbyService nearbyService, GeocodeService geocodeService, PlaceService placeService) {
+    public EventController(RestaurantRepository restaurantRepository, EventRepository eventRepository, UserService userService, EventService eventService, NearbyService nearbyService, GeocodeService geocodeService, PlaceService placeService, UserLikesRepository userLikesRepository) {
         this.restaurantRepository = restaurantRepository;
         this.eventRepository = eventRepository;
         this.userService = userService;
@@ -51,10 +57,8 @@ public class EventController {
         this.nearbyService = nearbyService;
         this.geocodeService = geocodeService;
         this.placeService = placeService;
+        this.userLikesRepository = userLikesRepository;
     }
-
-    @Value("${apiKey}")
-    private String APIKey;
 
     @PostMapping("")
     public ResponseEntity<?> getEventFromId(
@@ -180,5 +184,47 @@ public class EventController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/{eventId}/result")
+    public ResponseEntity<EventResultDTO> getEventResults(
+            @PathVariable int eventId,
+            HttpServletRequest request
+    ) {
+        Optional<Event> possibleEvent = eventRepository.findById(eventId);
+        if (possibleEvent.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Event event = possibleEvent.get();
+        User user = userService.getUserFromRequest(request);
+        EventResultDTO eventResultDTO = new EventResultDTO(event, user);
+        return ResponseEntity.ok(eventResultDTO);
+    }
+    @GetMapping("/{eventId}/votingProgress")
+    public ResponseEntity<?> getVotingProgress(
+            @PathVariable int eventId){
+        Optional<Event> possibleEvent = eventRepository.findById(eventId);
+        if (possibleEvent.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Event event = possibleEvent.get();
+        EventVotingProgressDTO eventVotingProgressDTO = new EventVotingProgressDTO();
+        Map<String, Integer> userVotes = new HashMap<>();
+        for(User user: event.getUsers()){
+            Optional<UserLikes> possibleUserLikes = userLikesRepository.findByUserAndEvent(user, event);
+            if(possibleUserLikes.isEmpty()){
+                return ResponseEntity.notFound().build();
+            }
+            UserLikes userLikes = possibleUserLikes.get();
+            Integer numberOfVotes = userLikes.getLikedRestaurants().size() + userLikes.getDislikedRestaurants().size();
+            userVotes.put(user.getDisplayName(), numberOfVotes);
+        }
+        System.out.println(userVotes);
+        System.out.println(event.getAvailableRestaurants().size());
+        userVotes.put("Number of Available Restaurants", event.getAvailableRestaurants().size());
+        eventVotingProgressDTO.getUserVotes(userVotes);
+        eventVotingProgressDTO.getNumberOfAvailableRestaurant(event.getAvailableRestaurants().size());
+
+        return ResponseEntity.ok(userVotes);
     }
 }
