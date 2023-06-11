@@ -5,9 +5,8 @@ export class NewEventDTO {
     mealTime: Date;
 
     constructor(
-        location: string = '63103',
-        // date = new Date("2023/07/01"),
-        searchRadius: string = '1000', 
+        location: string,
+        searchRadius: string, 
         ) {
             this.location = location;
             // this.date = date;
