@@ -103,11 +103,6 @@ public class EventService {
         Integer eventId = userLikesDTO.getEventId();
         String restaurantId = userLikesDTO.getRestaurantId();
 
-
-        System.out.println("UserID: " + userId);
-        System.out.println("EventID: " + eventId);
-        System.out.println("Restaurant ID: " + restaurantId);
-
         // Retrieve the User and Event objects based on the provided IDs
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Event not found"));
@@ -166,11 +161,9 @@ public class EventService {
         //Check for mutually liked restaurants
         public String getMutuallyLikedRestaurant(UserLikesDTO userLikesDTO) {
             Integer eventId = userLikesDTO.getEventId();
-            System.out.println("Checking for Mutually Liked Restaurants in Event: " + eventId);
 
             //Retrieve the Event object based on the provided event ID
-            Event event = eventRepository.findById(eventId)
-                    .orElseThrow(() -> new IllegalArgumentException("Event not found"));
+            Event event = this.getEventFromId(eventId);
 
             //Create a map to store the counts of liked restaurants
             Map<String, Integer> restaurantCounts = new HashMap<>();
@@ -194,7 +187,6 @@ public class EventService {
                 if (entry.getValue() == event.getUsers().size() && entry.getValue() >= 2) {
                     return entry.getKey(); //Returns the ID of the mutually liked restaurant
                 }
-                System.out.println("Hashmap Data: " + restaurantCounts);
             }
             return null; //returns null if no mutually liked restaurant is found.
         }
