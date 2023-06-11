@@ -1,16 +1,13 @@
 export class NewEventDTO {
 
-    location: string; // zip code? Address?
-    searchRadius: string;  // meters?
-    mealTime: Date;
+    location: string;
+    searchRadius: string;
+    mealTime: string;
 
     constructor(
         location: string,
         searchRadius: string, 
-        ) {
-            this.location = location;
-            // this.date = date;
-            this.searchRadius = searchRadius;
-        }
+        mealTime: string,
+    ) {  }
 
 }
