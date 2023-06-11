@@ -59,3 +59,11 @@ button.btn.btn-danger.mx-3:hover {
           0px 0px 24px -7px rgba(139, 0, 0, 1)
         ;
 }
+
+button.btn.btn-primary {
+  font-size: 16px;
+  margin-top: 5px;
+  color:  #223826;
+  background-color: #fff;
+
+}

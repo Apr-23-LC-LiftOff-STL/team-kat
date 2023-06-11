@@ -1,8 +1,8 @@
 <h1>Event Component</h1>
-<h2>DUMMY OUTPUT PLEASE CHANGE ME</h2>
+
 
 <div class="row">
-    <div class="col-auto card m-auto p-3">
+    <div class="col-auto card m-auto p-3 card-1">
         <div *ngIf="currentRestaurant != null; else noNextEvent">
             <div class="row p-2">
                 <h4 class="col-auto m-auto">{{ restaurantDetails.name }}</h4>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div>
-                <h4>Dummy outputs:</h4>
+                <h4>Location:</h4>
                 <p>{{ restaurantDetails.formatted_address }}</p>
                 <span *ngFor="let type of restaurantDetails.types">
                     <span>{{ type }}, </span>
@@ -38,12 +38,14 @@
                     <button class="btn btn-danger mx-3" (click)="yesToRestaurant(false)">No</button>
                 </div>
             </div>
+          <form (ngSubmit)="onSubmit()">
+            <button class="btn btn-primary">See Results</button>
+          </form>
+
+
         </div>
         <ng-template #noNextEvent>
             <p class="m-auto text-secondary">Woops! No restaurants to display :/</p>
         </ng-template>
     </div>
 </div>
-<form (ngSubmit)="onSubmit()">
-    <button class="btn btn-primary">See Results</button>
-</form>
