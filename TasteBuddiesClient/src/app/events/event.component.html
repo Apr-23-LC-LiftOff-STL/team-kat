@@ -9,7 +9,7 @@
             </div>
             <div class="row p-2">
                 <div class="col-auto m-auto text-center">
-                    <div *ngIf="!isPhotoLoading; else imgPlaceholder" id="primary-photo">
+                    <div *ngIf="!isPhotoLoading; else imgPlaceholder" id="primary-photo" class="primary-photo">
                         <div *ngIf="restaurantDetails.photos; else noPhotosFound">
                             <img [src]="currentPhoto" alt="" id="restaurant-photo">
                         </div>
