@@ -9,7 +9,7 @@ import { EventService } from 'src/services/event.service';
   styleUrls: ['./event-form.component.css']
 })
 export class EventFormComponent implements OnInit {
-  newEvent: NewEventDTO = new NewEventDTO('63108', '2', '');
+  newEvent: NewEventDTO = new NewEventDTO('63108', '2', new Date());
 
   constructor(
     private router: Router,
@@ -29,8 +29,8 @@ export class EventFormComponent implements OnInit {
     // copy the newEvent data so we can manipulate it without updating the template
     const formData = Object.assign(this.newEvent)
     formData.searchRadius = String(Number.parseFloat(this.newEvent.searchRadius) * 1609.344);
+    formData.mealTime = new Date(this.newEvent.mealTime)
     
-    console.log(formData)
 
     this.eventService.createEvent(formData).subscribe({
       next: res => {

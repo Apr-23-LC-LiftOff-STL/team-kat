@@ -2,12 +2,12 @@ export class NewEventDTO {
 
     location: string;
     searchRadius: string;
-    mealTime: string;
+    mealTime: Date;
 
     constructor(
         location: string,
         searchRadius: string, 
-        mealTime: string,
+        mealTime: Date,
     ) {  }
 
 }
