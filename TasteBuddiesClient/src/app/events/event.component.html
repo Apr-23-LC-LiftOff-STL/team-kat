@@ -1,16 +1,7 @@
-<h1>Event Component</h1>
-<h2>DUMMY OUTPUT PLEASE CHANGE ME</h2>
+<h1>Event: {{event.entryCode}}</h1>
+<h2><a href="mailto:?subject=Come out for a meal with me!&body=Hey, I'm organizing a meal on Taste Buddies. Come join us. The entry code is: {{event.entryCode}}" >Invite your friends</a></h2>
 
 <div class="row">
-    <div class="col-auto mr-auto p-3">
-        <div class="row" *ngFor="let user of event.otherUsers">
-            <app-user-progress
-                [user]="user"
-                [event]="this.event"
-            >
-            </app-user-progress>
-        </div>
-    </div>
     <div class="col-auto card m-auto p-3">
         <div *ngIf="currentRestaurant != null; else noNextEvent">
             <div class="row p-2">
@@ -53,3 +44,6 @@
         </ng-template>
     </div>
 </div>
+<form (ngSubmit)="onSubmit()">
+    <button class="btn btn-primary">See Results</button>
+</form>

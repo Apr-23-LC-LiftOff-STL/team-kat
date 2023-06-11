@@ -1,7 +1,18 @@
 <h1>Event Results</h1>
 
-<div *ngIf="eventResults">
-    <h2>Mutually Liked Restaurant:  {{ eventResults.mutuallyLikedRestaurant }}</h2>
+<div class="container">
+    <div class="row">
+        <div class="left-half col">
+            <app-event-result-left></app-event-result-left>
+        </div>
+        <div class="right-half col">
+            <app-event-result-right></app-event-result-right>
+        </div>
+    </div>
+</div>
+
+<!-- <div *ngIf="eventResults">
+    <h2>Mutually Liked Restaurant:  {{ eventResults.mutuallyLikedRestaurant }}</h2> -->
 
     <!-- <h3>Users Involved:</h3>
     <ul>
@@ -16,4 +27,4 @@
             {{ user.name }}: {{ user.remainingRestaurants }}
         </li>
     </ul> -->
-</div>
+<!-- </div> -->
