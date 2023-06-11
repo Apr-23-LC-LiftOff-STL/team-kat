@@ -5,12 +5,14 @@ import java.net.URISyntaxException;
 
 import org.launchcode.TasteBuddiesServer.data.EventRepository;
 import org.launchcode.TasteBuddiesServer.data.RestaurantRepository;
+import org.launchcode.TasteBuddiesServer.data.UserLikesRepository;
 import org.launchcode.TasteBuddiesServer.data.UserRepository;
 import org.launchcode.TasteBuddiesServer.exception.RoomCodeDoesNotExistException;
 import org.launchcode.TasteBuddiesServer.exception.UserAlreadyJoinedEventException;
 import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
 import org.launchcode.TasteBuddiesServer.models.User;
+import org.launchcode.TasteBuddiesServer.models.UserLikes;
 import org.launchcode.TasteBuddiesServer.models.dto.*;
 import org.launchcode.TasteBuddiesServer.models.geocode.Location;
 import org.launchcode.TasteBuddiesServer.models.place.ResultsPlace;
@@ -22,9 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -40,6 +40,8 @@ public class EventController {
     private RestaurantRepository restaurantRepository;
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private UserLikesRepository userLikesRepository;
     @Autowired
     private UserService userService;
     @Autowired
@@ -206,10 +208,61 @@ public class EventController {
             System.out.println("Mutually Liked Restaurant: " + mutuallyLikedRestaurant);
             possibleEvent.get().setMutuallyLikedRestaurant(mutuallyLikedRestaurant);
             eventRepository.save(possibleEvent.get());
+            //Redirect to the result page
+//            EventDTO eventDTO = new EventDTO();
+//            eventDTO .setId(userLikesDTO.getEventId());
+//            eventDTO.setMutuallyLikedRestaurant(mutuallyLikedRestaurant);
+//            URI resultPageUri = new URI("/api/event/" + userLikesDTO.getEventId() + "/results");
+//            return ResponseEntity.status(HttpStatus.OK).location(resultPageUri).build();
         } else {
             System.out.println("No Mutually Liked Restaurants");
         }
 
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/{eventId}/result")
+    public ResponseEntity<EventResultDTO> getEventResults(
+            @PathVariable int eventId,
+            HttpServletRequest request
+    ) {
+        Optional<Event> possibleEvent = eventRepository.findById(eventId);
+        if (possibleEvent.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Event event = possibleEvent.get();
+        Optional<User> possibleCurrentUser = userService.getUserFromRequest(request);
+        if (possibleCurrentUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        EventResultDTO eventResultDTO = new EventResultDTO(event, possibleCurrentUser.get());
+        return ResponseEntity.ok(eventResultDTO);
+    }
+    @GetMapping("/{eventId}/votingProgress")
+    public ResponseEntity<?> getVotingProgress(
+            @PathVariable int eventId){
+        Optional<Event> possibleEvent = eventRepository.findById(eventId);
+        if (possibleEvent.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Event event = possibleEvent.get();
+        EventVotingProgressDTO eventVotingProgressDTO = new EventVotingProgressDTO();
+        Map<String, Integer> userVotes = new HashMap<>();
+        for(User user: event.getUsers()){
+            Optional<UserLikes> possibleUserLikes = userLikesRepository.findByUserAndEvent(user, event);
+            if(possibleUserLikes.isEmpty()){
+                return ResponseEntity.notFound().build();
+            }
+            UserLikes userLikes = possibleUserLikes.get();
+            Integer numberOfVotes = userLikes.getLikedRestaurants().size() + userLikes.getDislikedRestaurants().size();
+            userVotes.put(user.getDisplayName(), numberOfVotes);
+        }
+        System.out.println(userVotes);
+        System.out.println(event.getAvailableRestaurants().size());
+        userVotes.put("Number of Available Restaurants", event.getAvailableRestaurants().size());
+        eventVotingProgressDTO.getUserVotes(userVotes);
+        eventVotingProgressDTO.getNumberOfAvailableRestaurant(event.getAvailableRestaurants().size());
+
+        return ResponseEntity.ok(userVotes);
     }
 }
