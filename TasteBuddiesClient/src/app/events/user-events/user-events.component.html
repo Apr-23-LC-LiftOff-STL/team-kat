@@ -1,40 +1,85 @@
 <div class="container">
-    <div class="row">
-        <div class="col card p-2 m-3">
-            <h3 class="mx-auto">Upcoming events</h3>
+  <div class="row">
+    <a class="col card p-2 m-3 card-1" routerLink="/event-page">
+      <h3 class="mx-auto"></h3>
 
-            <ul *ngIf="upcommingEvents.length > 0; else noUpcommingEvents">
-                <li *ngFor="let event of upcommingEvents">
-                    <a routerLink="./{{event.id}}">{{event.entryCode}}</a>
-                </li>
-            </ul>
-            <ng-template #noUpcommingEvents>
-                <p class="m-auto text-secondary">Woops! Nothing here yet</p>
-            </ng-template>
-        </div>
-        <div class="col card p-2 m-3">
-            <h3 class="mx-auto">
-                Past events
-            </h3>
-            <ul *ngIf="pastEvents.length > 0; else noPastEvents">
-                <li *ngFor="let event of pastEvents">
-                    <a routerLink="./{{event.id}}">{{event.entryCode}}</a>
-                </li>
-            </ul>
-            <ng-template #noPastEvents>
-                <p class="m-auto text-secondary">Woops! Nothing here yet</p>
-            </ng-template>
-        </div>
+      <ul *ngIf="upcommingEvents.length > 0; else noUpcommingEvents">
+        <li *ngFor="let event of upcommingEvents">
+          <a routerLink="/event/{{event.id}}">{{event.entryCode}}</a>
+        </li>
+      </ul>
+      <ng-template #noUpcommingEvents>
+        <p class="m-auto text-secondary"></p>
+      </ng-template>
+    </a>
+
+    <div class="col card p-2 m-3 card-2">
+      <h3 class="mx-auto">
+
+      </h3>
+      <ul *ngIf="pastEvents.length > 0; else noPastEvents" class="event-list">
+        <li *ngFor="let event of pastEvents" class="event-item">
+          <a routerLink="./{{event.id}}" class="event-link">{{event.entryCode}}</a>
+        </li>
+      </ul>
+      <ng-template #noPastEvents>
+        <p class="m-auto text-secondary"></p>
+      </ng-template>
     </div>
 
-    <div class="row">
-        <div>
-            <a class="btn btn-primary m-1" routerLink="./create" role="button">
-                New Event
+
+  </div>
+
+  <!--<div class="row">
+        </a>
+            <a class="btn btn-secondary" routerLink="./join" role="button">
             </a>
-            <a class="btn btn-secondary m-1" routerLink="./join" role="button">
-                Join Event
-            </a>
-        </div>
-    </div>
+        </a>
+    </div>-->
+</div>
+<div class="scrollable-box">
+  <div class="title">
+    <h3>Welcome to Taste Buddies</h3>
+  </div>
+  <p>
+    The ultimate culinary companion app! Our vision is to revolutionize the way you make dining decisions and ensure that every meal is a delightful experience. Whether you're pondering where to impress your date, seeking the perfect lunch spot with your colleagues, or simply craving a new gastronomic adventure, Taste Buddies is here to lend a helping hand.
+  </p>
+  <p>
+    With Taste Buddies, the burden of decision-making is a thing of the past. Our intuitive interface allows everyone to have a say in the selection process, ensuring that no taste bud is left unsatisfied. By accessing your device's location, we curate a personalized list of top-rated restaurants and eateries nearby, tailored to your unique preferences. Taste Buddies allows you swipe your way into flavor nirvana. Explore a diverse array of culinary options, and with each swipe, discover a mouthwatering selection perfectly suited to your taste. Whether you're an adventurous foodie or have specific dietary requirements, we've got you covered.
+  </p>
+
+  <p>
+    Join the Taste Buddies community today and embark on a culinary journey like no other. Get ready to indulge in delectable dishes, share memorable moments, and forge meaningful connections through the joy of food. With Taste Buddies, finding your next extraordinary dining experience has never been easier. Bon appétit!
+  </p>
+
+  <div class="title">
+    <h3>Meet The Taste Buddies</h3>
+  </div>
+  <ul>
+    <li>
+      <img src="https://avatars.githubusercontent.com/u/57424696?v=4" alt="Dev2 Name">
+      <a href="https://github.com/Nathan-422" class="link-color">Nathan Wright</a>
+    </li>
+    <li>
+      <img src="https://media.licdn.com/dms/image/D4E35AQEoWMfGNVwTNw/profile-framedphoto-shrink_400_400/0/1677542986314?e=1686855600&v=beta&t=5NWz69t0mzh6ZJXSB58wQfm38ViXqpqFscpK8FCB1Jw" alt="Dev1 Name">
+      <a href="https://github.com/BeAiza" class="link-color">Isaac Belmonte</a>
+    </li>
+    <li>
+      <img src="https://media.licdn.com/dms/image/D5635AQG4DY2UGQDlLw/profile-framedphoto-shrink_400_400/0/1684427242255?e=1686855600&v=beta&t=JuaCkNU6QiP3Puxhs_IlsFWnrEvhMe3WNIGSSz3YrO8" alt="Dev1 Name">
+      <a href="https://github.com/bruck71" class="link-color">Bradley Rucker</a>
+    </li>
+    <li>
+      <img src="https://cdn.discordapp.com/attachments/225383532850053120/1116507020305121330/Untitled_design1.png" alt="Dev2 Name">
+      <a href="https://github.com/rljt24" class="link-color">Ricky Jiles</a>
+    </li>
+    <li>
+      <img src="https://ca.slack-edge.com/T041P03M6BV-U042Y6SEAPP-f70a6f116a85-512" alt="Dev1 Name">
+      <a href="dev1-link.html" class="link-color">Elliott Pearson</a>
+    </li>
+    <li>
+      <img src="https://ca.slack-edge.com/T041P03M6BV-U0432HXS3A7-ba5bbecfbe82-512" alt="Dev2 Name">
+      <a href="https://github.com/stlstitch" class="link-color">Ben James</a>
+    </li>
+  </ul>
+
 </div>

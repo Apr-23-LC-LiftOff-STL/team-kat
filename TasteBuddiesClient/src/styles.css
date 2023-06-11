@@ -1,12 +1,88 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    background-color:  #FF4500;
+}
+
+main {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+
+
+/*a.btn.btn-primary {
+    color:  #F0FFF0;
+    background-color:  #FF1493;
+    box-shadow:
+      0px 0px 1.1px -7px rgba(255, 165, 0, 1),
+      0px 0px 3px -7px rgba(255, 165, 0, 1),
+      0px 0px 7.2px -7px rgba(0, 0, 0, 0.046),
+      0px 0px 24px -7px rgba(255, 165, 0, 1)
+    ;
+     border: #90EE90;
+
+
+}
+
+a.btn.btn-secondary {
+    color:  #F0FFF0;
+    background-color:  #FF1493;
+    box-shadow:
+      0px 0px 1.1px -7px rgba(255, 165, 0, 1),
+      0px 0px 3px -7px rgba(255, 165, 0, 1),
+      0px 0px 7.2px -7px rgba(0, 0, 0, 0.046),
+      0px 0px 24px -7px rgba(255, 165, 0, 1)
+    ;
+    margin-left: 30px;
+    border: #90EE90;
+}*/
+
+
+
+
+a.btn.btn-primary:hover {
+  box-shadow:
+   0.6px 0.4px 2.2px rgba(0, 0, 0, 0.02),
+            1.4px 0.9px 5.3px rgba(0, 0, 0, 0.028),
+            2.6px 1.6px 10px rgba(144, 238, 144, 0.1),
+            4.7px 2.9px 17.9px rgba(0, 100, 0, 0.042),
+            8.8px 5.4px 33.4px rgba(0, 0, 0, 0.042),
+            21px 13px 80px rgba(0, 100, 0, 0.07)
+  ;
+
+}
+
 .card {
     /* Add shadows to create the "card" effect */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    background-color: #fefefe;
+       box-shadow:
+         0.6px 0.4px 2.2px rgba(0, 0, 0, 0.02),
+         1.4px 0.9px 5.3px rgba(0, 0, 0, 0.028),
+         2.6px 1.6px 10px rgba(34, 56, 38, 1),
+         4.7px 2.9px 17.9px rgba(0, 0, 0, 0.042),
+         8.8px 5.4px 33.4px rgba(34, 56, 38, 1) ,
+         21px 13px 80px rgba(0, 0, 0, 0.07)
+       ;
+      border-radius: 35px;
+      transition: 1.5s;
+      height: 300px;
+
   }
-  
+
   /* On mouse-over, add a deeper shadow */
   .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow:
+          0px 0px 1.1px -7px rgba(255, 165, 0, 1),
+          0px 0px 3px -7px rgba(255, 165, 0, 1),
+          0px 0px 7.2px -7px rgba(0, 0, 0, 0.046),
+          0px 0px 24px -7px rgba(255, 165, 0, 1)
+        ;
+        color: #90EE90;
+
   }
+
+div.container {
+     color: #FFA500;
+}
+
+

@@ -1,0 +1,46 @@
+div.container {
+    padding-top: 40px;
+
+}
+div.row{
+    font-family:  Georgia, serif;
+}
+
+h2.mx-auto {
+    font-size: 45px;
+    color: #fff;
+}
+
+div.col.card.p-2.m-3.card-3 {
+    background-color: #223826;
+    color: #fff;
+    font-size: 18px;
+    height: 200px;
+}
+div.col.card.p-2.m-3.card-4 {
+    background-color: #223826;
+    color: #fff;
+    font-size: 18px;
+    height: 325px;
+}
+
+input.btn.btn-success {
+    font-size: 16px;
+    margin-top: 11px;
+    margin-left: 150px;
+    color: #223826;
+    background-color: #fff;
+}
+div.col.card.p-2.m-3.card-5 {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+    background-color: #223826;
+    color: #fff;
+    font-size: 18px;
+    border-color: #fff;
+}
+p.mx-auto {
+   margin-top: 5px;
+   margin-bottom: 5px;
+
+}
