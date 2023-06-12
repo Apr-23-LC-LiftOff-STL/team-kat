@@ -1,3 +1,17 @@
+form {
+  display: flex;
+
+  align-items: center;
+  height: 50vh; /* This is for vertical centering, adjust as needed */
+  margin: 0; /* Remove default margin */
+  padding-top: 60px;
+
+
+}
+
+
+
+
 div.container {
     padding-top: 40px;
 
@@ -15,13 +29,15 @@ div.col.card.p-2.m-3.card-3 {
     background-color: #223826;
     color: #fff;
     font-size: 18px;
-    height: 200px;
+    width: auto;
+    height: auto;
 }
 div.col.card.p-2.m-3.card-4 {
     background-color: #223826;
     color: #fff;
     font-size: 18px;
-    height: 325px;
+    width: auto;
+    height: auto;
 }
 
 input.btn.btn-success {
