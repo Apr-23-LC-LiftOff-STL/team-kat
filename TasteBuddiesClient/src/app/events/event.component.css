@@ -12,6 +12,7 @@ h1 {
     background-color: #223826;
     color: #fff;
     font-size: 18px;
+    min-width: 380px;
 }
 
 
