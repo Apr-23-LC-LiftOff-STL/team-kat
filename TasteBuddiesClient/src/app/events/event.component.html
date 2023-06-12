@@ -1,11 +1,23 @@
-<h1>Event Component</h1>
-<h2>DUMMY OUTPUT PLEASE CHANGE ME</h2>
+<div class="row mb-4">
+    <div class="col m-auto">
+        <h1 class="pb-0 pt-3">Event: 
+            <span *ngIf="event.entryCode; else loadingEntryCode">
+                {{event.entryCode}}
+            </span>
+        </h1>
+        <ng-template #loadingEntryCode><span>loading...</span></ng-template>
+        <h2><a href="mailto:?subject=Come out for a meal with me!&body=Hey, I'm organizing a meal on Taste Buddies. Come join us. The entry code is: {{event.entryCode}}" >Invite your friends</a></h2>
+    </div>
+</div>
 
 <div class="row">
-    <div class="col-auto card m-auto p-3">
+    <div class="col-auto card mx-auto mb-4 p-3 card-1" id="card-container">
         <div *ngIf="currentRestaurant != null; else noNextEvent">
             <div class="row p-2">
-                <h4 class="col-auto m-auto">{{ restaurantDetails.name }}</h4>
+                <h4 class="col-auto m-auto" *ngIf="restaurantDetails.name; else loadingName">{{ restaurantDetails.name }}</h4>
+                <ng-template #loadingName>
+                    <h4>Loading...</h4>
+                </ng-template>
             </div>
             <div class="row p-2">
                 <div class="col-auto m-auto text-center">
@@ -25,25 +37,35 @@
                     </ng-template>
                 </div>
             </div>
-            <div>
-                <h4>Dummy outputs:</h4>
-                <p>{{ restaurantDetails.formatted_address }}</p>
-                <span *ngFor="let type of restaurantDetails.types">
-                    <span>{{ type }}, </span>
-                </span>
+            <div class="row justify-content-evenly">
+                <div class="col-auto mb-3">
+                    <h4 class="text-nowrap">Info:</h4>
+                    <div  class="text-start" style="white-space: pre-line">
+                        {{ restaurantDetails.formatted_address }}
+                    </div>
+                </div>
+                <div class="col-4 mb-3" *ngIf="restaurantDetails.types">
+                    <h4  class="text-nowrap">Details:</h4>
+                    <div class="text-capitalize text-nowrap text-start" *ngFor="let type of restaurantDetails.types">
+                        {{ type }}
+                    </div>
+                </div>
             </div>
             <div class="row p-2">
                 <div class="col-auto m-auto">
-                    <button class="btn btn-success mx-3" (click)="yesToRestaurant(true)">Yes</button>
-                    <button class="btn btn-danger mx-3" (click)="yesToRestaurant(false)">No</button>
+                    <button class="btn btn-success mx-3 px-3" id="like-button" (click)="yesToRestaurant(true)">Yes</button>
+                    <button class="btn btn-danger mx-3 px-3" id="dislike-button" (click)="yesToRestaurant(false)">No</button>
                 </div>
             </div>
+            <div routerLink="/event/{{this.event.id}}/results" class="btn btn-primary mb-3" id="results-button">See Results</div>
+            <div class="text-center">
+                <div class="text-muted" *ngIf="matchMessage">{{ matchMessage }}</div>
+            </div>
+            
         </div>
         <ng-template #noNextEvent>
-            <p class="m-auto text-secondary">Woops! No restaurants to display :/</p>
+            <p class="mx-auto mb-3 text-secondary">No more restaurants to display. </p>
+            <div routerLink="/event/{{this.event.id}}/results" class="btn btn-primary mb-3" id="results-button">See Results</div>
         </ng-template>
     </div>
 </div>
-<form (ngSubmit)="onSubmit()">
-    <button class="btn btn-primary">See Results</button>
-</form>

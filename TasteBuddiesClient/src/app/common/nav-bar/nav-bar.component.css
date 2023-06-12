@@ -1,0 +1,77 @@
+nav.navbar {
+    padding-top:0px;
+
+}
+
+nav.navbar.navbar-expand-lg.bg-light{
+    width: 100%;
+
+}
+/*@media (max-width: 768px) {
+    nav.navbar.navbar-expand-lg.bg-light {
+        height: 500px;
+    }*/
+
+
+
+
+a.navbar-brand {
+    font-family:  Georgia, serif;
+    font-size: 15px;
+    color: #fff;
+    padding: 0.3rem 2rem;
+    border-radius: 30px;
+}
+nav.navbar.navbar-expand-lg.bg-light {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1117210448161427577/cover1.png") !important;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+ul.navbar-nav.ms-auto.mb-2.mb-lg-0 {
+  font-family:  Georgia, serif;
+}
+
+ul.nav-pills a.nav-link {
+    font-family:  Georgia, serif;
+    font-size: 15px;
+    border-radius: 15px;
+    padding: 0.1rem 0rem;
+
+}
+li.btn.btn-primary.rounded-pill {
+
+
+    border-radius: 15px;
+    padding: 0.3rem 2rem;
+}
+
+
+ul.nav-pills a.nav-link:hover {
+    color: rgba(0, 0, 0, 0.7);
+
+}
+
+
+
+ul.nav-pills a.nav-link {
+
+}
+
+.nav-pills {
+  --bs-nav-pills-border-radius: 0.375rem;
+  --bs-nav-pills-link-active-color: #fff;
+  --bs-nav-pills-link-active-bg: transparent;
+}
+.navbar {
+  --bs-navbar-color: #fff;
+
+  }

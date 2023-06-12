@@ -1,40 +1,40 @@
 <div class="container">
-    <div class="row">
-        <div class="col card p-2 m-3">
-            <h3 class="mx-auto">Upcoming events</h3>
+  <div class="card custom-card p-3">
 
-            <ul *ngIf="upcommingEvents.length > 0; else noUpcommingEvents">
-                <li *ngFor="let event of upcommingEvents">
-                    <a routerLink="./{{event.id}}">{{event.entryCode}}</a>
-                </li>
-            </ul>
-            <ng-template #noUpcommingEvents>
-                <p class="m-auto text-secondary">Woops! Nothing here yet</p>
-            </ng-template>
-        </div>
-        <div class="col card p-2 m-3">
-            <h3 class="mx-auto">
-                Past events
-            </h3>
-            <ul *ngIf="pastEvents.length > 0; else noPastEvents">
-                <li *ngFor="let event of pastEvents">
-                    <a routerLink="./{{event.id}}">{{event.entryCode}}</a>
-                </li>
-            </ul>
-            <ng-template #noPastEvents>
-                <p class="m-auto text-secondary">Woops! Nothing here yet</p>
-            </ng-template>
-        </div>
+    <a class="col card p-2 m-3 event-card" id="event-page" routerLink="/event-page">
+      <h3 class="mx-auto"> Start Matching </h3>
+    </a>
+    
+    
+    <div 
+    class="col card p-2 m-3 event-card"
+    id="upcomming-events-card">
+    <h3 class="mx-auto"> Upcoming </h3>
+
+      <ul *ngIf="upcommingEvents.length > 0; else noUpcommingEvents">
+        <li  *ngFor="let event of upcommingEvents">
+          <a class="link" routerLink="/event/{{event.id}}">{{event.entryCode}}</a>
+        </li>
+      </ul>
+      <ng-template #noUpcommingEvents>
+        <p class="m-auto text-secondary"></p>
+      </ng-template>
     </div>
+    <div 
+    class="col card p-2 m-3 event-card"
+    id="previous-events-card">
 
-    <div class="row">
-        <div>
-            <a class="btn btn-primary m-1" routerLink="./create" role="button">
-                New Event
-            </a>
-            <a class="btn btn-secondary m-1" routerLink="./join" role="button">
-                Join Event
-            </a>
-        </div>
+      <h3 class="mx-auto"> Previously Matched </h3>
+      <ul *ngIf="pastEvents.length > 0; else noPastEvents" class="event-list">
+        <li *ngFor="let event of pastEvents">
+          <a class="link" routerLink="./{{event.id}}" class="event-link">{{event.entryCode}}</a>
+        </li>
+      </ul>
+      <ng-template #noPastEvents>
+        <p class="m-auto text-secondary"></p>
+      </ng-template>
     </div>
 </div>
+<footer>
+
+</footer>

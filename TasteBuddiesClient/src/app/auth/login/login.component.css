@@ -1,0 +1,27 @@
+h3 {
+    text-align: center;
+    font-family:  Georgia, serif;
+    font-size: 45px;
+    color: #fff;
+}
+
+#login-container {
+    max-width: 360px;
+    background-color: #223826;
+    color: #000;
+    font-size: 18px;
+}
+
+p {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 3px;
+
+}
+#registration-button {
+
+    font-size: 16px;
+    color: #223826;
+    background-color: #fff;
+}

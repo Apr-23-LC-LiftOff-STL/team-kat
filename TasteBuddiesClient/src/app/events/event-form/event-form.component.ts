@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NewEventDTO } from 'src/models/DTO/new-event-dto';
-import { Event } from 'src/models/event';
-import { User } from 'src/models/user';
 import { EventService } from 'src/services/event.service';
-import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-event-form',
@@ -12,16 +9,13 @@ import { UserService } from 'src/services/user.service';
   styleUrls: ['./event-form.component.css']
 })
 export class EventFormComponent implements OnInit {
-  newEvent: NewEventDTO = new NewEventDTO;
+  newEvent: NewEventDTO = new NewEventDTO('63108', '2', new Date());
 
   constructor(
     private router: Router,
     private eventService: EventService,
     ) { 
-      // I'll leave this in for the moment, but it won't work because this is 
-      // a template driven form. We'd need a reactive form to set values
-      // here in the ts.
-      // this.newEvent.date = new Date(Date.now() + 60000);
+
     }
 
   ngOnInit(): void {
@@ -29,9 +23,17 @@ export class EventFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.eventService.createEvent(this.newEvent).subscribe({
-      next: res => {
 
+    console.log(this.newEvent)
+
+    // copy the newEvent data so we can manipulate it without updating the template
+    const formData = Object.assign(this.newEvent)
+    formData.searchRadius = String(Number.parseFloat(this.newEvent.searchRadius) * 1609.344);
+    formData.mealTime = new Date(this.newEvent.mealTime)
+    
+
+    this.eventService.createEvent(formData).subscribe({
+      next: res => {
         this.router.navigate(['/event']);
       },
       error: (e) => { 

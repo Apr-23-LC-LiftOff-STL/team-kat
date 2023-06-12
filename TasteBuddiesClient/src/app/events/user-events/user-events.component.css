@@ -1,0 +1,161 @@
+/* body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0; 
+  padding-top: 60px;
+
+
+} */
+.custom-card{
+  font-family:  Georgia, serif;
+  width: auto;
+  /* height: 700px; */
+  /* padding: 10px; */
+  /* margin: auto 60px auto; */
+  color: #223826;
+
+
+
+}
+
+.event-card {
+  min-height: 240px;
+}
+
+#event-page {
+    font-family:  Georgia, serif;
+    text-align: center;
+    font-family:  Georgia, serif;
+    font-size: 45px;
+    text-decoration: none;
+    color: #fff;
+    background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1117884931524268062/ooushi9.png") !important;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: none;
+
+}
+
+
+h3.mx-auto {
+    font-family:  Georgia, serif;
+    text-align: center;
+    font-family:  Georgia, serif;
+    font-size: 20px;
+    color: #fff;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+#previous-events-card {
+    font-family:  Georgia, serif;
+
+    background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1117877186087620821/ooushi5.png") !important;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: none;
+
+}
+  
+
+
+
+#upcomming-events-card {
+  
+  /* background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1116433243223380098/ooushi1.png"); */
+  background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1117882374638809169/ooushi6.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+}
+
+a.link {
+  font-family:  Georgia, serif;
+  font-size: 13px;
+  text-decoration: none;
+  color: #fff;
+
+
+}
+
+.event-link {
+  font-family:  Georgia, serif;
+  font-size: 13px;
+  text-decoration: none;
+  color: #fff;
+}
+.event-link:hover{
+    color:  #FF4500;
+}
+
+
+.event-item {
+    list-style-type: disc;
+}
+.event-item::marker {
+    color: #223826;
+}
+
+
+
+
+.event-list {
+  display: flex;
+  flex-direction: column; /* Make items layout in a column */
+  justify-content: space-around;
+}
+
+
+p.m-auto.text-secondary {
+
+    font-size: 15px;
+    color:  #FF1493 !important;
+}
+
+ li {
+    font-size: 15px;
+
+
+}
+
+
+
+
+/* ul {
+  list-style-type: none;
+  display:flex;
+  justify-content: space-around;
+}
+
+ul li {
+  text-align: center;
+  color: #fff !important;
+  margin: 20px 0;
+} */
+
+a.link-color {
+  color: #223826;
+}
+a.link-color:hover {
+    color:  #FF4500;
+}
+a.link-color:active {
+  color: #FF4500;
+}
+
+
+ul li img {
+  width: 100px; /* adjust the size of the images */
+  height: 100px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+}
+
+.card {
+  color: #90EE90;
+}

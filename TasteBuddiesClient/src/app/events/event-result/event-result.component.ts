@@ -31,10 +31,9 @@ export class EventResultComponent implements OnInit {
     this.eventService.getEventResults(eventId).subscribe({
       next: res => {
         this.eventResults = res;
-        console.log(this.eventResults);
       },
       error: e => {
-        console.log(e);
+        console.error(e);
       }
     })
   }

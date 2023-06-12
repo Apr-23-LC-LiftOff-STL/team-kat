@@ -17,6 +17,7 @@ export class EventComponent implements OnInit {
   event$: Observable<any>;
   restaurants: Array<{id: string}>;
   currentRestaurant: string;
+  matchMessage: string;
   restaurantDetails: {
     place_id: string,
     name: string,
@@ -56,11 +57,14 @@ export class EventComponent implements OnInit {
         this.event = res;
         this.restaurants = this.event.restaurants;
         this.nextRestaurant();
+
+        this.checkForMatch(this.event.id); //Updates message on page initialization
+
       },
       error: e => {
         console.error(e);
       }
-    })
+    });
   }
 
   yesToRestaurant(choice: boolean): void {
@@ -73,7 +77,9 @@ export class EventComponent implements OnInit {
     this.placesService.getRestaurantDetails(this.currentRestaurant).subscribe({
       next: res => {
         this.restaurantDetails = res;
-        this.loadPhoto(this.restaurantDetails.photos[0].photo_reference)
+        this.restaurantDetails.types = this.filterTypes(this.restaurantDetails.types);
+        this.restaurantDetails.formatted_address = this.formatAddress(this.restaurantDetails.formatted_address);
+        this.loadPhoto(this.restaurantDetails.photos[0].photo_reference);
       },
       error: e => {
         console.error(e);
@@ -91,13 +97,34 @@ export class EventComponent implements OnInit {
     );
 
     this.eventService.saveLike(userLikesDTO).subscribe({
-      next: res => {}, //doesn't perform any specific actions when save is successful
+      next: res => {
+        // Update match message after the vote is saved.
+        this.checkForMatch(this.event.id);
+      }, 
       error: e => {
         console.error(e); //Displays error when save is unsuccessful
       }
     });
   }
 
+  private filterTypes(types: Array<string>): Array<string> {
+    const IGNORED_TYPES = ['point_of_interest', 'establishment', 'food', 'storage'];
+    types = types.filter(type => !IGNORED_TYPES.includes(type));
+
+    let formattedTypes = [];
+
+    for (let t of types) {
+      t = t.replace('meal_takeaway', 'takeout');
+      t = t.replace('_', ' ');
+      formattedTypes.push(t);
+    }
+    return formattedTypes;
+  }
+
+  private formatAddress(address: string): string {
+    address = address.replace(', ', ',\n').replace(', USA', '');
+    return address;
+  }
   
   private loadPhoto(photo_reference: string): void {
     this.isPhotoLoading = true;
@@ -124,14 +151,20 @@ export class EventComponent implements OnInit {
     }
   }
 
-  onSubmit(): void{
-    // this.eventService.getEventResults(this.event.id).subscribe({
-    //   next: res => {
-        this.router.navigate([`/event/${this.event.id}/results`]);
-    //   },
-    //   error: e => {
-    //     console.error(e);
-    //   }
-    // })
+  // onSubmit(): void{
+  //       this.router.navigate([`/event/${this.event.id}/results`]);
+  // }
+
+  //Get's boolean for mutuallyLiked Restaurant to use with the updateMatchMessage service
+  private checkForMatch(eventId: number): void {
+    this.eventService.getEventResults(eventId).subscribe({
+      next: res => {
+        const hasMatch = res.mutuallyLikedRestaurant !== null;
+        this.matchMessage = this.eventService.updateMatchMessage(hasMatch);
+      },
+      error: e => {
+        console.error(e);
+      }
+    });
   }
 }

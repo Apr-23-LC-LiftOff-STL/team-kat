@@ -1,10 +1,7 @@
-.container {
-    display: flex;
-    flex-direction: row;
-}
-.left-half {
-    width: 50%;
-}
-.right-half {
-    width: 50%;
+.card {
+    background-color: #223826;
+    color: #FFA500;
+    font-size: 18px;
+    min-width: 380px;
+
 }
