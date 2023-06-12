@@ -1,13 +1,16 @@
-<h1>Join an existing event</h1>
+
+
+
 <div class="card p-3 m-3">
+  <h1>Join and Match</h1>
     <form (ngSubmit)="onSubmit()">
         <label class="form-label" for="entryCode">Room Code</label>
-        <input 
+        <input
             class="form-control"
-            type="text" 
-            onkeyup="this.value = this.value.toUpperCase();" 
-            id="entryCode" 
-            name="entryCode" 
+            type="text"
+            onkeyup="this.value = this.value.toUpperCase();"
+            id="entryCode"
+            name="entryCode"
             [(ngModel)] = "joinEvent.entryCode"
             placeholder="ABCDEF">
             <div style="color: red;" *ngIf="errorMessage">
@@ -17,3 +20,4 @@
         <input class="btn btn-join" type="submit" value="Join Event">
     </form>
 </div>
+

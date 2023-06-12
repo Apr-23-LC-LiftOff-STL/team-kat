@@ -1,12 +1,11 @@
 <form #newEventForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="card custom-card">
                 <h2 class="mx-auto">
-                    Start a new event
+                    Start Matching
                 </h2>
-            </div>
-        </div>
+
         <div class="row">
             <div class="col card p-2 m-3 card-3">
                 <h4 class="mx-auto">Where</h4>
@@ -23,13 +22,15 @@
                 <h4 class="mx-auto">When</h4>
                 <label class="form-label" for="date">Date</label>
                 <input class="form-control mb-3" type="datetime-local" id="date" name="date" [(ngModel)]="newEvent.mealTime">
-            </div>
-            
-            <div class="row">
+              <div class="row">
                 <div class="col">
-                    <input class="btn btn-success" type="submit" value="Create Event">
+                  <input class="btn btn-success" type="submit" value="Create Event">
                 </div>
+              </div>
             </div>
+        </div>
+    </div>
+
         </div>
     </div>
 </form>
