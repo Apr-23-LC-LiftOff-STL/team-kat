@@ -26,6 +26,7 @@ import { EventPageComponent } from './events/event-page/event-page.component';
 import { EventResultComponent } from './events/event-result/event-result.component';
 import { EventResultLeftComponent } from './events/event-result/event-result-left/event-result-left.component';
 import { EventResultRightComponent } from './events/event-result/event-result-right/event-result-right.component';
+//import { EventListComponent } from './event-list/event-list.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { EventResultRightComponent } from './events/event-result/event-result-ri
     EventResultComponent,
     EventResultLeftComponent,
     EventResultRightComponent
+    //EventListComponent
   ],
   imports: [
     BrowserModule,
