@@ -1,10 +1,8 @@
 
-<h1>Voting progess of All Users</h1>
-<div class="container">
-    <div *ngFor="let progress of progresses">
-        <h2>{{progress.userName}}</h2>
-        <div class="progress col">
-            <div class="progress-bar" role="progressbar" [style.width.%]="progress.ratio">{{progress.ratio}}%</div>
-        </div>
+<div class="h3 mb-3">Voting progess of all users</div>
+<div *ngFor="let progress of progresses" class="mb-3">
+    <div class="h4">{{progress.userName}}</div>
+    <div class="progress col">
+        <div class="progress-bar" role="progressbar" [style.width.%]="progress.ratio">{{progress.ratio}}%</div>
     </div>
 </div>
