@@ -121,3 +121,6 @@ ul li img {
   margin: 0 auto;
 }
 
+.card {
+  max-height: 300px;
+}
