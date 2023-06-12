@@ -12,7 +12,7 @@ export class NavBarComponent implements OnInit {
 
   buttons = [
     {buttonName : "Event", path : "event",},
-    {buttonName : "Account", path : "account",},
+    // {buttonName : "Account", path : "account",},
   ];
 
   loginLogout = {
