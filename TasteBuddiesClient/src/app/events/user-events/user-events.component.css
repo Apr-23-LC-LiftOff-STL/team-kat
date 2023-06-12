@@ -156,6 +156,6 @@ ul li img {
   margin: 0 auto;
 }
 
-/* .card {
-  max-height: 300px;
-} */
+.card {
+  color: #90EE90;
+}
