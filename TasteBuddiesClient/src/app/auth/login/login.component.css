@@ -7,7 +7,7 @@ div.col-auto.card.m-auto.p-3.card-8{
     background-color: #223826;
     color: #fff;
     font-size: 18px;
-    height: 200px;
+    /* height: 200px; */
 }
 p {
     color: #fff;
