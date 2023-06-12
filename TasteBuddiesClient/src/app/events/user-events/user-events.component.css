@@ -24,8 +24,12 @@ body {
 
 a.col.card.p-2.m-3.card-1{
     font-family:  Georgia, serif;
-
-    background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1116432677109776516/ooushi.png") !important;
+    text-align: center;
+    font-family:  Georgia, serif;
+    font-size: 45px;
+    text-decoration: none;
+    color: #fff;
+    background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1117884931524268062/ooushi9.png") !important;
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -33,8 +37,26 @@ a.col.card.p-2.m-3.card-1{
 
 }
 
+h3.mx-auto {
+    font-family:  Georgia, serif;
+    text-align: center;
+    font-family:  Georgia, serif;
+    font-size: 20px;
+    color: #fff;
+
+}
+.col.card.p-2.m-3.card-new{
+    font-family:  Georgia, serif;
+
+    background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1117877186087620821/ooushi5.png") !important;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: none;
+
+}
 div.col.card.p-2.m-3.card-2{
-     background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1116433243223380098/ooushi1.png");
+     background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1117882374638809169/ooushi6.png");
            background-position: center center;
            background-size: cover;
            background-repeat: no-repeat;
@@ -43,7 +65,16 @@ div.col.card.p-2.m-3.card-2{
 
 }
 
+a.link {
+font-family:  Georgia, serif;
 
+    font-family:  Georgia, serif;
+    font-size: 13px;
+    text-decoration: none;
+    color: #fff;
+
+
+}
 
 .event-link {
   font-family:  Georgia, serif;
