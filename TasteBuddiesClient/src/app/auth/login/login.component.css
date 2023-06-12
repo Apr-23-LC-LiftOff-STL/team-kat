@@ -7,18 +7,21 @@ div.col-auto.card.m-auto.p-3.card-8{
     background-color: #223826;
     color: #fff;
     font-size: 18px;
-    height: 200px;
+    height: 250px;
 }
 p {
     color: #fff;
     font-size: 18px;
     margin-top: 10px;
     margin-bottom: 3px;
+
 }
 button.btn.btn-signup.mx-3 {
+
     font-size: 16px;
+    margin-top: 5px;
     margin-left: 10px;
     color: #223826;
     background-color: #fff;
-
+    width: 100px;
 }

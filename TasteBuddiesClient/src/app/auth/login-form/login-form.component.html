@@ -1,11 +1,14 @@
 <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
-    <div>
+    <div class="email">
         <label for="email" class="email">Email:</label>
         <input type="text" id="email" name="email" [(ngModel)]="regModel.email">
     </div>
-    <div>
+    <div class="password">
         <label for="password" class="pass">Password:</label>
         <input type="password" id="password" name="password" [(ngModel)]="regModel.password">
     </div>
-    <input type="submit" value="Submit">
+  <div class= "submit">
+    <!--<input  type="submit" value="Submit"-->
+    <button href="/submit" class="btn btn-submit mx-3">Submit</button>
+  </div>
 </form>
