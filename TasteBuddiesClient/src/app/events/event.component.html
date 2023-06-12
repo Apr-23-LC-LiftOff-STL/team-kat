@@ -1,6 +1,10 @@
 <div class="row mb-4">
     <div class="col m-auto">
-        <h1 class="pb-0 pt-3">Event: <span *ngIf="event.entryCode; else loadingEntryCode">{{event.entryCode}}</span></h1>
+        <h1 class="pb-0 pt-3">Event: 
+            <span *ngIf="event.entryCode; else loadingEntryCode">
+                {{event.entryCode}}
+            </span>
+        </h1>
         <ng-template #loadingEntryCode><span>loading...</span></ng-template>
         <h2><a href="mailto:?subject=Come out for a meal with me!&body=Hey, I'm organizing a meal on Taste Buddies. Come join us. The entry code is: {{event.entryCode}}" >Invite your friends</a></h2>
     </div>

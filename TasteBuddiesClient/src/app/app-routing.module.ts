@@ -12,6 +12,7 @@ import { EventComponent } from './events/event.component';
 import { EventJoinComponent } from './events/event-join/event-join.component';
 import { EventResultComponent } from './events/event-result/event-result.component';
 import { EventPageComponent } from './events/event-page/event-page.component';
+//import { EventListComponent } from './event-list/event-list.component';
 
 const routes: Routes = [
   { path: '', title: 'Taste Buddies', component: HomeComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'event/:id', title: 'Event', component: EventComponent, canActivate: [AuthGuard] },
   { path: 'event', title: 'Events', component: UserEventsComponent, canActivate: [AuthGuard] },
   { path: 'event-page', title: 'Event Page', component: EventPageComponent, canActivate:[AuthGuard]},
+  //{ path: 'event-list', title: 'Event List', component: EventListComponent canActivate:[AuthGuard]},
   { path: 'event/:id/result', component: EventResultComponent, canActivate: [AuthGuard] },
   { path: '**', title: 'Page not found', component: PageNotFoundComponent },
 ];

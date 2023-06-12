@@ -2,12 +2,13 @@
 
 <div class="container">
   <div class="card custom-card">
-    <a class="col card p-2 m-3 card-1" routerLink="/event-page"></a>
-    <div class="col card p-2 m-3 card-1.2">
-      <h3 class="mx-auto"></h3>
+
+    <a class="col card p-2 m-3 card-1" routerLink="/event-page"><h3 class="mx-auto"> Start Matching </h3></a>
+    <div class="col card p-2 m-3 card-new">
+      <h3 class="mx-auto"> Upcoming </h3>
       <ul *ngIf="upcommingEvents.length > 0; else noUpcommingEvents">
-        <li *ngFor="let event of upcommingEvents">
-          <a routerLink="/event/{{event.id}}">{{event.entryCode}}</a>
+        <li  *ngFor="let event of upcommingEvents">
+          <a class="link" routerLink="/event/{{event.id}}">{{event.entryCode}}</a>
         </li>
       </ul>
       <ng-template #noUpcommingEvents>
@@ -15,12 +16,10 @@
       </ng-template>
     </div>
     <div class="col card p-2 m-3 card-2">
-      <h3 class="mx-auto">
-
-      </h3>
+      <h3 class="mx-auto"> Previously Matched </h3>
       <ul *ngIf="pastEvents.length > 0; else noPastEvents" class="event-list">
         <li *ngFor="let event of pastEvents" class="event-item">
-          <a routerLink="./{{event.id}}" class="event-link">{{event.entryCode}}</a>
+          <a class="link" routerLink="./{{event.id}}" class="event-link">{{event.entryCode}}</a>
         </li>
       </ul>
       <ng-template #noPastEvents>
