@@ -151,9 +151,9 @@ export class EventComponent implements OnInit {
     }
   }
 
-  onSubmit(): void{
-        this.router.navigate([`/event/${this.event.id}/results`]);
-  }
+  // onSubmit(): void{
+  //       this.router.navigate([`/event/${this.event.id}/results`]);
+  // }
 
   //Get's boolean for mutuallyLiked Restaurant to use with the updateMatchMessage service
   private checkForMatch(eventId: number): void {

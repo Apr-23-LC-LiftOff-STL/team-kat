@@ -68,6 +68,6 @@ export class EventService {
   }
 
   public updateMatchMessage(hasMatch: boolean): string {
-    return hasMatch ? "You Have A Match!" : "No Matches yet, Keep Voting";
+    return hasMatch ? "You Have A Match!" : "";
   }
 }
