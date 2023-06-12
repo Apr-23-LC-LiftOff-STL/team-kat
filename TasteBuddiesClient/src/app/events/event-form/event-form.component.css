@@ -20,9 +20,11 @@ div.row{
     font-family:  Georgia, serif;
 }
 
-h2.mx-auto {
+.custom-card {
+    text-align: center;
     font-size: 45px;
     color: #fff;
+    background-color: #223826;
 }
 
 div.col.card.p-2.m-3.card-3 {
@@ -41,20 +43,15 @@ div.col.card.p-2.m-3.card-4 {
 }
 
 input.btn.btn-success {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     font-size: 16px;
-    margin-top: 11px;
-    margin-left: 150px;
+    margin-top: 5px;
     color: #223826;
     background-color: #fff;
 }
-div.col.card.p-2.m-3.card-5 {
-    margin-top: 5px !important;
-    margin-bottom: 5px !important;
-    background-color: #223826;
-    color: #fff;
-    font-size: 18px;
-    border-color: #fff;
-}
+
 p.mx-auto {
    margin-top: 5px;
    margin-bottom: 5px;

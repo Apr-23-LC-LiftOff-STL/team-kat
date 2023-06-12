@@ -1,8 +1,7 @@
 
 
 h1 {
-    padding-left: 11px;
-    padding-top: 200px;
+    text-align: center;
     font-family:  Georgia, serif;
     font-size: 45px;
     color: #fff;
@@ -10,6 +9,7 @@ h1 {
 
 
 div.card.p-3.m-3 {
+
     background-color: #223826;
     color: #fff;
     font-size: 18px;
