@@ -58,7 +58,9 @@
                 </div>
             </div>
             <div routerLink="/event/{{this.event.id}}/results" class="btn btn-primary mb-3" id="results-button">See Results</div>
-            
+            <div class="text-center">
+                <div class="text-muted" *ngIf="matchMessage">{{ matchMessage }}</div>
+            </div>
             
         </div>
         <ng-template #noNextEvent>
