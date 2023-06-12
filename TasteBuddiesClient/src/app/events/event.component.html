@@ -1,8 +1,12 @@
-<h1>Event: {{event.entryCode}}</h1>
-<h2><a href="mailto:?subject=Come out for a meal with me!&body=Hey, I'm organizing a meal on Taste Buddies. Come join us. The entry code is: {{event.entryCode}}" >Invite your friends</a></h2>
+<div class="row mb-4">
+    <div class="col m-auto">
+        <h1 class="pb-0 pt-3">Event: {{event.entryCode}}</h1>
+        <h2><a href="mailto:?subject=Come out for a meal with me!&body=Hey, I'm organizing a meal on Taste Buddies. Come join us. The entry code is: {{event.entryCode}}" >Invite your friends</a></h2>
+    </div>
+</div>
 
 <div class="row">
-    <div class="col-auto card m-auto p-3 card-1">
+    <div class="col-auto card mx-auto mb-4 p-3 card-1" id="card-container">
         <div *ngIf="currentRestaurant != null; else noNextEvent">
             <div class="row p-2">
                 <h4 class="col-auto m-auto">{{ restaurantDetails.name }}</h4>
@@ -34,13 +38,11 @@
             </div>
             <div class="row p-2">
                 <div class="col-auto m-auto">
-                    <button class="btn btn-success mx-3" (click)="yesToRestaurant(true)">Yes</button>
-                    <button class="btn btn-danger mx-3" (click)="yesToRestaurant(false)">No</button>
+                    <button class="btn btn-success mx-3 px-3" id="like-button" (click)="yesToRestaurant(true)">Yes</button>
+                    <button class="btn btn-danger mx-3 px-3" id="dislike-button" (click)="yesToRestaurant(false)">No</button>
                 </div>
             </div>
-          <form (ngSubmit)="onSubmit()">
-            <button class="btn btn-primary">See Results</button>
-          </form>
+          <div routerLink="/event/{{this.event.id}}/results" class="btn btn-primary" id="results-button">See Results</div>
 
 
         </div>
