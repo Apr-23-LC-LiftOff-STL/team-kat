@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0; 
+  margin: 0;
   padding-top: 60px;
 
 
@@ -41,12 +41,13 @@
 
 
 h3.mx-auto {
+    margin-top: 5px;
     font-family:  Georgia, serif;
     text-align: center;
     font-family:  Georgia, serif;
-    font-size: 20px;
+    font-size: 24px;
     color: #fff;
-
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 #previous-events-card {
@@ -59,12 +60,12 @@ h3.mx-auto {
     border: none;
 
 }
-  
+
 
 
 
 #upcomming-events-card {
-  
+
   /* background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1116433243223380098/ooushi1.png"); */
   background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1117882374638809169/ooushi6.png");
   background-position: center center;
