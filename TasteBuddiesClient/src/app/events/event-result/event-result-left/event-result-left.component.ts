@@ -34,7 +34,6 @@ export class EventResultLeftComponent implements OnInit {
         } else {
           this.numberOfAvailableRestaurants = 1;
         }
-        console.log(this.numberOfAvailableRestaurants);
         for(let [key, value] of this.eventVotingProgress.userVotes){
           if(key === "Number of Available Restaurants"){
             continue;

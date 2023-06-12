@@ -1,16 +1,20 @@
-<h1>Enter Room Code</h1>
-<div class="col card p-2 m-3 card-6">
+<h1>Join an existing event</h1>
+<div class="card p-3 m-3">
     <form (ngSubmit)="onSubmit()">
-        <label for="entryCode">Room Code</label><br>
-        <input class="entry-code" type="text"
-        onkeyup="this.value = this.value.toUpperCase();"
-        id="entryCode"
-        name="entryCode"
-        [(ngModel)] = "joinEvent.entryCode"><br>
-        <input class="btn btn-join" type="submit" value="Join Event" ><br>
+        <label class="form-label" for="entryCode">Room Code</label>
+        <input 
+            class="form-control"
+            type="text" 
+            onkeyup="this.value = this.value.toUpperCase();" 
+            id="entryCode" 
+            name="entryCode" 
+            [(ngModel)] = "joinEvent.entryCode"
+            placeholder="ABCDEF">
+            <div style="color: red;" *ngIf="errorMessage">
+                {{errorMessage}}
+            </div>
+        <div class="form-text mb-3">Code is six letters</div>
+        <input class="btn btn-join" type="submit" value="Join Event">
     </form>
-    <div *ngIf="errorMessage" style="color: red;">
-        {{errorMessage}}
-    </div>
+    
 </div>
-<!-- <p>event-join works!</p> -->
