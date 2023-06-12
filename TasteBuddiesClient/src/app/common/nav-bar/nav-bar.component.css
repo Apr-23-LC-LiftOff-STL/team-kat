@@ -1,5 +1,5 @@
 nav.navbar {
-    padding-top:650px;
+    padding-top:0px;
 
 }
 
@@ -23,12 +23,17 @@ a.navbar-brand {
     border-radius: 30px;
 }
 nav.navbar.navbar-expand-lg.bg-light {
-
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
     background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1117210448161427577/cover1.png") !important;
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
-
+    background-attachment: fixed;
 }
 
 ul.navbar-nav.ms-auto.mb-2.mb-lg-0 {

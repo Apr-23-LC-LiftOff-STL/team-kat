@@ -4,7 +4,17 @@ form {
 
 }
 
-div.email {
+input.w-100.btn .ig-btn.btn-primary.mb-3 {
+    font-size: 16px;
+
+    color: #223826;
+    background-color: #fff;
+
+}
+
+
+
+/*div.email {
     margin-left: 10px;
 }
 input#email.ng-untouched.ng-valid.ng-dirty {
@@ -32,4 +42,4 @@ button.btn.btn-submit {
     color: #223826;
     background-color: #fff;
 
-}
+}*/

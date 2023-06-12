@@ -1,4 +1,85 @@
-/*div.body.home-page{
-  background: url('https://cdn.discordapp.com/attachments/225383532850053120/1116198450338467870/TASTEyyy.gif') !important;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* This is for vertical centering, adjust as needed */
+  margin: 0; /* Remove default margin */
+  padding-top: 60px;
+
+
+}
+
+
+.home-page{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('https://cdn.discordapp.com/attachments/225383532850053120/1117833463186341938/TASTEyyy1.gif') !important;
   background-size: cover;
-}*/
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: auto; /* make sure the height is auto so it increases with content */
+  overflow: auto;
+
+}
+
+.h3, h3 {
+    padding-top: 20px;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.scrollable-box-md {
+
+  font-family:  Georgia, serif;
+  width: 80%;
+  padding: 10px;
+  margin: 1550px auto 60px auto;
+  color: #223826;
+  background-color: #FFFDD0;
+  box-shadow:
+           0.6px 0.4px 2.2px rgba(0, 0, 0, 0.02),
+           1.4px 0.9px 5.3px rgba(0, 0, 0, 0.028),
+           2.6px 1.6px 10px rgba(34, 56, 38, 1),
+           4.7px 2.9px 17.9px rgba(0, 0, 0, 0.042),
+           8.8px 5.4px 33.4px rgba(34, 56, 38, 1) ,
+           21px 13px 80px rgba(0, 0, 0, 0.07)
+         ;
+  border-radius: 35px;
+  transition: 1.5s;
+}
+
+
+ul {
+  list-style-type: none;
+  display:flex;
+  justify-content: space-around;
+}
+
+ul li {
+  text-align: center;
+  color: #fff !important;
+  margin: 20px 0;
+}
+
+a.link-color {
+  color: #223826;
+}
+a.link-color:hover {
+    color:  #FF4500;
+}
+a.link-color:active {
+  color: #FF4500;
+}
+
+
+ul li img {
+  width: 100px; /* adjust the size of the images */
+  height: 100px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+}

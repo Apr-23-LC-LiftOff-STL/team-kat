@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-body {
+/*body {
     background-color:  #FF4500;
-}
+}*/
 
 main {
   padding-left: 0px;
@@ -82,6 +82,7 @@ a.btn.btn-primary:hover {
   }
 
 div.container {
+
      color: #FFA500;
 }
 
