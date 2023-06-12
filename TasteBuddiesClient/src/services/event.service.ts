@@ -60,15 +60,14 @@ export class EventService {
   }
 
   public getEventResults(eventId: number): Observable<EventResultDTO> {
-    // return this.route.paramMap.pipe(
-    //   switchMap((params: ParamMap) => {
-    //     const eventId = Number.parseInt(params.get('id')!);
         return this.http.get<EventResultDTO>(`${EVENT_API}${eventId}/result`);
-      // })
-    // );
   }
 
   public getVotingProgress(eventId: number): Observable<any> {
     return this.http.get<any>(`${EVENT_API}${eventId}/votingProgress`);
+  }
+
+  public updateMatchMessage(hasMatch: boolean): string {
+    return hasMatch ? "You Have A Match!" : "No Matches yet, Keep Voting";
   }
 }

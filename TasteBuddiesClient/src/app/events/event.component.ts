@@ -17,6 +17,7 @@ export class EventComponent implements OnInit {
   event$: Observable<any>;
   restaurants: Array<{id: string}>;
   currentRestaurant: string;
+  matchMessage: string;
   restaurantDetails: {
     place_id: string,
     name: string,
@@ -56,11 +57,14 @@ export class EventComponent implements OnInit {
         this.event = res;
         this.restaurants = this.event.restaurants;
         this.nextRestaurant();
+
+        this.checkForMatch(this.event.id); //Updates message on page initialization
+
       },
       error: e => {
         console.error(e);
       }
-    })
+    });
   }
 
   yesToRestaurant(choice: boolean): void {
@@ -91,7 +95,10 @@ export class EventComponent implements OnInit {
     );
 
     this.eventService.saveLike(userLikesDTO).subscribe({
-      next: res => {}, //doesn't perform any specific actions when save is successful
+      next: res => {
+        // Update match message after the vote is saved.
+        this.checkForMatch(this.event.id);
+      }, 
       error: e => {
         console.error(e); //Displays error when save is unsuccessful
       }
@@ -125,13 +132,19 @@ export class EventComponent implements OnInit {
   }
 
   onSubmit(): void{
-    // this.eventService.getEventResults(this.event.id).subscribe({
-    //   next: res => {
         this.router.navigate([`/event/${this.event.id}/results`]);
-    //   },
-    //   error: e => {
-    //     console.error(e);
-    //   }
-    // })
+  }
+
+  //Get's boolean for mutuallyLiked Restaurant to use with the updateMatchMessage service
+  private checkForMatch(eventId: number): void {
+    this.eventService.getEventResults(eventId).subscribe({
+      next: res => {
+        const hasMatch = res.mutuallyLikedRestaurant !== null;
+        this.matchMessage = this.eventService.updateMatchMessage(hasMatch);
+      },
+      error: e => {
+        console.error(e);
+      }
+    });
   }
 }

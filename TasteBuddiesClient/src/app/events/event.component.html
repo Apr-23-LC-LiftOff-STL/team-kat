@@ -47,3 +47,8 @@
 <form (ngSubmit)="onSubmit()">
     <button class="btn btn-primary">See Results</button>
 </form>
+<div>
+    <div class="row p-2">
+        <p *ngIf="matchMessage">{{ matchMessage }}</p>
+    </div>
+</div>
