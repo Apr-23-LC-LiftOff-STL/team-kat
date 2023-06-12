@@ -10,7 +10,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
   styleUrls: ['./event-join.component.css']
 })
 export class EventJoinComponent implements OnInit { 
-  joinEvent: JoinEventDto = new JoinEventDto;
+  joinEvent: JoinEventDto = new JoinEventDto('');
   errorMessage: string;
 
   constructor(

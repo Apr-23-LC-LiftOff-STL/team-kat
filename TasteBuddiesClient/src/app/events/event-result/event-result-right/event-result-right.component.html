@@ -1,7 +1,5 @@
-<h1>Event Results</h1>
-
 <div *ngIf="eventResults">
-    <div *ngIf="eventResults.mutuallyLikedRestaurant">
+    <div *ngIf="eventResults.mutuallyLikedRestaurant; else noMatchYet">
       <h2>You have a match!</h2>
       <div>
         <h2>{{ restaurantDetails.name }}</h2>
@@ -10,6 +8,9 @@
         <div *ngIf="isPhotoLoading">Loading photo...</div>
       </div>
     </div>
+    <ng-template #noMatchYet>
+      <div class="h2 mb-3">No matches yet. Keep swiping!</div>
+    </ng-template>
 </div><br>
 
 

@@ -77,7 +77,9 @@ export class EventComponent implements OnInit {
     this.placesService.getRestaurantDetails(this.currentRestaurant).subscribe({
       next: res => {
         this.restaurantDetails = res;
-        this.loadPhoto(this.restaurantDetails.photos[0].photo_reference)
+        this.restaurantDetails.types = this.filterTypes(this.restaurantDetails.types);
+        this.restaurantDetails.formatted_address = this.formatAddress(this.restaurantDetails.formatted_address);
+        this.loadPhoto(this.restaurantDetails.photos[0].photo_reference);
       },
       error: e => {
         console.error(e);
@@ -105,6 +107,24 @@ export class EventComponent implements OnInit {
     });
   }
 
+  private filterTypes(types: Array<string>): Array<string> {
+    const IGNORED_TYPES = ['point_of_interest', 'establishment', 'food', 'storage'];
+    types = types.filter(type => !IGNORED_TYPES.includes(type));
+
+    let formattedTypes = [];
+
+    for (let t of types) {
+      t = t.replace('meal_takeaway', 'takeout');
+      t = t.replace('_', ' ');
+      formattedTypes.push(t);
+    }
+    return formattedTypes;
+  }
+
+  private formatAddress(address: string): string {
+    address = address.replace(', ', ',\n').replace(', USA', '');
+    return address;
+  }
   
   private loadPhoto(photo_reference: string): void {
     this.isPhotoLoading = true;

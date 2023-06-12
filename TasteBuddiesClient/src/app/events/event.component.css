@@ -1,0 +1,75 @@
+h1 {
+ padding-top: 40px;
+ padding-bottom: 40px;
+ font-size: 50px;
+ font-family:  Georgia, serif;
+ text-align: center;
+ color: #fff;
+}
+
+
+#card-container {
+    background-color: #223826;
+    color: #fff;
+    font-size: 18px;
+    min-width: 380px;
+}
+
+
+div {
+    font-family:  Georgia, serif;
+    font-size: 18px;
+    text-align: center;
+    color: #fff;
+}
+
+
+#like-button {
+  font-size: 16px;
+  margin-top: 11px;
+  color: #006400;
+  background-color: #fff;
+}
+#like-button:hover {
+   box-shadow:
+          0px 0px 1.1px -7px rgba(0, 100, 0, 1),
+          0px 0px 3px -7px rgba(0, 100, 0, 1),
+          0px 0px 7.2px -7px rgba(0, 100, 0, 1),
+          0px 0px 24px -7px rgba(0, 100, 0, 1)
+        ;
+}
+#dislike-button {
+  font-size: 16px;
+  margin-top: 11px;
+  color:  #8B0000;
+  background-color: #fff;
+}
+
+#dislike-button:hover {
+   box-shadow:
+          0px 0px 1.1px -7px rgba(139, 0, 0, 1),
+          0px 0px 3px -7px rgba(139, 0, 0, 1),
+          0px 0px 7.2px -7px rgba(139, 0, 0, 1),
+          0px 0px 24px -7px rgba(139, 0, 0, 1)
+        ;
+}
+
+#results-button {
+  font-size: 16px;
+  margin-top: 5px;
+  color:  #223826;
+  background-color: #fff;
+
+}
+
+#results-button:hover {
+  background-color: #f5f5f5;
+}
+
+a, a:visited {
+  color: #fff;
+}
+
+a:hover, a:active {
+  color: #f5f5f5;
+}

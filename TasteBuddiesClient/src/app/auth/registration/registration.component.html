@@ -1,5 +1,9 @@
-<p>Do some registration stuff!</p>
+<h3>Register</h3>
 
-<app-registration-form></app-registration-form>
+<div class="card m-auto p-4 mb-3" id="registration-container">
+    <app-registration-form id="registration-form"></app-registration-form>
+    
+    <p>Already have an account?</p>
 
-<p>Already have an account? <a href="/login">Login</a></p>
+    <div routerLink="/login" class="btn mb-3" id="login-button">Login</div>
+</div>

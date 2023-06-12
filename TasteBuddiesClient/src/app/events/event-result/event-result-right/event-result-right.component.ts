@@ -53,7 +53,7 @@ export class EventResultRightComponent implements OnInit {
         }
       },
       error: e => {
-        console.log(e);
+        console.error(e);
       }
     })
   }
@@ -65,7 +65,7 @@ export class EventResultRightComponent implements OnInit {
         this.loadPhoto(this.restaurantDetails.photos[0].photo_reference)
       },
       error: e => {
-        console.log(e);
+        console.error(e);
       }
     });
   }
@@ -78,7 +78,7 @@ export class EventResultRightComponent implements OnInit {
         this.createImageFromBlob(res);
       },
       error: e => {
-        console.log(e);
+        console.error(e);
       }
     })
   }

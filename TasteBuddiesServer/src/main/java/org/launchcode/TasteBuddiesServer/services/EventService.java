@@ -1,13 +1,17 @@
 package org.launchcode.TasteBuddiesServer.services;
 
-import org.launchcode.TasteBuddiesServer.data.*;
+import org.launchcode.TasteBuddiesServer.data.EventRepository;
+import org.launchcode.TasteBuddiesServer.data.RestaurantRepository;
+import org.launchcode.TasteBuddiesServer.data.UserLikesRepository;
+import org.launchcode.TasteBuddiesServer.data.UserRepository;
+import org.launchcode.TasteBuddiesServer.exception.EventDoesNotExistException;
+import org.launchcode.TasteBuddiesServer.exception.UserNotFoundException;
+import org.launchcode.TasteBuddiesServer.models.Event;
 import org.launchcode.TasteBuddiesServer.models.Restaurant;
+import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.UserLikes;
 import org.launchcode.TasteBuddiesServer.models.dto.CreateEventFormDTO;
-import org.launchcode.TasteBuddiesServer.models.Event;
-import org.launchcode.TasteBuddiesServer.models.User;
 import org.launchcode.TasteBuddiesServer.models.dto.UserLikesDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,20 +19,20 @@ import java.util.*;
 @Service
 public class EventService {
 
-    @Autowired
-    private EventRepository eventRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    private UserLikesRepository userLikesRepository;
-
-    @Autowired
-    private RestaurantRepository restaurantRepository;
+    private final EventRepository eventRepository;
+    private final UserRepository userRepository;
+    private final UserLikesRepository userLikesRepository;
+    private final RestaurantRepository restaurantRepository;
 
     public static final char[] UPPERCASE_LETTERS = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     public static final int ENTRY_CODE_LENGTH = 6;
+
+    public EventService(EventRepository eventRepository, UserRepository userRepository, UserLikesRepository userLikesRepository, RestaurantRepository restaurantRepository) {
+        this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
+        this.userLikesRepository = userLikesRepository;
+        this.restaurantRepository = restaurantRepository;
+    }
 
     public Event createEvent(CreateEventFormDTO request, String userEmail) {
         Event event = new Event();
@@ -38,21 +42,28 @@ public class EventService {
         String entryCode = generateUniqueEntryCode();
         event.setEntryCode(entryCode);
 
-        Optional<User> optionalUser = userRepository.findByEmail(userEmail);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            event.getUsers().add(user);
+        User user = userRepository
+                .findByEmail(userEmail)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-            Event savedEvent = eventRepository.save(event);
-            user.getEvents().add(savedEvent);
-            userRepository.save(user);
+        event.getUsers().add(user);
 
-            return savedEvent;
-        } else {
-            // handel the case when user is not found, throw exception or return default value
-            return event;
+        Event savedEvent = eventRepository.save(event);
+        user.getEvents().add(savedEvent);
+        userRepository.save(user);
+
+        return savedEvent;
+
+
+    }
+
+    public Event getEventFromId(int eventId) {
+
+        if (eventId <= 0) {
+            throw new EventDoesNotExistException("Event does not exist");
         }
 
+        return eventRepository.findById(eventId).orElseThrow(() -> new EventDoesNotExistException("Event does not exist"));
     }
 
     public String generateUniqueEntryCode() {
@@ -76,7 +87,7 @@ public class EventService {
 
             roomCode = codeBuilder.toString();
 
-            Optional possibleEvent = eventRepository.findByEntryCode(roomCode);
+            Optional<Event> possibleEvent = eventRepository.findByEntryCode(roomCode);
 
             if (possibleEvent.isEmpty()) {
                 break;
@@ -92,11 +103,6 @@ public class EventService {
         Integer eventId = userLikesDTO.getEventId();
         String restaurantId = userLikesDTO.getRestaurantId();
 
-
-        System.out.println("UserID: " + userId);
-        System.out.println("EventID: " + eventId);
-        System.out.println("Restaurant ID: " + restaurantId);
-
         // Retrieve the User and Event objects based on the provided IDs
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Event not found"));
@@ -105,7 +111,7 @@ public class EventService {
         Optional<UserLikes> userLikesOptional = userLikesRepository.findByUserAndEvent(user, event);
         UserLikes userLikes;
 
-        //Check if userLikes exists.  If not create it and pull it from database by using createuserlikes method
+        //Check if userLikes exists.  If not create it and pull it from database by using createUserLikes method
         if (userLikesOptional.isEmpty()) {
             userLikesOptional = this.createUserLikes(user, event);
         }
@@ -155,11 +161,9 @@ public class EventService {
         //Check for mutually liked restaurants
         public String getMutuallyLikedRestaurant(UserLikesDTO userLikesDTO) {
             Integer eventId = userLikesDTO.getEventId();
-            System.out.println("Checking for Mutually Liked Restaurants in Event: " + eventId);
 
             //Retrieve the Event object based on the provided event ID
-            Event event = eventRepository.findById(eventId)
-                    .orElseThrow(() -> new IllegalArgumentException("Event not found"));
+            Event event = this.getEventFromId(eventId);
 
             //Create a map to store the counts of liked restaurants
             Map<String, Integer> restaurantCounts = new HashMap<>();
@@ -183,11 +187,9 @@ public class EventService {
                 if (entry.getValue() == event.getUsers().size() && entry.getValue() >= 2) {
                     return entry.getKey(); //Returns the ID of the mutually liked restaurant
                 }
-                System.out.println("Hashmap Data: " + restaurantCounts);
             }
             return null; //returns null if no mutually liked restaurant is found.
         }
-
 
     public Event filterSeenEvents(Event event, User user) {
 
