@@ -1,8 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 
-/*body {
-    background-color:  #FF4500;
-}*/
+body {
+    position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("https://cdn.discordapp.com/attachments/225383532850053120/1117210448161427577/cover1.png") !important;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        height: auto; /* make sure the height is auto so it increases with content */
+        overflow: auto;
+}
 
 main {
   padding-left: 0px;
@@ -55,6 +66,8 @@ a.btn.btn-primary:hover {
 
 .card {
     /* Add shadows to create the "card" effect */
+
+
        box-shadow:
          0.6px 0.4px 2.2px rgba(0, 0, 0, 0.02),
          1.4px 0.9px 5.3px rgba(0, 0, 0, 0.028),
@@ -65,7 +78,7 @@ a.btn.btn-primary:hover {
        ;
       border-radius: 35px;
       transition: 1.5s;
-      height: 300px;
+
 
   }
 

@@ -7,13 +7,13 @@ nav.navbar.navbar-expand-lg.bg-light{
     width: 100%;
 
 }
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
     nav.navbar.navbar-expand-lg.bg-light {
         height: 500px;
-    }
+    }*/
 
 
-}
+
 
 a.navbar-brand {
     font-family:  Georgia, serif;
